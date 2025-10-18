@@ -1,5 +1,6 @@
 
 import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
+import PageLayout from '../../layouts/pageslayout';
 export default function Main() {
     const tags: HelmetProps = {
         pageTitle: 'Home',
@@ -7,8 +8,10 @@ export default function Main() {
     }
     return (
         <HelmetLayout {...tags}>
-            <div className=''>landing page
-            </div>
+            <PageLayout>
+                <div className=''>landing page
+                </div>
+            </PageLayout>
         </HelmetLayout>
     )
 }
