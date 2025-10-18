@@ -11,7 +11,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-white border-t border-gray-200 text-gray-700">
+        <footer className="bg-white border-t border-gray-50 text-gray-700">
             <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
                 {/* Logo and Description */}
                 <div>
@@ -28,7 +28,7 @@ export default function Footer() {
                                 Coach<span className="text-primary-500">Me AI</span>
                             </span>
                         </div>
-                        <p className="text-sm text-gray-600 mb-4">
+                        <p className="text-sm text-gray-600 mt-2 mb-4">
                             Your automated job application partner to land your dream job faster.
                         </p>
                         {/* Social Icons */}
