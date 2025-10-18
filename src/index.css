@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+Bhaiksuki&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* primary colors */
+  --color-primary-50: #F0E6EF;
+  --color-primary-100: #D0B0CD;
+  --color-primary-200: #B98AB5;
+  --color-primary-300: #995493;
+  --color-primary-400: #85337E;
+  --color-primary-500: #67005E;
+  --color-primary-600: #5E0056;
+  --color-primary-700: #490043;
+  --color-primary-800: #390034;
+  --color-primary-900: #2B0027;
+
+  /* secondary text shades */
+  --color-grey-50: #E8E8E8;
+  --color-grey-100: #B8B8B8;
+  --color-grey-200: #969696;
+  --color-grey-300: #666666;
+  --color-grey-400: #494949;
+  --color-grey-500: #1B1B1B;
+  --color-grey-600: #191919;
+  --color-grey-700: #131313;
+  --color-grey-800: #0F0F0F;
+  --color-grey-900: #0B0B0B;
+
+  --color-purple-50: #FFFBFF;
+  --color-purple-100: #FFF4FE;
+  --color-purple-200: #FFEEFE;
+  --color-purple-300: #FFE6FD;
+  --color-purple-400: #FFE1FD;
+  /* Original: #FFDAFC */
+  --color-purple-500: #FFDAFC;
+  --color-purple-600: #E8C6E5;
+  --color-purple-700: #B59BB3;
+  --color-purple-800: #8C788B;
+  --color-purple-900: #6B5C6A;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
