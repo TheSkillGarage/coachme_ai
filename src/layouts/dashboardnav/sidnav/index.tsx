@@ -52,7 +52,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
                 {/* Navigation */}
                 <nav className="w-[80%] m-auto space-y-1">
                     {menuItems.map((item) => (
-                        <div key={item.title} className="py-[4px]">
+                        <div key={item.title} className="py-[1px]">
                             {item.subMenu ? (
                                 <div>
                                     <button
@@ -151,10 +151,10 @@ export default function Main({ open, setOpen }: SidebarProps) {
                         </NavLink>
                     ))}
                 </nav>
-                <div className="w-[80%] m-auto">
-                    <button className="flex  items-center font-normal text-sm text-gray-700 hover:cursor-pointer" >
-                        <LogOut className="w-5 h-5  m-2 text-gray-700 hover:text-gray-900" />
-                        LogOut
+                <div className="w-[80%] space-y-1 m-auto px-3">
+                    <button className="flex mt-[8px]  items-center font-normal text-sm text-gray-700 hover:cursor-pointer" >
+                        <LogOut className="w-5 h-5 text-gray-700 hover:text-gray-900" />
+                        <p className="ml-2">LogOut</p>
                     </button>
                 </div>
             </aside>
