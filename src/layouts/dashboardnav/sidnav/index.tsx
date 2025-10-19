@@ -58,9 +58,9 @@ export default function Main({ open, setOpen }: SidebarProps) {
                     ✕
                 </button>
 
-                <div className="flex items-center justify-center mb-4 mt-8">
+                <div className="flex items-center justify-center mb-4 mt-[32px]">
                     <div className="text-center">
-                        <img src={Logo} className="h-[35px] w-[45px] mx-auto" alt="Logo" />
+                        <img src={Logo} className="h-[30px] w-[45px] mx-auto" alt="Logo" />
                         <h1 className="text-lg font-semibold text-primary-500 mt-1">
                             CoachMe AI
                         </h1>
@@ -81,7 +81,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
                                 <div>
                                     <button
                                         onClick={() => toggleSubmenu(item.title)}
-                                        className="flex w-full items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-500 font-medium"
+                                        className="flex w-full items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-600 font-medium"
                                     >
                                         <div className="flex items-center gap-2">
                                             {item.icon && <span>{item.icon}</span>}
@@ -125,7 +125,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
 
                                                                     return `flex font-normal items-center gap-2 px-3 py-2 rounded-lg transition ${active
                                                                         ? "text-primary-500 bg-purple-300"
-                                                                        : "text-gray-500 hover:bg-gray-100"
+                                                                        : "text-gray-600 hover:bg-gray-100"
                                                                         }`;
                                                                 }}
                                                                 onClick={() => setOpen(false)}
@@ -151,7 +151,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
 
                                         return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
                                             ? "text-primary-500 bg-purple-300"
-                                            : "text-gray-500 hover:bg-gray-100"
+                                            : "text-gray-600 hover:bg-gray-100"
                                             }`;
                                     }}
                                     onClick={() => setOpen(false)}
@@ -166,7 +166,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
 
                 {/* Helper menu */}
                 <motion.nav
-                    className="w-[80%] m-auto space-y-1 pt-[34px]"
+                    className="w-[80%] m-auto space-y-1 pt-[70px]"
                     variants={listVariants}
                     initial="hidden"
                     animate="visible"
@@ -183,7 +183,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
 
                                     return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
                                         ? "text-primary-500 bg-purple-300"
-                                        : "text-gray-500 hover:bg-gray-100"
+                                        : "text-gray-600 hover:bg-gray-100"
                                         }`;
                                 }}
                                 onClick={() => setOpen(false)}
@@ -203,8 +203,8 @@ export default function Main({ open, setOpen }: SidebarProps) {
                     animate="visible"
                     transition={{ delay: 0.4 }}
                 >
-                    <button className="flex mt-[8px] items-center font-normal text-sm text-gray-500 hover:cursor-pointer">
-                        <LogOut className="w-5 h-5 text-gray-500 hover:text-gray-500" />
+                    <button className="flex mt-[8px] items-center font-normal text-sm text-gray-600 hover:cursor-pointer">
+                        <LogOut className="w-5 h-5 text-gray-600 hover:text-gray-500" />
                         <p className="ml-2">Log Out</p>
                     </button>
                 </motion.div>
