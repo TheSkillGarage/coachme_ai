@@ -2,7 +2,9 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { helperMenuItems, menuItems } from "./menu";
 import { ChevronDown, ChevronUp, LogOut } from "lucide-react";
-import Logo from '../../../assets/coachmeai.png'
+import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../../../assets/coachmeai.png";
+
 interface SidebarProps {
     open: boolean;
     setOpen: (open: boolean) => void;
@@ -10,7 +12,7 @@ interface SidebarProps {
 
 export default function Main({ open, setOpen }: SidebarProps) {
     const [openMenus, setOpenMenus] = useState<string[]>([]);
-    const location = useLocation()
+    const location = useLocation();
 
     const toggleSubmenu = (title: string) => {
         setOpenMenus((prev) =>
@@ -18,6 +20,20 @@ export default function Main({ open, setOpen }: SidebarProps) {
                 ? prev.filter((t) => t !== title)
                 : [...prev, title]
         );
+    };
+
+    // Animation variants
+    const listVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.08 },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, x: -20 },
+        visible: { opacity: 1, x: 0 },
     };
 
     return (
@@ -32,7 +48,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
 
             <aside
                 className={`fixed md:static z-40 top-0 left-0 h-full w-64 bg-white border-r border-gray-50 transition-transform duration-300
-          ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+        ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
             >
                 {/* Header */}
                 <button
@@ -41,23 +57,31 @@ export default function Main({ open, setOpen }: SidebarProps) {
                 >
                     ✕
                 </button>
-                <div className="md:w-[90%] md:flex-start flex items-center justify-center  pv-4 mb-[16px] mt-[32px]">
-                    <div className="">
-                        <img src={Logo} className="h-[35] w-[35px] m-auto" alt="" />
-                        <h1 className="text-lg font-semibold text-primary-500">CoachMe AI</h1>
-                    </div>
 
+                <div className="flex items-center justify-center mb-4 mt-8">
+                    <div className="text-center">
+                        <img src={Logo} className="h-[35px] w-[45px] mx-auto" alt="Logo" />
+                        <h1 className="text-lg font-semibold text-primary-500 mt-1">
+                            CoachMe AI
+                        </h1>
+                    </div>
                 </div>
 
-                {/* Navigation */}
-                <nav className="w-[80%] m-auto space-y-1">
+                {/* Main Navigation */}
+                <motion.nav
+                    className="w-[80%] m-auto space-y-1"
+                    variants={listVariants}
+                    initial="hidden"
+                    animate="visible"
+                    key={location.pathname} // ensures re-animation on route change
+                >
                     {menuItems.map((item) => (
-                        <div key={item.title} className="py-[1px]">
+                        <motion.div key={item.title} variants={itemVariants}>
                             {item.subMenu ? (
                                 <div>
                                     <button
                                         onClick={() => toggleSubmenu(item.title)}
-                                        className="flex w-full items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-700 font-medium"
+                                        className="flex w-full items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-500 font-medium"
                                     >
                                         <div className="flex items-center gap-2">
                                             {item.icon && <span>{item.icon}</span>}
@@ -70,93 +94,120 @@ export default function Main({ open, setOpen }: SidebarProps) {
                                         )}
                                     </button>
 
-                                    {/* Submenu items */}
-                                    {openMenus.includes(item.title) && (
-                                        <div className="bg-gray-500 rounded-lg">
-                                            {item.subMenu.map((sub) => (
-                                                <NavLink
-                                                    to={item.pathname ?? "#"}
-                                                    className={({ isActive }) => {
-                                                        const isDashboard =
-                                                            item.pathname === "/" || item.pathname === "/dashboard";
-                                                        const isDashboardActive =
-                                                            isDashboard && location.pathname.startsWith("/user/dashboard");
-
-                                                        const active = isActive || isDashboardActive;
-
-                                                        return `flex font-normal items-center gap-2 px-3 py-2 rounded-lg transition ${active
-                                                            ? "text-primary-500 bg-purple-500"
-                                                            : "text-gray-700 hover:bg-gray-100"
-                                                            }`;
-                                                    }}
-                                                    onClick={() => setOpen(false)}
+                                    {/* Submenu animation */}
+                                    <AnimatePresence>
+                                        {openMenus.includes(item.title) && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: "auto" }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                                className="overflow-hidden ml-2 bg-gray-50 rounded-lg mt-1"
+                                            >
+                                                <motion.ul
+                                                    variants={listVariants}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    exit="hidden"
+                                                    className="py-1"
                                                 >
-                                                    {item.icon && <span>{item.icon}</span>}
-                                                    <span>{item.title}</span>
-                                                </NavLink>
+                                                    {item.subMenu.map((sub, index) => (
+                                                        <motion.li key={index} variants={itemVariants}>
+                                                            <NavLink
+                                                                to={sub.pathname ?? "#"}
+                                                                className={({ isActive }) => {
+                                                                    const active =
+                                                                        isActive ||
+                                                                        (sub.pathname === "/" &&
+                                                                            location.pathname.startsWith(
+                                                                                "/user/dashboard"
+                                                                            ));
 
-                                            ))}
-                                        </div>
-                                    )}
+                                                                    return `flex font-normal items-center gap-2 px-3 py-2 rounded-lg transition ${active
+                                                                        ? "text-primary-500 bg-purple-300"
+                                                                        : "text-gray-500 hover:bg-gray-100"
+                                                                        }`;
+                                                                }}
+                                                                onClick={() => setOpen(false)}
+                                                            >
+                                                                {sub.icon && <span>{sub.icon}</span>}
+                                                                <span>{sub.title}</span>
+                                                            </NavLink>
+                                                        </motion.li>
+                                                    ))}
+                                                </motion.ul>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             ) : (
-                                <div className="">
-                                    <NavLink
-                                        to={item.pathname ?? "#"}
-                                        className={({ isActive }) => {
-                                            const isDashboard =
-                                                item.pathname === "/" || item.pathname === "/dashboard";
-                                            const isDashboardActive =
-                                                isDashboard && location.pathname.startsWith("/user/dashboard");
+                                <NavLink
+                                    to={item.pathname ?? "#"}
+                                    className={({ isActive }) => {
+                                        const active =
+                                            isActive ||
+                                            (item.pathname === "/" &&
+                                                location.pathname.startsWith("/user/dashboard"));
 
-                                            const active = isActive || isDashboardActive;
-
-                                            return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
-                                                ? "text-primary-500 bg-purple-500"
-                                                : "text-gray-700 hover:bg-gray-100"
-                                                }`;
-                                        }}
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        {item.icon && <span>{item.icon}</span>}
-                                        <span>{item.title}</span>
-                                    </NavLink>
-                                </div>
-
+                                        return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
+                                            ? "text-primary-500 bg-purple-300"
+                                            : "text-gray-500 hover:bg-gray-100"
+                                            }`;
+                                    }}
+                                    onClick={() => setOpen(false)}
+                                >
+                                    {item.icon && <span>{item.icon}</span>}
+                                    <span>{item.title}</span>
+                                </NavLink>
                             )}
-                        </div>
+                        </motion.div>
                     ))}
-                </nav>
-                <nav className="w-[80%] m-auto space-y-1 pt-[34px]">
+                </motion.nav>
+
+                {/* Helper menu */}
+                <motion.nav
+                    className="w-[80%] m-auto space-y-1 pt-[34px]"
+                    variants={listVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
                     {helperMenuItems.map((item) => (
-                        <NavLink
-                            to={item.pathname ?? "#"}
-                            className={({ isActive }) => {
-                                const isDashboard =
-                                    item.pathname === "/" || item.pathname === "/dashboard";
-                                const isDashboardActive =
-                                    isDashboard && location.pathname.startsWith("/user/dashboard");
+                        <motion.div key={item.title} variants={itemVariants}>
+                            <NavLink
+                                to={item.pathname ?? "#"}
+                                className={({ isActive }) => {
+                                    const active =
+                                        isActive ||
+                                        (item.pathname === "/" &&
+                                            location.pathname.startsWith("/user/dashboard"));
 
-                                const active = isActive || isDashboardActive;
-
-                                return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
-                                    ? "text-primary-500 bg-purple-500"
-                                    : "text-gray-700 hover:bg-gray-100"
-                                    }`;
-                            }}
-                            onClick={() => setOpen(false)}
-                        >
-                            {item.icon && <span>{item.icon}</span>}
-                            <span>{item.title}</span>
-                        </NavLink>
+                                    return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
+                                        ? "text-primary-500 bg-purple-300"
+                                        : "text-gray-500 hover:bg-gray-100"
+                                        }`;
+                                }}
+                                onClick={() => setOpen(false)}
+                            >
+                                {item.icon && <span>{item.icon}</span>}
+                                <span>{item.title}</span>
+                            </NavLink>
+                        </motion.div>
                     ))}
-                </nav>
-                <div className="w-[80%] space-y-1 m-auto px-3">
-                    <button className="flex mt-[8px]  items-center font-normal text-sm text-gray-700 hover:cursor-pointer" >
-                        <LogOut className="w-5 h-5 text-gray-700 hover:text-gray-900" />
-                        <p className="ml-2">LogOut</p>
+                </motion.nav>
+
+                {/* Logout */}
+                <motion.div
+                    className="w-[80%] space-y-1 m-auto px-3"
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ delay: 0.4 }}
+                >
+                    <button className="flex mt-[8px] items-center font-normal text-sm text-gray-500 hover:cursor-pointer">
+                        <LogOut className="w-5 h-5 text-gray-500 hover:text-gray-500" />
+                        <p className="ml-2">Log Out</p>
                     </button>
-                </div>
+                </motion.div>
             </aside>
         </>
     );
