@@ -124,7 +124,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
                                                                             ));
 
                                                                     return `flex font-normal items-center gap-2 px-3 py-2 rounded-lg transition ${active
-                                                                        ? "text-primary-500 bg-purple-300"
+                                                                        ? "text-primary-500 bg-purple-500"
                                                                         : "text-gray-600 hover:bg-gray-100"
                                                                         }`;
                                                                 }}
@@ -150,7 +150,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
                                                 location.pathname.startsWith("/user/dashboard"));
 
                                         return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
-                                            ? "text-primary-500 bg-purple-300"
+                                            ? "text-primary-500 bg-purple-500"
                                             : "text-gray-600 hover:bg-gray-100"
                                             }`;
                                     }}
@@ -182,7 +182,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
                                             location.pathname.startsWith("/user/dashboard"));
 
                                     return `flex font-normal text-sm items-center gap-2 px-3 py-[8px] rounded-lg transition ${active
-                                        ? "text-primary-500 bg-purple-300"
+                                        ? "text-primary-500 bg-purple-500"
                                         : "text-gray-600 hover:bg-gray-100"
                                         }`;
                                 }}

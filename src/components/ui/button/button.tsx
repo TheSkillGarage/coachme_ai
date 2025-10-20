@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../../utils/utils"; // optional helper for merging classNames
+import { cn } from "../../../utils/utils"; // optional helper for merging classNames
 import { Loader2 } from "lucide-react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

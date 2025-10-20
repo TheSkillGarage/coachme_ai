@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "../../../assets/coachmeai.png";
-import Button from "../../../components/button/button";
+import Button from "../../../components/ui/button/button";
 
 export default function LandingNavbar() {
     const [open, setOpen] = useState(false);
