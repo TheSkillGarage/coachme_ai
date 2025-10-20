@@ -1,6 +1,7 @@
 import { Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { menuItems } from "../sidnav/menu";
+import { Avatar } from "../../../components/ui/avatar";
 
 interface NavbarProps {
     setSidebarOpen: (open: boolean) => void;
@@ -64,11 +65,8 @@ export default function Main({ setSidebarOpen }: NavbarProps) {
 
             <div className="flex items-center gap-4">
                 {user.avatar ? (
-                    <img
-                        src={user.avatar}
-                        alt={user.name}
-                        className="w-10 h-10 rounded-full object-cover border border-gray-200"
-                    />
+                    <Avatar src={user.avatar} className='' name={user.name} size="md" />
+
                 ) : (
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-500 text-white font-medium border border-gray-200">
                         {getInitials(user.name)}
