@@ -11,7 +11,7 @@ const HeroSection: React.FC = () => {
          flex flex-col items-center justify-center
          p-5 md:p-20
          pb-0 md:pb-0
-         mt-[64px] md:mt-[72px]"
+         mt-[64px] mb-8 md:mt-[72px]"
     >
       <Badge className="bg-transparent border border-primary-500 gap-2 mb-4 py-1 px-3">
         <Sparkles className="w-4 h-4 stroke-primary-500" />
@@ -47,7 +47,9 @@ const HeroSection: React.FC = () => {
         className="bg-[linear-gradient(95.87deg,#FFD3FB_-11.49%,#FFF0FE_102.86%)]
          p-2 md:p-[22px]
          pb-0 md:pb-0
-         rounded-t-[11px] md:rounded-t-[27px]"
+         rounded-t-[11px] md:rounded-t-[27px]
+         overflow-hidden
+         w-full max-w-[1004px] md:mx-auto"
       >
         <img
           src={imgHero}
