@@ -7,6 +7,8 @@ export default function Main() {
         pageTitle: 'Home',
         description: ""
     }
+    const section = document.querySelector('features');
+    console.log("Found section:", section);
     return (
         <HelmetLayout {...tags}>
             <PageLayout>
