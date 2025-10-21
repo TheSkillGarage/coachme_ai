@@ -82,11 +82,13 @@ const FeatureBlock: React.FC<{ feature: Feature; isReversed: boolean }> = ({
                         <Icon className={`${feature.iconColor}`} size={24} />
                     </div>
                     <h3
-                        className="ml-3 sm:ml-4 text-[24px] font-semibold text-grey-500 text-left leading-snug"
+                        className="ml-3 sm:ml-4 text-lg sm:text-xl md:text-2xl lg:text-2xl font-semibold text-grey-500 text-left leading-snug"
                         style={{ lineHeight: "1.3" }}
                     >
                         {feature.title}
                     </h3>
+
+
                 </div>
                 <p
                     className="text-[20px] text-grey-500 leading-snug text-left"
