@@ -91,7 +91,7 @@ const FeatureBlock: React.FC<{ feature: Feature; isReversed: boolean }> = ({
 
                 </div>
                 <p
-                    className="text-[20px] text-grey-500 leading-snug text-left"
+                    className="lg:text-[20px] sm:text-base text-grey-500 leading-snug text-left"
                     style={{ lineHeight: "1.5" }}
                 >
                     {feature.description}
