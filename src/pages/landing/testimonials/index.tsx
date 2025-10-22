@@ -8,6 +8,7 @@ interface Testimonial {
   id: number;
   fullName: string;
   position: string;
+  companyName: string;
   rating: number;
   quote: string;
   date: string;
@@ -18,7 +19,8 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     fullName: 'Tina Jayden',
-    position: 'Marketing Analyst at Google',
+    position: 'Marketing Analyst',
+    companyName: 'Google',
     rating: 2,
     quote:
       'This platform made job hunting so much easier! Within two weeks, I had three interviews lined up and landed a job I love. The AI-generated cover letters saved me so much time.',
@@ -28,7 +30,8 @@ const testimonials: Testimonial[] = [
   {
     id: 2,
     fullName: 'David Zion',
-    position: 'Software Developer At TriniTech',
+    position: 'Software Developer',
+    companyName: 'TriniTech TriniTech TriniTech',
     rating: 5,
     quote:
       'This platform made job hunting so much easier! Within two weeks, I had three interviews lined up and landed a job I love. The AI-generated cover letters saved me so much time. I’ve used several job platforms before, but this one is on another level. From personalized job recommendations to optimized cover letters, it’s a game changer.',
@@ -38,7 +41,8 @@ const testimonials: Testimonial[] = [
   {
     id: 3,
     fullName: 'Aisha Bello',
-    position: 'Data Analyst at DTHub',
+    position: 'Data Analyst',
+    companyName: 'DTHub',
     rating: 4,
     quote:
       'This platform made job hunting so much easier! Within two weeks, I had three interviews lined up and landed a job I love.',
@@ -52,18 +56,20 @@ const TestimonialBlock: React.FC<{ testimonial: Testimonial }> = ({
 }) => {
   return (
     <Card
-      className="flex flex-col justify-between h-[299px] md:h-[302px]
+      className="flex flex-col justify-between min-h-[299px] md:min-h-[302px]
                min-w-[280px] w-full xl:w-[411px] xl:flex-1
                box-border p-4"
     >
       <div>
         <div className="flex gap-2 mb-4">
-          <Avatar size="lg" src={testimonial.avatarSrc} />
-          <div className="">
+          <Avatar size="lg" className="min-w-12" src={testimonial.avatarSrc} />
+          <div className="flex flex-col">
             <p className="font-semibold text-[18px] md:text-[20px] mb-1 leading-[140%]">
               {testimonial.fullName}
             </p>
-            <p className="text-grey-300 text-sm">{testimonial.position}</p>
+            <p className="text-grey-300 text-sm">
+              {testimonial.position} at {testimonial.companyName}
+            </p>
           </div>
         </div>
         <div className="mb-4 flex">
