@@ -114,7 +114,7 @@ const FeatureBlock: React.FC<{ feature: Feature; isReversed: boolean }> = ({
 
 const FeaturesSection: React.FC = () => {
     return (
-        <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
+        <section id="features" className="pt-12 sm:py-16 md:py-20 lg:py-8">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20">
                 {/* Header */}
                 <div className="text-center mb-10 sm:mb-14 lg:mb-16 px-4 sm:px-0">
