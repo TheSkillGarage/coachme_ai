@@ -51,7 +51,11 @@ const TestimonialBlock: React.FC<{ testimonial: Testimonial }> = ({
   testimonial,
 }) => {
   return (
-    <Card className="flex flex-col justify-between h-[299px] md:h-[302px]  min-w-[280px] max-w-[411px] box-border p-4">
+    <Card
+      className="flex flex-col justify-between h-[299px] md:h-[302px]
+               min-w-[280px] w-full xl:w-[411px] xl:flex-1
+               box-border p-4"
+    >
       <div>
         <div className="flex gap-2 mb-4">
           <Avatar size="lg" src={testimonial.avatarSrc} />
@@ -93,7 +97,7 @@ const TestimonialsSection: React.FC = () => {
         Trusted by Job Seekers Everywhere
       </h4>
 
-      <div className="flex flex-wrap lg:flex-row flex-1  gap-6">
+      <div className="flex flex-wrap lg:flex-row flex-1 gap-6">
         {testimonials.map((testimonial) => (
           <TestimonialBlock key={testimonial.id} testimonial={testimonial} />
         ))}
