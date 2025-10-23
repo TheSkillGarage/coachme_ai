@@ -7,6 +7,7 @@ import { Badge } from '../../../components/ui/badge';
 const HeroSection: React.FC = () => {
   return (
     <section
+      id='home'
       className="bg-[linear-gradient(90.1deg,#FFD3FB_-62.27%,#FFFFFF_51.24%,#FFFFFF_96.02%)]
          flex flex-col items-center justify-center
          p-5 md:p-20

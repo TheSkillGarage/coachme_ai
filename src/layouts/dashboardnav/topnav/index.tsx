@@ -2,6 +2,8 @@ import { Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { menuItems } from "../sidnav/menu";
 import { Avatar } from "../../../components/ui/avatar";
+import { CustomDropdown } from "../../../components/ui/dropdown";
+import { useState } from "react";
 
 interface NavbarProps {
     setSidebarOpen: (open: boolean) => void;
@@ -35,6 +37,7 @@ const getInitials = (name: string) => {
 
 export default function Main({ setSidebarOpen }: NavbarProps) {
     const location = useLocation();
+    const [open, setOpen] = useState(false);
 
     // Example user data 
     const user: User = {
@@ -65,7 +68,22 @@ export default function Main({ setSidebarOpen }: NavbarProps) {
 
             <div className="flex items-center gap-4">
                 {user.avatar ? (
-                    <Avatar src={user.avatar} className='' name={user.name} size="md" />
+                    <div>
+                        <Avatar
+                            src={user.avatar}
+                            name={user.name}
+                            size="md"
+                            onClick={() => alert("Avatar clicked!")}
+                            className="cursor-pointer"
+                        />
+
+                        <CustomDropdown open={open} setOpen={setOpen} width="w-72" align="right">
+                            <div className="p-4">
+                                <p className="font-semibold text-gray-800">Manually Controlled Menu</p>
+                            </div>
+                        </CustomDropdown>
+                    </div>
+
 
                 ) : (
                     <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary-500 text-white font-medium border border-gray-200">

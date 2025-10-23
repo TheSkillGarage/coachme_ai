@@ -93,7 +93,7 @@ const TestimonialsSection: React.FC = () => {
     <section
       className="flex flex-col items-center justify-center
          px-5 md:px-20
-         mb-12"
+         mb-12 mx-auto max-w-7xl " 
     >
       <Badge className="bg-transparent border border-primary-500 gap-2 mb-4 py-1 px-3 text-primary-500">
         Testimonials
