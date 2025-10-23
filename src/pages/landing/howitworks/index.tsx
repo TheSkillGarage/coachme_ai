@@ -78,7 +78,7 @@ const MobileConnector: React.FC = () => (
 const HowItWorks: React.FC = () => {
     return (
         <section id='how-it-works' className="bg-white py-10 sm:py-10 lg:py-10 h-auto">
-            <div className="max-w-7xl px-4 md:px-12 lg:px-20  sm:px-24">
+            <div className="max-w-7xl m-auto px-4 md:px-12 lg:px-20  sm:px-24">
                 {/* Header */}
                 <div className="text-center mb-4 sm:mb-8">
                     <Badge className="mb-4 sm:mb-6 bg-transparent border border-primary-500 text-primary-500">
