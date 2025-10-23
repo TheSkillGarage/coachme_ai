@@ -27,7 +27,7 @@ export default function Main() {
         <HelmetLayout {...tags}>
             <div className=''>Dashboard
                 <CustomDropdown
-                    trigger={<Button className='bg-primary-500' variant="outline">Open Menu</Button>}
+                    trigger={<Button className='bg-primary-500 cursor-pointer' variant="outline">Open Menu</Button>}
                     width="w-72"
                     align="right"
                     className='w-[10rem]'

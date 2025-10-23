@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card } from '../../../../components/ui/card';
-import { Badge } from '../../../../components/ui/badge';
+import { Card } from '../../../components/ui/card';
+import { Badge } from '../../../components/ui/badge';
 import { Smartphone, Search, LineChart } from 'lucide-react';
-import ArrowConnector from '../../../../assets/Arrow 6.png';
-import MobileConnectorImg from '../../../../assets/Arrow 6 (1).png';
+import ArrowConnector from '../../../assets/Arrow 6.png';
+import MobileConnectorImg from '../../../assets/Arrow 6 (1).png';
 
 interface WorkStep {
     id: number;
@@ -78,7 +78,7 @@ const MobileConnector: React.FC = () => (
 const HowItWorks: React.FC = () => {
     return (
         <section id='how-it-works' className="bg-white py-10 sm:py-10 lg:py-10 h-auto">
-            <div className="max-w-7xl px-8 sm:px-20 lg:px-20">
+            <div className="max-w-7xl px-4 md:px-12 lg:px-20  sm:px-24">
                 {/* Header */}
                 <div className="text-center mb-4 sm:mb-8">
                     <Badge className="mb-4 sm:mb-6 bg-transparent border border-primary-500 text-primary-500">

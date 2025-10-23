@@ -115,7 +115,7 @@ const FeatureBlock: React.FC<{ feature: Feature; isReversed: boolean }> = ({
 const FeaturesSection: React.FC = () => {
     return (
         <section id="features" className="pt-12 sm:py-16 md:py-20 lg:py-8">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20">
+            <div className="mx-auto max-w-7xl md:px-12 px-4 sm:px-6 lg:px-20">
                 {/* Header */}
                 <div className="text-center mb-10 sm:mb-14 lg:mb-16 px-4 sm:px-0">
                     <Badge className="text-primary-500 border border-primary-500 bg-white mb-2">
