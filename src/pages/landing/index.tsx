@@ -3,6 +3,7 @@ import PageLayout from '../../layouts/pageslayout';
 import FeaturesSection from './features';
 import HeroSection from './hero';
 import HowItWorks from './howitworks';
+import TestimonialsSection from './testimonials';
 export default function Main() {
     const tags: HelmetProps = {
         pageTitle: 'Home',
@@ -14,6 +15,7 @@ export default function Main() {
                 <HeroSection />
                 <FeaturesSection />
                 <HowItWorks />
+                <TestimonialsSection />
             </PageLayout>
         </HelmetLayout>
     )
