@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { cn } from "../../../utils/utils";
 
 interface CheckboxProps {
+    name?: string; // 👈 added name prop
     checked?: boolean;
     onChange?: (checked: boolean) => void;
     label?: string;
@@ -12,6 +13,7 @@ interface CheckboxProps {
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({
+    name,
     checked = false,
     onChange,
     label,
@@ -25,6 +27,12 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         lg: "w-6 h-6",
     };
 
+    const handleChange = () => {
+        if (!disabled && onChange) {
+            onChange(!checked);
+        }
+    };
+
     return (
         <label
             className={cn(
@@ -32,9 +40,20 @@ export const Checkbox: React.FC<CheckboxProps> = ({
                 disabled && "opacity-50 cursor-not-allowed"
             )}
         >
+            {/* Hidden input for form compatibility */}
+            <input
+                type="checkbox"
+                name={name}
+                checked={checked}
+                onChange={() => handleChange()}
+                disabled={disabled}
+                className="hidden"
+            />
+
+            {/* Styled visual checkbox */}
             <button
                 type="button"
-                onClick={() => !disabled && onChange?.(!checked)}
+                onClick={handleChange}
                 className={cn(
                     "flex items-center justify-center rounded border transition-colors",
                     sizes[size],
@@ -45,6 +64,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
             >
                 {checked && <Check className="w-3 h-3" strokeWidth={3} />}
             </button>
+
             {label && <span className="text-sm text-gray-700">{label}</span>}
         </label>
     );

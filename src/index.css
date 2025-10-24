@@ -46,3 +46,71 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+.circle-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Optional: Center the loader on the screen or in its parent */
+  /* margin: 50px auto; */
+}
+
+.circle-loader-spinner {
+  position: relative;
+  /* Calculate the size based on radius and dot size */
+  width: calc(2 * var(--circle-radius) + var(--dot-size));
+  height: calc(2 * var(--circle-radius) + var(--dot-size));
+}
+
+.circle-loader-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  margin-top: calc(var(--dot-size) / -2);
+  /* Adjust for dot's own size */
+  margin-left: calc(var(--dot-size) / -2);
+  /* Adjust for dot's own size */
+  transform-origin: center center;
+  /* Ensure rotation is from its own center */
+}
+
+/* Keyframe animation for the active dot */
+@keyframes spin-color {
+  0% {
+    background-color: var(--active-dot-color);
+  }
+
+  12.5% {
+    /* (1 / numDots) * 100% - Adjust based on your numDots */
+    background-color: var(--inactive-dot-color);
+  }
+
+  100% {
+    background-color: var(--inactive-dot-color);
+  }
+}
+
+/* Rotate the entire spinner container to simulate the active dot moving */
+@keyframes rotate-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.circle-loader-spinner {
+  animation: rotate-spinner var(--animation-duration) linear infinite;
+}
+
+/* The first dot starts as active and animates its color */
+.circle-loader-dot.active {
+  animation: spin-color var(--animation-duration) linear infinite;
+  /* Ensure it doesn't rotate with the parent spinner, as its color animates */
+  /* This ensures only its color changes, and the spinner's rotation creates the illusion */
+}
