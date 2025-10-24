@@ -11,6 +11,7 @@ interface DialogProps {
     footer?: ReactNode;
     className?: string;
     bgColor?: string; // optional background color
+    titleSize?: string;
 }
 
 const Dialog: React.FC<DialogProps> = ({
@@ -21,6 +22,7 @@ const Dialog: React.FC<DialogProps> = ({
     footer,
     className,
     bgColor = "bg-white", // default to white
+    titleSize = 'lg'
 }) => {
     return (
         <AnimatePresence>
@@ -44,7 +46,7 @@ const Dialog: React.FC<DialogProps> = ({
                     >
                         {/* Header */}
                         <div className="flex justify-between items-center  px-4 py-2">
-                            {title && <h3 className="text-lg font-semibold">{title}</h3>}
+                            {title && <h3 className={`text-${titleSize} font-semibold`}>{title}</h3>}
                             <button
                                 onClick={onClose}
                                 className="p-1 rounded hover:bg-primary-500 dark:hover:bg-primary-500 hover:text-white"
