@@ -2,18 +2,20 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "../../../assets/coachmeai.png";
 import Button from "../../../components/ui/button/button";
+import { useNavigate } from "react-router-dom";
+
+const navLinks = [
+    { name: "Home", path: "#home" },
+    { name: "Features", path: "#features" },
+    { name: "How it Works", path: "#how-it-works" },
+    { name: "Testimonials", path: "#testimonials" },
+    { name: "FAQs", path: "#faqs" },
+];
 
 export default function LandingNavbar() {
     const [open, setOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("#home");
-
-    const navLinks = [
-        { name: "Home", path: "#home" },
-        { name: "Features", path: "#features" },
-        { name: "How it Works", path: "#how-it-works" },
-        { name: "Testimonials", path: "#testimonials" },
-        { name: "FAQs", path: "#faqs" },
-    ];
+    const navigate = useNavigate()
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
         e.preventDefault();
@@ -84,16 +86,16 @@ export default function LandingNavbar() {
                         variant="outline"
                         color="text-primary-500"
                         border="border-primary-500"
-                        onClick={() => alert("Login clicked")}
+                        onClick={() => navigate("/login")}
                     >
                         Login
                     </Button>
-                    <Button onClick={() => alert("Sign Up clicked")}>Sign Up</Button>
+                    <Button onClick={() => navigate("/signup")}>Sign Up</Button>
                 </div>
 
                 {/* Mobile Menu Button */}
                 <button
-                    onClick={() => setOpen(!open)}
+                    onClick={() => navigate("/login")}
                     className="md:hidden p-2 rounded hover:bg-gray-100"
                 >
                     {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -122,12 +124,12 @@ export default function LandingNavbar() {
                                 variant="outline"
                                 color="text-primary-500"
                                 border="border-primary-500"
-                                onClick={() => alert("Login clicked")}
+                                onClick={() => navigate("/login")}
                                 className="cursor-pointer"
                             >
                                 Login
                             </Button>
-                            <Button className="cursor-pointer" onClick={() => alert("Sign Up clicked")}>Sign Up</Button>
+                            <Button className="cursor-pointer" onClick={() => navigate("/signup")}>Sign Up</Button>
                         </div>
                     </nav>
                 </div>

@@ -13,6 +13,9 @@ import Applications from "../pages/applications"
 import JobSearch from "../pages/jobsearch"
 import Analytics from "../pages/analytics"
 import Help from "../pages/help"
+import LoginPage from "../pages/auth/login"
+import SignupPage from "../pages/auth/createaccount"
+import ResetPage from "../pages/auth/resetpasword"
 const Router = () => {
     const routes = [
         {
@@ -21,6 +24,30 @@ const Router = () => {
                 <GeneralGuard>
                     <LandingPage />
                 </GeneralGuard>
+            ),
+        },
+        {
+            path: "/login",
+            element: (
+
+                <LoginPage />
+
+            ),
+        },
+        {
+            path: "/signup",
+            element: (
+
+                <SignupPage />
+
+            ),
+        },
+        {
+            path: "/reset-password",
+            element: (
+
+                <ResetPage />
+
             ),
         },
         {
