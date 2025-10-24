@@ -268,8 +268,8 @@ export default function Main({ open, setOpen }: SidebarProps) {
                             onClick={() => {
                                 setIsOpen(false);
                                 setLogoutStep("idle");
-                                navigate("/", { replace: true });
-                                window.location.href = "/";
+                                navigate("/login", { replace: true });
+                                window.location.href = "/login";
                             }}
                         >
                             Back to Login
