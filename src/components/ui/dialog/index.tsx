@@ -10,6 +10,7 @@ interface DialogProps {
     children: ReactNode;
     footer?: ReactNode;
     className?: string;
+    titleSize?: string;
     bgColor?: string;
     showCloseButton?: boolean; // optional flag to show/hide X button
     closeOnOverlayClick?: boolean; // whether clicking overlay closes dialog
@@ -22,6 +23,7 @@ const Dialog: React.FC<DialogProps> = ({
     children,
     footer,
     className,
+    titleSize = 'lg',
     bgColor = "bg-white",
     showCloseButton = true,
     closeOnOverlayClick = true, // default: true
@@ -54,7 +56,7 @@ const Dialog: React.FC<DialogProps> = ({
                     >
                         {/* Header */}
                         <div className="flex justify-between items-center px-4 py-2">
-                            {title && <h3 className="text-lg font-semibold">{title}</h3>}
+                            {title && <h3 className={`text-${titleSize} font-semibold`}>{title}</h3>}
                             {showCloseButton && (
                                 <button
                                     onClick={onClose}
