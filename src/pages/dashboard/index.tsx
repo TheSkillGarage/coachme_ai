@@ -15,6 +15,7 @@ import { Checkbox } from '../../components/ui/checkbox';
 import { Drawer } from '../../components/ui/drawer';
 import Skeleton from '../../components/ui/skeleton';
 import Carousel from '../../components/ui/carousel';
+import CircleLoader from '../../components/loader';
 export default function Main() {
     const [open, setOpen] = useState(false);
     const [isActive, setIsActive] = useState(false);
@@ -26,6 +27,7 @@ export default function Main() {
     return (
         <HelmetLayout {...tags}>
             <div className=''>Dashboard
+                <CircleLoader />
                 <CustomDropdown
                     trigger={<Button className='bg-primary-500 cursor-pointer' variant="outline">Open Menu</Button>}
                     width="w-72"

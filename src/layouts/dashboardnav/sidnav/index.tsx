@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { helperMenuItems, menuItems } from "./menu";
-import { ChevronDown, ChevronUp, LogOut } from "lucide-react";
+import { ChevronDown, ChevronUp, LogOut, } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../../../assets/coachmeai.png";
+import LogoutDialog from "../../../components//auth/logout";
 
 interface SidebarProps {
     open: boolean;
@@ -12,6 +13,15 @@ interface SidebarProps {
 
 export default function Main({ open, setOpen }: SidebarProps) {
     const [openMenus, setOpenMenus] = useState<string[]>([]);
+
+    const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+
+    const performLogout = async () => {
+        // simulate API delay
+        await new Promise(res => setTimeout(res, 1500));
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+    };
     const location = useLocation();
 
     const toggleSubmenu = (title: string) => {
@@ -73,7 +83,7 @@ export default function Main({ open, setOpen }: SidebarProps) {
                     variants={listVariants}
                     initial="hidden"
                     animate="visible"
-                    key={location.pathname} // ensures re-animation on route change
+                    key={location.pathname}
                 >
                     {menuItems.map((item) => (
                         <motion.div key={item.title} variants={itemVariants}>
@@ -203,12 +213,20 @@ export default function Main({ open, setOpen }: SidebarProps) {
                     animate="visible"
                     transition={{ delay: 0.4 }}
                 >
-                    <button className="flex mt-[8px] items-center font-normal text-sm text-gray-600 hover:cursor-pointer">
-                        <LogOut className="w-5 h-5 text-gray-600 hover:text-gray-500" />
+                    <button
+                        onClick={() => setIsLogoutOpen(true)}
+                        className="flex mt-[8px] items-center font-normal text-sm text-grey-400 hover:cursor-pointer hover:text-primary-500"
+                    >
+                        <LogOut className="w-5 h-5 " />
                         <p className="ml-2">Log Out</p>
                     </button>
                 </motion.div>
             </aside>
+            <LogoutDialog
+                isOpen={isLogoutOpen}
+                onClose={() => setIsLogoutOpen(false)}
+                clickOverlayToClose={false}
+            />
         </>
     );
 }

@@ -93,7 +93,7 @@ export default function Main() {
                         {
                             key: "actions",
                             label: "Actions",
-                            render: (user) => (
+                            render: () => (
                                 <button className="p-2 hover:bg-gray-100 rounded-md">
                                     <MoreVertical className="w-4 h-4 text-gray-500" />
                                 </button>

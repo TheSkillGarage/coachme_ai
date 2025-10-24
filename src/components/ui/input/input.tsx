@@ -7,6 +7,7 @@ interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "
     label?: string;
     leftIcon?: LucideIcon;
     rightIcon?: LucideIcon;
+    onRightIconClick?: () => void; // 👈 added
     error?: string;
     helperText?: string;
     size?: "sm" | "md" | "lg";
@@ -22,6 +23,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             label,
             leftIcon: LeftIcon,
             rightIcon: RightIcon,
+            onRightIconClick, // 👈 added
             error,
             helperText,
             size = "md",
@@ -61,10 +63,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         return (
             <div className={cn("w-full flex flex-col", className)}>
                 {label && (
-                    <label
-                        htmlFor={props.id}
-                        className="mb-1 text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor={props.id} className="mb-1 text-sm font-medium text-gray-700">
                         {label}
                     </label>
                 )}
@@ -98,7 +97,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     />
 
                     {RightIcon && (
-                        <RightIcon className="w-5 h-5 text-gray-400 absolute right-3 pointer-events-none" />
+                        <button
+                            type="button"
+                            onClick={onRightIconClick}
+                            className="absolute right-3 text-gray-400 hover:text-gray-600 transition-colors"
+                        >
+                            <RightIcon className="w-5 h-5" />
+                        </button>
                     )}
                 </div>
 
