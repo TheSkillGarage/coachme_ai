@@ -4,6 +4,7 @@ import FeaturesSection from './features';
 import HeroSection from './hero';
 import HowItWorks from './howitworks';
 import TestimonialsSection from './testimonials';
+import FaqSection from './FAQs';
 export default function Main() {
     const tags: HelmetProps = {
         pageTitle: 'Home',
@@ -16,6 +17,7 @@ export default function Main() {
                 <FeaturesSection />
                 <HowItWorks />
                 <TestimonialsSection />
+                <FaqSection/>
             </PageLayout>
         </HelmetLayout>
     )
