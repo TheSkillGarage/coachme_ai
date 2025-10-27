@@ -37,7 +37,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="bg-[#FFF9FD] py-16 px-4 sm:px-8 md:px-16 lg:px-24 font-inter">
+    <section id="faqs" className="bg-[#FFF9FD] py-16 px-4 sm:px-8 md:px-16 lg:px-24 font-inter">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 pt-8  ">
@@ -50,11 +50,11 @@ export default function FaqSection() {
         </div>
 
         {/* FAQ List */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-white border-[0.4px] border-[#E8E8E8] rounded-xl transition-all duration-300"
             >
               {/* Question */}
               <button
