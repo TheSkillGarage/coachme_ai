@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { ChevronDown } from 'lucide-react';
 
 const faqs = [
   {
@@ -40,11 +40,11 @@ export default function FaqSection() {
     <section className="bg-[#FFF9FD] py-16 px-4 sm:px-8 md:px-16 lg:px-24 font-inter">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 border-t-4 border-[#B061A2] pt-8">
-          <p className="inline-block border border-text-[#B061A2]-800 text-[#B061A2] px-6 py-2 rounded-full font-medium ">
+        <div className="text-center mb-12 pt-8  ">
+          <p className="inline-block border border-text-[#B061A2]-800 text-[#B061A2] px-4 py-1 rounded-full font-medium ">
             FAQs
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#111827] leading-snug">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl  font-[600] text-[#111827] leading-snug">
             Find Answers to Common Questions Here
           </h2>
         </div>
@@ -54,15 +54,15 @@ export default function FaqSection() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
             >
               {/* Question */}
               <button
                 onClick={() => toggleFaq(index)}
-                className="w-full flex justify-between items-center px-5 sm:px-6 py-4 text-left text-base sm:text-lg font-medium text-[#111827] hover:text-[#B061A2] focus:outline-none"
+                className="w-full flex justify-between items-center px-5 sm:px-6 py-4.5 text-left text-base sm:text-lg font-[500] text-[#111827]  focus:outline-none"
               >
                 <span className="flex-1">{faq.question}</span>
-                <ChevronDownIcon
+                <ChevronDown
                   className={`h-5 w-5 text-gray-500 transform transition-transform duration-300 ${
                     openIndex === index ? "rotate-180 text-[#B061A2]" : ""
                   }`}
