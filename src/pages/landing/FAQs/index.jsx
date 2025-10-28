@@ -40,11 +40,11 @@ export default function FaqSection() {
     <section id="faqs" className="bg-[#FFF9FD] py-16 px-4 sm:px-8 md:px-16 lg:px-24 font-inter">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 pt-8  ">
+        <div className="space-y-2 text-center mb-12 pt-8  ">
           <p className="inline-block border border-text-[#B061A2]-800 text-[#B061A2] px-4 py-1 rounded-full font-medium ">
             FAQs
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl  font-[600] text-[#111827] leading-snug">
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 tracking-tight font-inter">
             Find Answers to Common Questions Here
           </h2>
         </div>
@@ -59,7 +59,7 @@ export default function FaqSection() {
               {/* Question */}
               <button
                 onClick={() => toggleFaq(index)}
-                className="w-full flex justify-between items-center px-5 sm:px-6 py-4.5 text-left text-base sm:text-lg font-[500] text-[#111827]  focus:outline-none"
+                className="w-full flex justify-between items-center px-5 sm:px-6 py-4.5 text-left text-base sm:text-lg font-[400] text-[#111827]  focus:outline-none"
               >
                 <span className="flex-1">{faq.question}</span>
                 <ChevronDown
