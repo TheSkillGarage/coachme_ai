@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { ChevronDown } from 'lucide-react';
 
-const faqs = [
+interface FAQs{
+  question: string;
+  answer: string;
+}
+
+const faqs : FAQs[] = [
   {
     question: "How does the automated job application work?",
     answer:
@@ -30,9 +35,9 @@ const faqs = [
 ];
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const toggleFaq = (index) => {
+  const toggleFaq = (index:number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -40,11 +45,11 @@ export default function FaqSection() {
     <section id="faqs" className="bg-[#FFF9FD] py-16 px-4 sm:px-8 md:px-16 lg:px-24 font-inter">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 pt-8  ">
+        <div className="space-y-2 text-center mb-12 pt-8  ">
           <p className="inline-block border border-text-[#B061A2]-800 text-[#B061A2] px-4 py-1 rounded-full font-medium ">
             FAQs
           </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl  font-[600] text-[#111827] leading-snug">
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 tracking-tight font-inter">
             Find Answers to Common Questions Here
           </h2>
         </div>
@@ -54,12 +59,12 @@ export default function FaqSection() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white border-[0.4px] border-[#E8E8E8] rounded-xl transition-all duration-300"
+              className="bg-white border-[0.4px] border-[#E8E8E8] hover:shadow-md rounded-xl transition-all duration-300"
             >
               {/* Question */}
               <button
                 onClick={() => toggleFaq(index)}
-                className="w-full flex justify-between items-center px-5 sm:px-6 py-4.5 text-left text-base sm:text-lg font-[500] text-[#111827]  focus:outline-none"
+                className="w-full flex justify-between items-center px-5 sm:px-6 py-4.5 text-left text-base sm:text-lg font-[400] text-[#111827]  focus:outline-none"
               >
                 <span className="flex-1">{faq.question}</span>
                 <ChevronDown

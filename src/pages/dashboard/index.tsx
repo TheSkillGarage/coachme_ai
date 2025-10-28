@@ -11,69 +11,69 @@ import { NotificationCard } from '../../components/notification';
 import type { Notification } from '../../components/notification';
 
 const tags: HelmetProps = {
-  pageTitle: 'User Dashboard',
-  description: '',
+    pageTitle: 'User Dashboard',
+    description: '',
 };
 
 const activityItems: Notification[] = [
-  {
-    title: 'Interview Scheduled',
-    description:
-      'Your interview with TechCorp for Senior Developer position has been scheduled for tomorrow at 2:00 PM.',
-    date: 'Monday, January 15, 2024',
-    itemType: 'interview',
-    itemDetails: {
-      position: 'Senior React Developer',
-      companyName: 'TechCorp Inc',
-      location: 'San Francisco, CA',
-      date: 'Monday, January 15, 2025 ',
-      time: '11:30 AM',
+    {
+        title: 'Interview Scheduled',
+        description:
+            'Your interview with TechCorp for Senior Developer position has been scheduled for tomorrow at 2:00 PM.',
+        date: 'Monday, January 15, 2024',
+        itemType: 'interview',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: 'Monday, January 15, 2025 ',
+            time: '11:30 AM',
+        },
     },
-  },
-  {
-    title: 'Application Status Update',
-    description:
-      'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
-    date: '2025-10-24T14:00:00Z',
-    itemType: 'application',
-    itemDetails: {
-      position: 'Senior React Developer',
-      companyName: 'TechCorp Inc',
-      location: 'San Francisco, CA',
-      date: '2025-10-20T14:00:00Z',
-      time: '02:00 PM',
+    {
+        title: 'Application Status Update',
+        description:
+            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
+        date: '2025-10-24T14:00:00Z',
+        itemType: 'application',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: '2025-10-20T14:00:00Z',
+            time: '02:00 PM',
+        },
     },
-  },
-  {
-    title: 'Application Status Update',
-    description:
-      'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
-    date: 'Friday, October 10, 2025',
-    itemType: 'profile',
-    itemDetails: {
-      position: 'Senior React Developer',
-      companyName: 'TechCorp Inc',
-      location: 'San Francisco, CA',
-      date: 'Friday, October 10, 2025',
-      time: '11:30 AM',
+    {
+        title: 'Application Status Update',
+        description:
+            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
+        date: 'Friday, October 10, 2025',
+        itemType: 'profile',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: 'Friday, October 10, 2025',
+            time: '11:30 AM',
+        },
     },
-  },
 ];
 
 export default function Main() {
-  const navigate = useNavigate();
-  const isResentActivity = false; // temporal variable for changing view
+    const navigate = useNavigate();
+    const isResentActivity = false; // temporal variable for changing view
 
-  return (
-    <HelmetLayout {...tags}>
-      <div className="">
-        <p className="mb-2 font-semibold text-2xl">Welcome to CoachMe AI</p>
-        <p className="mb-6 font-normal text-[16px]">
-          Your AI-powered job search companion. Let's find your perfect
-          opportunity.
-        </p>
+    return (
+        <HelmetLayout {...tags}>
+            <div className="">
+                <p className="mb-2 font-semibold text-2xl">Welcome to CoachMe AI</p>
+                <p className="mb-6 font-normal text-[16px]">
+                    Your AI-powered job search companion. Let's find your perfect
+                    opportunity.
+                </p>
 
-        <SwitchAI />
+                <SwitchAI />
 
         <div className="flex justify-between flex-col xl:flex-row gap-2 mb-8">
           <TopCard
