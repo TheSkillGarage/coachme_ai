@@ -1,12 +1,14 @@
+import React from "react";
+
 export interface MenuState {
-    icon?: any;
+    icon?: React.ReactNode; 
     title: string;
     pathname?: string;
     subMenu?: MenuState[];
     ignore?: boolean;
     blank?: boolean;
-    suffix?: any;
+    suffix?: React.ReactNode;
     bullet?: boolean;
     color?: string;
-    onClick?: React.EventHandler<any>
+    onClick?: React.MouseEventHandler<HTMLElement>;
 }

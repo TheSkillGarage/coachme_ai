@@ -81,7 +81,7 @@ export default function Main() {
             description="Search thousands of job listings"
             icon={<Briefcase className="w-4 h-4 text-primary-500" />}
             iconBg="bg-purple-500"
-            onActionClick={() => navigate('/user/job-search')}
+            onActionClick={() => navigate('/user/jobs')}
             cardProps={{
               shadow: 'none',
               hoverable: false,
@@ -151,7 +151,7 @@ export default function Main() {
                 </p>
                 <Button
                   className="p-4"
-                  onClick={() => navigate('/user/job-search')}
+                  onClick={() => navigate('/user/jobs')}
                 >
                   Start Job Search
                 </Button>

@@ -23,7 +23,7 @@ export const menuItems: MenuState[] = [
     {
         icon: <FolderSearch className="w-5 h-5" />,
         title: "Job Search",
-        pathname: "/user/job-search",
+        pathname: "/user/jobs",
     },
     {
         icon: <ListCheck className="w-5 h-5" />,
