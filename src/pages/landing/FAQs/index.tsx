@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ChevronDown } from 'lucide-react';
 
 interface FAQs{
-  question:String;
-  answer:String;
+  question: string;
+  answer: string;
 }
 
 const faqs : FAQs[] = [
