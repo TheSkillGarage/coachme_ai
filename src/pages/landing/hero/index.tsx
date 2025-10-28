@@ -1,10 +1,11 @@
 import { Sparkles, Clock, ArrowRight } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/ui/button/button';
 import imgHero from '../../../assets/hero.png';
 import { Badge } from '../../../components/ui/badge';
 
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section
       id='home'
@@ -34,7 +35,7 @@ const HeroSection: React.FC = () => {
         className="p-4 w-[100%] md:w-[216px] mb-8"
         icon={<ArrowRight className="w-4 h-4" />}
         iconPosition="right"
-        onClick={() => alert('Sign Up clicked')}
+        onClick={() => navigate("/signup")}
       >
         Get Started for Free
       </Button>

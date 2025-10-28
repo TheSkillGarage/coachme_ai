@@ -9,6 +9,7 @@ interface TopCardProps {
     iconBg?: string; // 👈 customizable background color for the icon
     actionText?: string;
     onActionClick?: () => void;
+    cardProps?: Partial<React.ComponentProps<typeof Card>>
 }
 
 export const TopCard: React.FC<TopCardProps> = ({
@@ -18,9 +19,10 @@ export const TopCard: React.FC<TopCardProps> = ({
     iconBg = "bg-primary-100", // 👈 default color
     actionText = "Get Started",
     onActionClick,
+    cardProps,
 }) => {
     return (
-        <Card className="p-4 flex flex-col justify-between h-full rounded-xl border border-gray-100 shadow-sm bg-white select-none">
+        <Card {...cardProps} className="p-4 flex flex-col justify-between h-full rounded-xl border border-gray-100 shadow-sm bg-white select-none">
             <div className="flex justify-between items-start mb-3">
                 <div>
                     <h3 className="font-semibold text-gray-900 text-sm md:text-base">
@@ -30,7 +32,7 @@ export const TopCard: React.FC<TopCardProps> = ({
                 </div>
 
                 {icon && (
-                    <div className={`p-2 rounded-full ${iconBg} text-primary-700`}>
+                    <div className={`p-1 rounded-full ${iconBg} text-primary-700`}>
                         {icon}
                     </div>
                 )}
@@ -38,7 +40,7 @@ export const TopCard: React.FC<TopCardProps> = ({
 
             <button
                 onClick={onActionClick}
-                className="text-primary-700 font-medium text-sm flex items-center gap-1 hover:underline"
+                className="text-primary-700 font-medium text-sm flex items-center gap-1 hover:underline cursor-pointer"
             >
                 {actionText}
                 <ArrowRight className="w-4 h-4" />

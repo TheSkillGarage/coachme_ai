@@ -14,17 +14,23 @@ interface User {
     avatar?: string | null;
 }
 
+interface MenuItem {
+    title: string;
+    pathname?: string;
+    subMenu?: MenuItem[];
+  }
+
 // Helper to recursively find the current route title
-const findRouteTitle = (items: any[], pathname: string): string | null => {
+const findRouteTitle = (items: MenuItem[], pathname: string): string | null => {
     for (const item of items) {
-        if (item.pathname === pathname) return item.title;
-        if (item.subMenu) {
-            const subResult = findRouteTitle(item.subMenu, pathname);
-            if (subResult) return subResult;
-        }
+      if (item.pathname === pathname) return item.title;
+      if (item.subMenu) {
+        const subResult = findRouteTitle(item.subMenu, pathname);
+        if (subResult) return subResult;
+      }
     }
     return null;
-};
+  };
 
 // Helper to get initials from full name
 const getInitials = (name: string) => {

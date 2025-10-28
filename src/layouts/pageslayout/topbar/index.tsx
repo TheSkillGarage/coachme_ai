@@ -4,18 +4,18 @@ import Logo from "../../../assets/coachmeai.png";
 import Button from "../../../components/ui/button/button";
 import { useNavigate } from "react-router-dom";
 
+const navLinks = [
+    { name: "Home", path: "#home" },
+    { name: "Features", path: "#features" },
+    { name: "How it Works", path: "#how-it-works" },
+    { name: "Testimonials", path: "#testimonials" },
+    { name: "FAQs", path: "#faqs" },
+];
+
 export default function LandingNavbar() {
     const [open, setOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("#home");
     const navigate = useNavigate()
-
-    const navLinks = [
-        { name: "Home", path: "#home" },
-        { name: "Features", path: "#features" },
-        { name: "How it Works", path: "#how-it-works" },
-        { name: "Testimonials", path: "#testimonials" },
-        { name: "FAQs", path: "#faqs" },
-    ];
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
         e.preventDefault();

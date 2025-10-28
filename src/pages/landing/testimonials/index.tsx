@@ -91,6 +91,7 @@ const TestimonialBlock: React.FC<{ testimonial: Testimonial }> = ({
 const TestimonialsSection: React.FC = () => {
   return (
     <section
+      id='testimonials'
       className="flex flex-col items-center justify-center
          px-5 md:px-20
          mb-12 mx-auto max-w-7xl " 
