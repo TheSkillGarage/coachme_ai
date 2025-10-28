@@ -11,155 +11,155 @@ import { NotificationCard } from '../../components/notification';
 import type { Notification } from '../../components/notification';
 
 const tags: HelmetProps = {
-  pageTitle: 'User Dashboard',
-  description: '',
+    pageTitle: 'User Dashboard',
+    description: '',
 };
 
 const activityItems: Notification[] = [
-  {
-    title: 'Interview Scheduled',
-    description:
-      'Your interview with TechCorp for Senior Developer position has been scheduled for tomorrow at 2:00 PM.',
-    date: 'Monday, January 15, 2024',
-    itemType: 'interview',
-    itemDetails: {
-      position: 'Senior React Developer',
-      companyName: 'TechCorp Inc',
-      location: 'San Francisco, CA',
-      date: 'Monday, January 15, 2025 ',
-      time: '11:30 AM',
+    {
+        title: 'Interview Scheduled',
+        description:
+            'Your interview with TechCorp for Senior Developer position has been scheduled for tomorrow at 2:00 PM.',
+        date: 'Monday, January 15, 2024',
+        itemType: 'interview',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: 'Monday, January 15, 2025 ',
+            time: '11:30 AM',
+        },
     },
-  },
-  {
-    title: 'Application Status Update',
-    description:
-      'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
-    date: '2025-10-24T14:00:00Z',
-    itemType: 'application',
-    itemDetails: {
-      position: 'Senior React Developer',
-      companyName: 'TechCorp Inc',
-      location: 'San Francisco, CA',
-      date: '2025-10-20T14:00:00Z',
-      time: '02:00 PM',
+    {
+        title: 'Application Status Update',
+        description:
+            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
+        date: '2025-10-24T14:00:00Z',
+        itemType: 'application',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: '2025-10-20T14:00:00Z',
+            time: '02:00 PM',
+        },
     },
-  },
-  {
-    title: 'Application Status Update',
-    description:
-      'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
-    date: 'Friday, October 10, 2025',
-    itemType: 'profile',
-    itemDetails: {
-      position: 'Senior React Developer',
-      companyName: 'TechCorp Inc',
-      location: 'San Francisco, CA',
-      date: 'Friday, October 10, 2025',
-      time: '11:30 AM',
+    {
+        title: 'Application Status Update',
+        description:
+            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
+        date: 'Friday, October 10, 2025',
+        itemType: 'profile',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: 'Friday, October 10, 2025',
+            time: '11:30 AM',
+        },
     },
-  },
 ];
 
 export default function Main() {
-  const navigate = useNavigate();
-  const isResentActivity = false; // temporal variable for changing view
+    const navigate = useNavigate();
+    const isResentActivity = false; // temporal variable for changing view
 
-  return (
-    <HelmetLayout {...tags}>
-      <div className="">
-        <p className="mb-2 font-semibold text-2xl">Welcome to CoachMe AI</p>
-        <p className="mb-6 font-normal text-[16px]">
-          Your AI-powered job search companion. Let's find your perfect
-          opportunity.
-        </p>
-
-        <SwitchAI />
-
-        <div className="flex justify-between flex-col xl:flex-row gap-2 mb-8">
-          <TopCard
-            title="Find Jobs"
-            description="Search thousands of job listings"
-            icon={<Briefcase className="w-4 h-4 text-primary-500" />}
-            iconBg="bg-purple-500"
-            onActionClick={() => navigate('/user/job-search')}
-            cardProps={{
-              shadow: 'none',
-              hoverable: false,
-            }}
-          />
-          <TopCard
-            title="Track Applications"
-            description="Manage your job applications"
-            icon={<FileText className="w-4 h-4 bg-red text-[#2563EB]" />}
-            iconBg="bg-[#DBEAFE]"
-            onActionClick={() => navigate('/user/applications')}
-            cardProps={{
-              shadow: 'none',
-              hoverable: false,
-            }}
-          />
-          <TopCard
-            title="View Analytics"
-            description="Track your job search progress"
-            icon={<ChartLine className="w-4 h-4 text-[#166534]" />}
-            iconBg="bg-[#F0FDF4]"
-            onActionClick={() => navigate('/user/analytics')}
-            cardProps={{
-              shadow: 'none',
-              hoverable: false,
-            }}
-          />
-          <TopCard
-            title="Update Resume"
-            description="Keep your resume current"
-            icon={<FileUser className="w-4 h-4 text-[#EA580C]" />}
-            iconBg="bg-[#FFF2E1]"
-            onActionClick={() => navigate('/user/resume')}
-            cardProps={{
-              shadow: 'none',
-              hoverable: false,
-            }}
-          />
-        </div>
-
-        <div>
-          <Card hoverable={false} shadow="none">
-            <p className="font-semibold text-[20px] mb-8">Recent Activity</p>
-            {isResentActivity ? (
-              <div className="flex flex-col gap-5">
-                {activityItems
-                  .sort(
-                    (a, b) =>
-                      new Date(b.date).getTime() - new Date(a.date).getTime()
-                  )
-                  .map((activityItem) => (
-                    <NotificationCard notification={activityItem} />
-                  ))}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center pb-0 md:pb-[33px]">
-                <img
-                  src={imgDashboardTracker}
-                  className="w-[80px] h-[80px] bg-red text-grey-100 md-0 mb-[20px]"
-                  alt="Coach Me AI dashboard"
-                />
-                <p className="font-semibold text-2xl mb-2">
-                  No recent activity
+    return (
+        <HelmetLayout {...tags}>
+            <div className="">
+                <p className="mb-2 font-semibold text-2xl">Welcome to CoachMe AI</p>
+                <p className="mb-6 font-normal text-[16px]">
+                    Your AI-powered job search companion. Let's find your perfect
+                    opportunity.
                 </p>
-                <p className="font-normal text-[16px] mb-8 text-grey-400">
-                  Start applying to jobs to see your activity here
-                </p>
-                <Button
-                  className="p-4"
-                  onClick={() => navigate('/user/job-search')}
-                >
-                  Start Job Search
-                </Button>
-              </div>
-            )}
-          </Card>
-        </div>
-      </div>
-    </HelmetLayout>
-  );
+
+                <SwitchAI />
+
+                <div className="flex justify-between flex-col xl:flex-row gap-2 mb-8">
+                    <TopCard
+                        title="Find Jobs"
+                        description="Search thousands of job listings"
+                        icon={<Briefcase className="w-4 h-4 text-primary-500" />}
+                        iconBg="bg-purple-500"
+                        onActionClick={() => navigate('/user/job-search')}
+                        cardProps={{
+                            shadow: 'none',
+                            hoverable: false,
+                        }}
+                    />
+                    <TopCard
+                        title="Track Applications"
+                        description="Manage your job applications"
+                        icon={<FileText className="w-4 h-4 bg-red text-[#2563EB]" />}
+                        iconBg="bg-[#DBEAFE]"
+                        onActionClick={() => navigate('/user/applications')}
+                        cardProps={{
+                            shadow: 'none',
+                            hoverable: false,
+                        }}
+                    />
+                    <TopCard
+                        title="View Analytics"
+                        description="Track your job search progress"
+                        icon={<ChartLine className="w-4 h-4 text-[#166534]" />}
+                        iconBg="bg-[#F0FDF4]"
+                        onActionClick={() => navigate('/user/analytics')}
+                        cardProps={{
+                            shadow: 'none',
+                            hoverable: false,
+                        }}
+                    />
+                    <TopCard
+                        title="Update Resume"
+                        description="Keep your resume current"
+                        icon={<FileUser className="w-4 h-4 text-[#EA580C]" />}
+                        iconBg="bg-[#FFF2E1]"
+                        onActionClick={() => navigate('/user/resume')}
+                        cardProps={{
+                            shadow: 'none',
+                            hoverable: false,
+                        }}
+                    />
+                </div>
+
+                <div>
+                    <Card hoverable={false} shadow="none">
+                        <p className="font-semibold text-[20px] mb-8">Recent Activity</p>
+                        {isResentActivity ? (
+                            <div className="flex flex-col gap-5">
+                                {activityItems
+                                    .sort(
+                                        (a, b) =>
+                                            new Date(b.date).getTime() - new Date(a.date).getTime()
+                                    )
+                                    .map((activityItem) => (
+                                        <NotificationCard notification={activityItem} />
+                                    ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center pb-0 md:pb-[33px]">
+                                <img
+                                    src={imgDashboardTracker}
+                                    className="w-[80px] h-[80px] bg-red text-grey-100 md-0 mb-[20px]"
+                                    alt="Coach Me AI dashboard"
+                                />
+                                <p className="font-semibold text-2xl mb-2">
+                                    No recent activity
+                                </p>
+                                <p className="font-normal text-[16px] mb-8 text-grey-400">
+                                    Start applying to jobs to see your activity here
+                                </p>
+                                <Button
+                                    className="p-4"
+                                    onClick={() => navigate('/user/job-search')}
+                                >
+                                    Start Job Search
+                                </Button>
+                            </div>
+                        )}
+                    </Card>
+                </div>
+            </div>
+        </HelmetLayout>
+    );
 }
