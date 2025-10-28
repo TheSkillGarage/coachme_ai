@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { ChevronDown } from 'lucide-react';
 
-const faqs = [
+interface FAQs{
+  question:String;
+  answer:String;
+}
+
+const faqs : FAQs[] = [
   {
     question: "How does the automated job application work?",
     answer:
@@ -30,9 +35,9 @@ const faqs = [
 ];
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const toggleFaq = (index) => {
+  const toggleFaq = (index:number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -54,7 +59,7 @@ export default function FaqSection() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white border-[0.4px] border-[#E8E8E8] rounded-xl transition-all duration-300"
+              className="bg-white border-[0.4px] border-[#E8E8E8] hover:shadow-md rounded-xl transition-all duration-300"
             >
               {/* Question */}
               <button
