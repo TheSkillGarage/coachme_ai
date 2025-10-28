@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, } from "react-router-dom";
 import { helperMenuItems, menuItems } from "./menu";
 import { ChevronDown, ChevronUp, LogOut, } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,12 +16,6 @@ export default function Main({ open, setOpen }: SidebarProps) {
 
     const [isLogoutOpen, setIsLogoutOpen] = useState(false);
 
-    const performLogout = async () => {
-        // simulate API delay
-        await new Promise(res => setTimeout(res, 1500));
-        localStorage.removeItem("user");
-        window.location.href = "/login";
-    };
     const location = useLocation();
 
     const toggleSubmenu = (title: string) => {
