@@ -276,7 +276,7 @@ export default function JobDetailsPage() {
           <div className="space-y-3">
             {similarJobs.length > 0 ? (
               similarJobs.map((similarJob) => (
-                <Link key={similarJob.id} to={`/user/job/${similarJob.id}`}>
+                <Link key={similarJob.id} to={`/user/jobs/${similarJob.id}`}>
                   <div className="flex items-start gap-3 pb-4 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer">
                     <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-xl flex-shrink-0">
                       {similarJob.logo}
