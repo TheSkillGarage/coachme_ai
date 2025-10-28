@@ -8,7 +8,7 @@ export interface Option {
 }
 
 interface CustomSelectProps {
-    label?: string;
+    label?: React.ReactNode;
     placeholder?: string;
     options: Option[];
     value?: string | string[];
@@ -63,7 +63,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     const baseStyle =
         "relative w-full cursor-pointer rounded-2xl transition-all duration-200";
     const variantStyles = {
-        solid: "bg-primary-600 text-white border border-primary-600 hover:bg-primary-700",
+        solid: "bg-primary-600 text-white border border-primary-500 hover:bg-primary-500",
         outline:
             "bg-white border border-gray-300 hover:border-primary-400 text-gray-800",
         ghost: "bg-transparent hover:bg-gray-100 text-gray-700",
@@ -115,7 +115,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                                     return (
                                         <div
                                             key={val}
-                                            className="flex items-center gap-2 bg-primary-50 text-primary-700 px-3 py-1 rounded-xl text-sm"
+                                            className="flex items-center gap-2 bg-grey-50 text-grey-500 px-3 py-1 rounded-lg text-sm"
                                         >
                                             <span>{option?.label}</span>
                                             <button
@@ -149,12 +149,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                 {isOpen && (
                     <div className="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-2xl shadow-lg">
                         {searchable && (
-                            <div className="flex items-center px-3 py-2 border-b border-gray-100">
+                            <div className="flex items-center px-3 py-2 border-b border-grey-100">
                                 <Search className="w-4 h-4 text-gray-400 mr-2" />
                                 <input
                                     type="text"
                                     placeholder="Search..."
-                                    className="w-full text-sm outline-none bg-transparent"
+                                    className="w-full text-sm outline-none bg-transparent placeholder:text-100"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     onClick={(e) => e.stopPropagation()}

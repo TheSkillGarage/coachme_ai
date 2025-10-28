@@ -95,7 +95,7 @@ export default function LandingNavbar() {
 
                 {/* Mobile Menu Button */}
                 <button
-                    onClick={() => navigate("/login")}
+                    onClick={() => setOpen(true)}
                     className="md:hidden p-2 rounded hover:bg-gray-100"
                 >
                     {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

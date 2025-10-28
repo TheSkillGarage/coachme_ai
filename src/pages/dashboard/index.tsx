@@ -16,17 +16,24 @@ import { Drawer } from '../../components/ui/drawer';
 import Skeleton from '../../components/ui/skeleton';
 import Carousel from '../../components/ui/carousel';
 import CircleLoader from '../../components/loader';
+import Radio from '../../components/ui/radiobutton';
 export default function Main() {
     const [open, setOpen] = useState(false);
     const [isActive, setIsActive] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [selected, setSelected] = useState(false);
     const tags: HelmetProps = {
         pageTitle: 'User Dashboard',
         description: ""
     }
     return (
         <HelmetLayout {...tags}>
-            <div className=''>Dashboard
+            <div className=''>
+                <Radio
+                    label="Option 1"
+                    checked={selected}
+                    onChange={() => setSelected(prev => !prev)}
+                />
                 <CircleLoader />
                 <CustomDropdown
                     trigger={<Button className='bg-primary-500 cursor-pointer' variant="outline">Open Menu</Button>}
