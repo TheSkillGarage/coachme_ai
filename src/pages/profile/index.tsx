@@ -1,22 +1,9 @@
-// import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
-// export default function Main() {
-//     const tags: HelmetProps = {
-//         pageTitle: 'Profile',
-//         description: ""
-//     }
-//     return (
-//         <HelmetLayout {...tags}>
-//             <div className=''>Profile
-//             </div>
-//         </HelmetLayout>
-//     )
-// }
-
-import React, { useState } from "react";
+import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
 import { Save } from 'lucide-react';
 import { Upload } from "lucide-react";
+import React, { useState } from "react";
 
-const ProfileSetup: React.FC = () => {
+export default function Main() {
   const [photo, setPhoto] = useState<string | null>(null);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,11 +13,17 @@ const ProfileSetup: React.FC = () => {
       reader.onloadend = () => setPhoto(reader.result as string);
       reader.readAsDataURL(file);
     }
-  };
+  }
 
-  const handleRemovePhoto = () => setPhoto(null);
+    const handleRemovePhoto = () => setPhoto(null);
+    const tags: HelmetProps = {
+        pageTitle: 'Profile',
+        description: ""
+    }
 
-  return (
+    return (
+        <HelmetLayout {...tags}>
+            <div className=''>
     <>
     <div className="w-full px-4 md:px-8">
       <div className="flex flex-col md:flex-row justify-between md:items-center mb-8 gap-4">
@@ -101,7 +94,7 @@ const ProfileSetup: React.FC = () => {
 
         <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="text-sm text-gray-500">First Name</label>
+            <label className="text-sm text-gray-500 font-bold">First Name</label>
             <input
               type="text"
               placeholder="Blessing"
@@ -109,7 +102,7 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-sm text-gray-500">Last Name</label>
+            <label className="text-sm text-gray-500 font-bold">Last Name</label>
             <input
               type="text"
               placeholder="Bella"
@@ -117,7 +110,7 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-sm text-gray-500">Email</label>
+            <label className="text-sm text-gray-500 font-bold">Email</label>
             <input
               type="email"
               placeholder="blessingbella@gmail.com"
@@ -125,7 +118,7 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
           <div>
-            <label className="text-sm text-gray-500">Phone</label>
+            <label className="text-sm text-gray-500 font-bold">Phone</label>
             <input
               type="text"
               placeholder="+2349045637645"
@@ -133,7 +126,7 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
           <div className="md:col-span-2">
-            <label className="text-sm text-gray-500">Location</label>
+            <label className="text-sm text-gray-500 font-bold">Location</label>
             <input
               type="text"
               placeholder="Nigeria"
@@ -141,7 +134,6 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
         </form>
-
         <div className="block md:hidden mt-8">
           <button className="flex items-center justify-center gap-2 cursor-pointer bg-[#67005E] hover:bg-[#51004B] text-white px-6 py-2.5 rounded-md transition w-full">
             <Save size={14} />
@@ -152,7 +144,7 @@ const ProfileSetup: React.FC = () => {
     </div>
 
     </>
-  );
-};
-
-export default ProfileSetup;
+            </div>
+        </HelmetLayout>
+    )
+}
