@@ -169,7 +169,7 @@ export default function JobSearch() {
 
         <SwitchAI />
         
-        <div className="max-w-7xl">
+        <div className="">
           <SearchBar 
             jobSearch={searchQuery}
             setJobSearch={setSearchQuery}
@@ -177,8 +177,8 @@ export default function JobSearch() {
             setLocationSearch={setLocationQuery}
           />
         </div>
-        <div className="max-w-7xl py-4 flex flex-col lg:flex-row justify-between items-center">
-          <div className="w-full lg:w-[23%] flex items-center bg-gray-100 rounded-lg p-1">
+        <div className="py-4 flex flex-col xl:flex-row justify-between items-center">
+          <div className="w-full xl:w-[23%] flex items-center bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => setActiveTab("all")}
               className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
@@ -200,8 +200,8 @@ export default function JobSearch() {
               Saved Jobs
             </button>
           </div>
-          <div className="flex flex-col lg:flex-row gap-3 items-center w-full lg:w-auto">
-            <div className="lg:hidden flex justify-between items-center w-full my-4">
+          <div className="flex flex-col xl:flex-row gap-3 items-center w-full xl:w-auto">
+            <div className="xl:hidden flex justify-between items-center w-full my-4">
               <p>{activeTab === "all" ? `All Jobs ` : `Saved Jobs`}</p>
               <Button
                 variant="outline"
@@ -215,16 +215,16 @@ export default function JobSearch() {
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-2 bg-white border w-full lg:w-auto"
+              className="flex items-center gap-2 bg-white border w-full xl:w-auto"
               icon={<Bell className="w-4 h-4 text-primary-500" />}
             >
               <span className="text-primary-500">Create Job Alert</span>
             </Button>
           </div>
         </div>
-        <div className="max-w-7xl py-4 lg:py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="hidden lg:block lg:col-span-1">
+        <div className="py-4 xl:py-8">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
+            <div className="hidden xl:block xl:col-span-1">
               <FiltersSidebar 
                 filters={filters} 
                 setFilters={setFilters}

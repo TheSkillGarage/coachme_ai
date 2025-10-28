@@ -15,7 +15,7 @@ interface FiltersSidebarProps {
 export default function FiltersSidebar({
   filters,
   setFilters,
-  onClearAll
+  onClearAll,
 }: FiltersSidebarProps) {
   const [expandedSections, setExpandedSections] = useState({
     location: true,
@@ -27,13 +27,13 @@ export default function FiltersSidebar({
 
   const [tempSalaryRange, setTempSalaryRange] = useState(filters.salaryRange);
 
-const handleSalaryChange = (value: number | number[]) => {
-  setTempSalaryRange(value as number[]);
-};
+  const handleSalaryChange = (value: number | number[]) => {
+    setTempSalaryRange(value as number[]);
+  };
 
-const handleSalaryChangeComplete = (value: number | number[]) => {
-  setFilters({ ...filters, salaryRange: value as number[] });
-};
+  const handleSalaryChangeComplete = (value: number | number[]) => {
+    setFilters({ ...filters, salaryRange: value as number[] });
+  };
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections((prev) => ({
@@ -51,7 +51,10 @@ const handleSalaryChangeComplete = (value: number | number[]) => {
     <div className="sticky top-8 bg-white p-5">
       <div className="flex justify-between items-center pb-2 mb-6 border-b-[0.4px] border-b-[rgba(150,150,150,1)]">
         <h2 className="text-lg font-semibold">Filters</h2>
-        <p className="text-red-600 text-sm font-medium cursor-pointer" onClick={handleClearAll}>
+        <p
+          className="text-red-600 text-sm font-medium cursor-pointer"
+          onClick={handleClearAll}
+        >
           Clear All
         </p>
       </div>
@@ -163,17 +166,32 @@ const handleSalaryChangeComplete = (value: number | number[]) => {
               value={tempSalaryRange}
               onChange={handleSalaryChange}
               onChangeComplete={handleSalaryChangeComplete}
-              
-              styles={{track: { backgroundColor: "#761f6e" , height: 8, borderRadius: 2, borderColor: "#761f6e", background: "#761f6e", }, handle: { borderColor: "#761f6e" , height: 20, width: 20, marginTop: -6, backgroundColor: "white", borderWidth: 3, }, rail: { backgroundColor: "#e5e7eb" , height: 8, borderRadius: 4, },}}
+              styles={{
+                track: {
+                  backgroundColor: "#761f6e",
+                  height: 10,
+                  borderRadius: 4,
+                  background: "#761f6e"
+                },
+                handle: {
+                  borderColor: "#761f6e",
+                  height: 20,
+                  width: 20,
+                  backgroundColor: "white",
+                  borderWidth: 1,
+                  opacity: 1,
+                },
+                rail: {
+                  backgroundColor: "#e5e7eb",
+                  height: 10,
+                  borderRadius: 4,
+                },
+              }}
             />
 
             <div className="flex justify-between">
-              <span className="text-xs text-gray-500">
-                ${tempSalaryRange[0]}K
-              </span>
-              <span className="text-xs text-gray-500">
-                ${tempSalaryRange[1]}K
-              </span>
+              <span className="text-xs font-semibold">${tempSalaryRange[0]}K</span>
+              <span className="text-xs font-semibold">${tempSalaryRange[1]}K</span>
             </div>
           </div>
         )}

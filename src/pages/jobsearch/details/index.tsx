@@ -109,7 +109,7 @@ export default function JobDetailsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Go Back */}
-      <div className="max-w-7xl mx-auto px-4 pt-6">
+      <div className="mx-auto px-4 pt-6">
         <Link
           to="/user/jobs"
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors bg-white py-2 px-4 rounded-2xl border-[0.4px] border-[rgba(150,150,150,1)]"
@@ -119,7 +119,7 @@ export default function JobDetailsPage() {
       </div>
 
       {/* Job Header */}
-      <div className="max-w-7xl mx-auto mt-4 lg:px-4">
+      <div className="mx-auto mt-4 lg:px-4">
         <div className="bg-white rounded-xl shadow-sm p-4 lg:p-6">
           <div className="flex gap-3 lg:gap-4 items-start">
             {/* Logo */}
@@ -250,7 +250,7 @@ export default function JobDetailsPage() {
       </div>
 
       {/* Job Description */}
-      <div className="max-w-7xl mx-auto mt-6 lg:px-4">
+      <div className="mx-auto mt-6 lg:px-4">
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold mb-4">Job Description</h2>
           <div className="text-sm leading-relaxed whitespace-pre-line text-foreground">
@@ -260,7 +260,7 @@ export default function JobDetailsPage() {
       </div>
 
       {/* About Company */}
-      <div className="max-w-7xl mx-auto mt-6 lg:px-4">
+      <div className="mx-auto mt-6 lg:px-4">
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold mb-3">About The Company</h2>
           <p className="text-sm leading-relaxed text-foreground">
@@ -270,7 +270,7 @@ export default function JobDetailsPage() {
       </div>
 
       {/* Similar Jobs */}
-      <div className="max-w-7xl mx-auto mt-6 mb-10 lg:px-4">
+      <div className="mx-auto mt-6 mb-10 lg:px-4">
         <div className="bg-white rounded-xl shadow-sm p-4 lg:p-6">
           <h2 className="text-lg font-semibold mb-3">Similar Jobs</h2>
           <div className="space-y-3">

@@ -172,36 +172,35 @@ export default function FiltersMobileDrawer({
           </button>
           {expandedSections.salary && (
             <div className="space-y-3">
-              <Slider
-                range
-                min={0}
-                max={200}
-                value={tempSalaryRange}
-                onChange={handleSalaryChange}
-                onChangeComplete={handleSalaryChangeComplete}
-                styles={{
-                  track: {
-                    backgroundColor: "#761f6e",
-                    height: 8,
-                    borderRadius: 2,
-                    borderColor: "#761f6e",
-                    background: "#761f6e",
-                  },
-                  handle: {
-                    borderColor: "#761f6e",
-                    height: 20,
-                    width: 20,
-                    marginTop: -6,
-                    backgroundColor: "white",
-                    borderWidth: 3,
-                  },
-                  rail: {
-                    backgroundColor: "#e5e7eb",
-                    height: 8,
-                    borderRadius: 4,
-                  },
-                }}
-              />
+            <Slider
+              range
+              min={0}
+              max={200}
+              value={tempSalaryRange}
+              onChange={handleSalaryChange}
+              onChangeComplete={handleSalaryChangeComplete}
+              styles={{
+                track: {
+                  backgroundColor: "#761f6e",
+                  height: 10,
+                  borderRadius: 4,
+                  background: "#761f6e"
+                },
+                handle: {
+                  borderColor: "#761f6e",
+                  height: 20,
+                  width: 20,
+                  backgroundColor: "white",
+                  borderWidth: 1,
+                  opacity: 1,
+                },
+                rail: {
+                  backgroundColor: "#e5e7eb",
+                  height: 10,
+                  borderRadius: 4,
+                },
+              }}
+            />
 
               <div className="flex justify-between">
                 <span className="text-xs text-gray-500">

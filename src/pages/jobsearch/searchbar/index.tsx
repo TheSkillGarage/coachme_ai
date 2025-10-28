@@ -24,7 +24,7 @@ export default function SearchBar({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 items-center w-full max-w-7xl">
+    <div className="flex flex-col xl:flex-row gap-3 items-center w-full">
       <Input
         placeholder="Job title, keywords or company"
         leftIcon={Search}
@@ -50,7 +50,7 @@ export default function SearchBar({
       <Button
         icon={<Search className="w-4 h-4" />}
         iconPosition="left"
-        className="w-full sm:w-auto"
+        className="w-full xl:w-auto"
         onClick={handleSearch}
       >
         Search Jobs
