@@ -16,6 +16,7 @@ import Help from "../pages/help"
 import LoginPage from "../pages/auth/login"
 import SignupPage from "../pages/auth/createaccount"
 import ResetPage from "../pages/auth/resetpasword"
+import JobDetailsPage from "../pages/jobsearch/details"
 const Router = () => {
     const routes = [
         {
@@ -89,9 +90,13 @@ const Router = () => {
                     element: <Applications />
                 },
                 {
-                    path: "job-search",
+                    path: "jobs",
                     element: <JobSearch />
                 },
+                {
+                    path: "jobs/:id",
+                    element: <JobDetailsPage />,
+                  },
                 {
                     path: "analytics",
                     element: <Analytics />
