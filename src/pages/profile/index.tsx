@@ -1,10 +1,11 @@
 import HelmetLayout, { type HelmetProps } from "../../layouts/helmetlayout";
 import { Save } from "lucide-react";
 import { Upload } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export default function Main() {
   const [photo, setPhoto] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -15,7 +16,15 @@ export default function Main() {
     }
   };
 
-  const handleRemovePhoto = () => setPhoto(null);
+  const handleRemovePhoto = () => {
+    setPhoto(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+  
+
   const tags: HelmetProps = {
     pageTitle: "Profile",
     description: "",
@@ -73,13 +82,14 @@ export default function Main() {
                         accept="image/*"
                         className="hidden"
                         onChange={handlePhotoUpload}
+                        ref={fileInputRef}
                       />
                       <Upload size={14} />
                       Upload Photo
                     </label>
                     <button
                       onClick={handleRemovePhoto}
-                      className="text-[#C80000] text-sm font-medium"
+                      className="text-[#C80000] text-sm font-medium cursor-pointer hover:text-red-500 cursor-pointer"
                     >
                       Remove
                     </button>
