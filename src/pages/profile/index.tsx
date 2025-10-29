@@ -89,7 +89,7 @@ export default function Main() {
                     </label>
                     <button
                       onClick={handleRemovePhoto}
-                      className="text-[#C80000] text-sm font-medium cursor-pointer hover:text-red-500"
+                      className="text-[#C80000] text-sm font-medium cursor-pointer hover:text-red-500 cursor-pointer"
                     >
                       Remove
                     </button>

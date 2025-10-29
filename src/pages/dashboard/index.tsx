@@ -8,61 +8,16 @@ import { TopCard } from '../../components/topcard';
 import Button from '../../components/ui/button/button';
 import { SwitchAI } from '../../components/switchai';
 import { NotificationCard } from '../../components/notification';
-import type { Notification } from '../../components/notification';
+import { activityItems } from '../../data';
 
 const tags: HelmetProps = {
     pageTitle: 'User Dashboard',
     description: '',
 };
 
-const activityItems: Notification[] = [
-    {
-        title: 'Interview Scheduled',
-        description:
-            'Your interview with TechCorp for Senior Developer position has been scheduled for tomorrow at 2:00 PM.',
-        date: 'Monday, January 15, 2024',
-        itemType: 'interview',
-        itemDetails: {
-            position: 'Senior React Developer',
-            companyName: 'TechCorp Inc',
-            location: 'San Francisco, CA',
-            date: 'Monday, January 15, 2025 ',
-            time: '11:30 AM',
-        },
-    },
-    {
-        title: 'Application Status Update',
-        description:
-            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
-        date: '2025-10-24T14:00:00Z',
-        itemType: 'application',
-        itemDetails: {
-            position: 'Senior React Developer',
-            companyName: 'TechCorp Inc',
-            location: 'San Francisco, CA',
-            date: '2025-10-20T14:00:00Z',
-            time: '02:00 PM',
-        },
-    },
-    {
-        title: 'Application Status Update',
-        description:
-            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
-        date: 'Friday, October 10, 2025',
-        itemType: 'profile',
-        itemDetails: {
-            position: 'Senior React Developer',
-            companyName: 'TechCorp Inc',
-            location: 'San Francisco, CA',
-            date: 'Friday, October 10, 2025',
-            time: '11:30 AM',
-        },
-    },
-];
-
 export default function Main() {
     const navigate = useNavigate();
-    const isResentActivity = false; // temporal variable for changing view
+    const isResentActivity = true; // temporal variable for changing view
 
     return (
         <HelmetLayout {...tags}>

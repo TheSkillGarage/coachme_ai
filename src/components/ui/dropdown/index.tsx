@@ -73,7 +73,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
     return (
         <div
             ref={dropdownRef}
-            className="relative inline-block text-left select-none"
+            className="min-w-full relative inline-block text-left select-none"
         >
             {triggerWithProps}
 

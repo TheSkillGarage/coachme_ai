@@ -100,7 +100,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         <button
                             type="button"
                             onClick={onRightIconClick}
-                            className="absolute right-3 text-gray-400 hover:text-gray-600 transition-colors"
+                            className="absolute right-3 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
                         >
                             <RightIcon className="w-5 h-5" />
                         </button>
