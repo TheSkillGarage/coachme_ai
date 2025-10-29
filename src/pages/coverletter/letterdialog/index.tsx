@@ -6,11 +6,25 @@ import Radio from "../../../components/ui/radiobutton";
 import Button from "../../../components/ui/button/button";
 import { Card } from "../../../components/ui/card";
 
+// --- Types ---
+export interface SaveLetterData {
+    title: string;
+}
+
+export type FileFormat = "pdf" | "docx" | "txt";
+
+export interface DownloadLetterData {
+    fileName: string;
+    format: FileFormat;
+}
+
+export type LetterDialogData = SaveLetterData | DownloadLetterData;
+
 interface LetterDialogProps {
     open: boolean;
     mode: "save" | "download";
     onClose: () => void;
-    onConfirm: (data: any) => void;
+    onConfirm: (data: LetterDialogData) => void;
 }
 
 export default function LetterDialog({
@@ -19,18 +33,19 @@ export default function LetterDialog({
     onClose,
     onConfirm,
 }: LetterDialogProps) {
-    const [format, setFormat] = React.useState("pdf");
+    const [format, setFormat] = React.useState<FileFormat>("pdf");
     const [name, setName] = React.useState("TechCorp Cover Letter");
 
     const handleConfirm = () => {
-        const payload =
-            mode === "save" ? { name } : { name, format };
+        const payload: LetterDialogData =
+            mode === "save"
+                ? { title: name }
+                : { fileName: name, format };
         onConfirm(payload);
         onClose();
     };
 
     const isSave = mode === "save";
-
 
     return (
         <AnimatePresence>
@@ -66,8 +81,8 @@ export default function LetterDialog({
                                 </h2>
                                 <p className="text-sm text-gray-500">
                                     {isSave
-                                        ? "Give your cover letter a name to save it to your library"
-                                        : "Choose your preferred file format and name"}
+                                        ? "Give your cover letter a name to save it to your library."
+                                        : "Choose your preferred file format and name."}
                                 </p>
                             </div>
 
@@ -83,70 +98,53 @@ export default function LetterDialog({
                                 />
                             </div>
 
-                            {/* Format Selection (only for download) */}
+                            {/* Format Selection */}
                             {!isSave && (
                                 <div className="mt-5 space-y-2">
                                     <label className="text-sm font-medium text-gray-700">
                                         Format
                                     </label>
-                                    <div className="flex lg:flex flex-wrap items-center gap-5 mt-1">
-                                        <div className="flex items-center gap-2">
-                                            <Radio
-                                                name="format"
-                                                value="pdf"
-                                                checked={format === "pdf"}
-                                                onChange={(e) => setFormat(e.target.value)}
-                                            />
-                                            <FileText
-                                                className={`h-5 w-5 ${format === "pdf"
-                                                    ? "text-grey-200"
-                                                    : "text-grey-200"
-                                                    }`}
-                                            />
-                                            <span className="text-sm text-grey-400">PDF</span>
-                                        </div>
-
-                                        <div className="flex items-center gap-2">
-                                            <Radio
-                                                name="format"
-                                                value="docx"
-                                                checked={format === "docx"}
-                                                onChange={(e) => setFormat(e.target.value)}
-                                            />
-                                            <FileText
-                                                className={`h-5 w-5 ${format === "docx"
-                                                    ? "text-grey-200"
-                                                    : "text-grey-200"
-                                                    }`}
-                                            />
-                                            <span className="text-sm text-grey-400">Word (.docx)</span>
-                                        </div>
-
-                                        <div className="flex items-center gap-2">
-                                            <Radio
-                                                name="format"
-                                                value="txt"
-                                                checked={format === "txt"}
-                                                onChange={(e) => setFormat(e.target.value)}
-                                            />
-                                            <FileText
-                                                className={`h-5 w-5 ${format === "txt"
-                                                    ? "text-grey-200"
-                                                    : "text-grey-200"
-                                                    }`}
-                                            />
-                                            <span className="text-sm text-grey-400">Text (.txt)</span>
-                                        </div>
+                                    <div className="flex flex-wrap items-center gap-5 mt-1">
+                                        {(["pdf", "docx", "txt"] as FileFormat[]).map((type) => (
+                                            <div key={type} className="flex items-center gap-2">
+                                                <Radio
+                                                    name="format"
+                                                    value={type}
+                                                    checked={format === type}
+                                                    onChange={(e) =>
+                                                        setFormat(e.target.value as FileFormat)
+                                                    }
+                                                />
+                                                <FileText
+                                                    className={`h-5 w-5 ${format === type
+                                                        ? "text-primary-500"
+                                                        : "text-gray-300"
+                                                        }`}
+                                                />
+                                                <span
+                                                    className={`text-sm ${format === type
+                                                        ? "text-gray-900 font-medium"
+                                                        : "text-gray-500"
+                                                        }`}
+                                                >
+                                                    {type === "pdf"
+                                                        ? "PDF"
+                                                        : type === "docx"
+                                                            ? "Word (.docx)"
+                                                            : "Text (.txt)"}
+                                                </span>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             )}
 
-                            {/* Footer Buttons */}
+                            {/* Footer */}
                             <div className="flex justify-end gap-3 mt-8">
                                 <Button
                                     variant="outline"
                                     onClick={onClose}
-                                    className="border-gray-300 text-grey-500 flex items-center gap-1"
+                                    className="border-gray-300 text-gray-600 flex items-center gap-1"
                                 >
                                     ✕ Cancel
                                 </Button>

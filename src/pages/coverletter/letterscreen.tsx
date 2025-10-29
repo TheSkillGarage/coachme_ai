@@ -1,13 +1,55 @@
 import { useState } from "react";
 import { Card } from "../../components/ui/card";
 import { Copy, Download, Save, SquarePen } from "lucide-react";
-import LetterDialog from "./letterdialog";
+import LetterDialog, { type LetterDialogData } from "./letterdialog";
+
 interface LetterScreenProps {
     onEdit: () => void;
 }
+
 export default function LetterScreen({ onEdit }: LetterScreenProps) {
     const [showDialog, setShowDialog] = useState(false);
     const [dialogMode, setDialogMode] = useState<"save" | "download">("save");
+
+    const letterContent = `
+Dear Hiring Manager,
+
+I am writing to express my interest in the Frontend Developer
+position at TechCorp. With over 5 years of experience in web
+development and a passion for creating intuitive user interfaces,
+I believe I would be a valuable addition to your team.
+
+Throughout my career, I have developed expertise in React,
+TypeScript, and modern frontend frameworks. In my current role
+at InnovateSoft, I led the development of a customer-facing
+application that improved user engagement by 40% and reduced
+bounce rates by 25%.
+
+I am particularly drawn to TechCorp's mission to make technology
+accessible to everyone. Your recent project on developing inclusive
+design systems aligns perfectly with my interest in creating
+accessible web applications.
+
+I would welcome the opportunity to discuss how my skills and
+experience can contribute to TechCorp's continued success.
+
+Sincerely,
+[Your Name]
+`.trim();
+
+    // ✅ Handler for confirm action
+    const handleDialogConfirm = (data: LetterDialogData) => {
+        if ("format" in data) {
+            // --- DOWNLOAD FLOW ---
+            const { fileName, format } = data;
+            downloadLetter(letterContent, fileName, format);
+        } else {
+            // --- SAVE FLOW ---
+            console.log("Letter saved with title:", data.title);
+        }
+        setShowDialog(false);
+    };
+
     return (
         <Card
             hoverable={false}
@@ -28,37 +70,8 @@ export default function LetterScreen({ onEdit }: LetterScreenProps) {
                     text-gray-700 text-sm leading-relaxed
                 "
             >
-                <p className="text-grey-400 text-xs md:text-xs">
-                    <span className="block py-4 font-medium text-gray-700">
-                        Dear Hiring Manager,
-                    </span>
-                    I am writing to express my interest in the Frontend Developer
-                    position at TechCorp. With over 5 years of experience in web
-                    development and a passion for creating intuitive user
-                    interfaces, I believe I would be a valuable addition to your
-                    team.
-                    <br />
-                    <br />
-                    Throughout my career, I have developed expertise in React,
-                    TypeScript, and modern frontend frameworks. In my current role
-                    at InnovateSoft, I led the development of a customer-facing
-                    application that improved user engagement by 40% and reduced
-                    bounce rates by 25%.
-                    <br />
-                    <br />
-                    I am particularly drawn to TechCorp's mission to make
-                    technology accessible to everyone. Your recent project on
-                    developing inclusive design systems aligns perfectly with my
-                    interest in creating accessible web applications.
-                    <br />
-                    <br />
-                    I would welcome the opportunity to discuss how my skills and
-                    experience can contribute to TechCorp's continued success.
-                    Thank you for considering my application.
-                    <div className="py-4">
-                        <span className="block font-medium">Sincerely,</span>
-                        <span className="block">[Your Name]</span>
-                    </div>
+                <p className="text-grey-400 text-xs md:text-xs whitespace-pre-line">
+                    {letterContent}
                 </p>
             </Card>
 
@@ -92,6 +105,7 @@ export default function LetterScreen({ onEdit }: LetterScreenProps) {
                     </button>
 
                     <button
+                        onClick={() => navigator.clipboard.writeText(letterContent)}
                         className="
                             flex items-center justify-center gap-1
                             cursor-pointer px-3 py-2 rounded-lg text-sm 
@@ -106,7 +120,10 @@ export default function LetterScreen({ onEdit }: LetterScreenProps) {
                     </button>
 
                     <button
-                        onClick={() => { setDialogMode("save"); setShowDialog(true); }}
+                        onClick={() => {
+                            setDialogMode("save");
+                            setShowDialog(true);
+                        }}
                         className="
                             flex items-center justify-center gap-1 
                             cursor-pointer px-3 py-2 rounded-lg text-sm 
@@ -123,7 +140,10 @@ export default function LetterScreen({ onEdit }: LetterScreenProps) {
 
                 {/* Download Button */}
                 <button
-                    onClick={() => { setDialogMode("download"); setShowDialog(true); }}
+                    onClick={() => {
+                        setDialogMode("download");
+                        setShowDialog(true);
+                    }}
                     className="
                         flex items-center justify-center gap-2 
                         cursor-pointer text-white px-4 py-2 
@@ -137,14 +157,52 @@ export default function LetterScreen({ onEdit }: LetterScreenProps) {
                 </button>
             </div>
 
+            {/* Dialog */}
             <LetterDialog
                 open={showDialog}
                 mode={dialogMode}
                 onClose={() => setShowDialog(false)}
-                onConfirm={(data) => {
-                    console.log("Dialog result:", data);
-                }}
+                onConfirm={handleDialogConfirm}
             />
         </Card>
     );
+}
+
+// ✅ Download helper
+function downloadLetter(
+    content: string,
+    fileName: string,
+    format: "pdf" | "docx" | "txt"
+) {
+    if (format === "txt") {
+        const blob = new Blob([content], { type: "text/plain" });
+        triggerDownload(blob, `${fileName}.txt`);
+    } else if (format === "docx") {
+        const html = `
+        <!DOCTYPE html>
+        <html><head><meta charset="utf-8"></head>
+        <body><pre>${content}</pre></body></html>`;
+        const blob = new Blob([html], {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        });
+        triggerDownload(blob, `${fileName}.docx`);
+    } else if (format === "pdf") {
+        import("jspdf").then(({ jsPDF }) => {
+            const doc = new jsPDF();
+            const lines = doc.splitTextToSize(content, 180);
+            doc.text(lines, 10, 10);
+            doc.save(`${fileName}.pdf`);
+        });
+    }
+}
+
+function triggerDownload(blob: Blob, fileName: string) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }

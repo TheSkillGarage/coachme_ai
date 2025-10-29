@@ -3,7 +3,7 @@ import { Card } from "../ui/card";
 import Button from "../ui/button/button";
 import { Input } from "../ui/input/input";
 import { Checkbox } from "../ui/checkbox";
-import { ArrowLeft, CheckCircle2, Eye, EyeOff, Mail, User } from "lucide-react";
+import { CheckCircle2, Eye, EyeOff, Mail, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as yup from "yup";
 import { CustomOtpInput } from "../ui/otpinput";
