@@ -28,7 +28,7 @@ export default function Main() {
     const [showEditor, setShowEditor] = useState(false); // for intro screen
     const [showLetter, setShowLetter] = useState(false); // for letter preview
     const [loading, setLoading] = useState(false);
-    const [isEditing, setIsEditing] = useState(false); // 👈 NEW: controls the rich text editor
+    const [isEditing, setIsEditing] = useState(false); // NEW: controls the rich text editor
 
     const options = [
         { label: "React", value: "react" },
@@ -72,7 +72,7 @@ export default function Main() {
             <div className="w-full overflow-x-hidden">
                 <AnimatePresence mode="wait">
                     {!showEditor ? (
-                        // ✅ Intro Screen
+                        //Intro Screen
                         <motion.div
                             key="intro"
                             initial={{ opacity: 0, y: 30 }}
@@ -89,7 +89,7 @@ export default function Main() {
                             />
                         </motion.div>
                     ) : (
-                        // ✅ Main Editor Screen
+                        //Main Editor Screen
                         <motion.div
                             key="editor"
                             initial={{ opacity: 0, y: 30 }}
@@ -105,7 +105,7 @@ export default function Main() {
                                 overflow-hidden
                             "
                         >
-                            {/* ✅ Left Section (Job Details) */}
+                            {/* Left Section (Job Details) */}
                             <Card
                                 hoverable={false}
                                 className="
@@ -180,11 +180,11 @@ export default function Main() {
                                 </div>
                             </Card>
 
-                            {/* ✅ Right Section (Dynamic Views) */}
-                            <div className="w-full lg:w-1/2 min-h-[400px] overflow-hidden">
+                            {/*Right Section (Dynamic Views) */}
+                            <div className="w-full lg:w-1/2 overflow-hidden">
                                 <AnimatePresence mode="wait">
                                     {loading ? (
-                                        // ⏳ Loading Animation
+                                        // Loading Animation
                                         <motion.div
                                             key="loading"
                                             initial={{ opacity: 0 }}
@@ -195,7 +195,7 @@ export default function Main() {
                                             <Initiaditor loading={true} />
                                         </motion.div>
                                     ) : isEditing ? (
-                                        // 📝 RichTextEditor when editing
+                                        //RichTextEditor when editing
                                         <motion.div
                                             key="editorView"
                                             initial={{ opacity: 0, x: 30 }}
@@ -219,7 +219,7 @@ export default function Main() {
                                             />
                                         </motion.div>
                                     ) : showLetter ? (
-                                        // 📄 Letter Preview
+                                        //Letter Preview
                                         <motion.div
                                             key="letter"
                                             initial={{ opacity: 0, x: 30 }}
@@ -230,7 +230,7 @@ export default function Main() {
                                             <LetterScreen onEdit={() => setIsEditing(true)} />
                                         </motion.div>
                                     ) : (
-                                        // 🪄 Default Idle Initiator
+                                        //Default Idle Initiator
                                         <motion.div
                                             key="initiator"
                                             initial={{ opacity: 0 }}
