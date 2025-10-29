@@ -1,14 +1,15 @@
+// components/ui/checkbox.tsx
 import React from "react";
 import { Check } from "lucide-react";
 import { cn } from "../../../utils/utils";
 
 interface CheckboxProps {
-    name?: string; // 👈 added name prop
+    name?: string;
     checked?: boolean;
     onChange?: (checked: boolean) => void;
     label?: string;
     disabled?: boolean;
-    color?: string; // Tailwind class for active color (e.g., "bg-primary-500")
+    color?: string;
     size?: "sm" | "md" | "lg";
 }
 
@@ -27,9 +28,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         lg: "w-6 h-6",
     };
 
-    const handleChange = () => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!disabled && onChange) {
-            onChange(!checked);
+            onChange(e.target.checked);
         }
     };
 
@@ -45,25 +46,23 @@ export const Checkbox: React.FC<CheckboxProps> = ({
                 type="checkbox"
                 name={name}
                 checked={checked}
-                onChange={() => handleChange()}
+                onChange={handleChange}
                 disabled={disabled}
                 className="hidden"
             />
 
             {/* Styled visual checkbox */}
-            <button
-                type="button"
-                onClick={handleChange}
+            <div
                 className={cn(
                     "flex items-center justify-center rounded border transition-colors",
                     sizes[size],
                     checked
                         ? `${color} border-transparent text-white`
-                        : "border-gray-300 bg-white text-transparent"
+                        : "border-gray-300 bg-white text-transparent hover:border-gray-400"
                 )}
             >
                 {checked && <Check className="w-3 h-3" strokeWidth={3} />}
-            </button>
+            </div>
 
             {label && <span className="text-sm text-gray-700">{label}</span>}
         </label>
