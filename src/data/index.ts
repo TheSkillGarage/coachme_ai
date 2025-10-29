@@ -1,4 +1,4 @@
-import  type { Job } from "../types";
+import  type { Job, Notification } from "../types";
 
 export const mockJobs: Job[] = [
     {
@@ -144,3 +144,48 @@ export const mockJobs: Job[] = [
       experienceLevel: "Senior Level",
     },
   ];
+
+ export const activityItems: Notification[] = [
+    {
+        title: 'Interview Scheduled',
+        description:
+            'Your interview with TechCorp for Senior Developer position has been scheduled for tomorrow at 2:00 PM.',
+        date: 'Monday, January 15, 2024',
+        itemType: 'interview',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: 'Monday, January 15, 2025 ',
+            time: '11:30 AM',
+        },
+    },
+    {
+        title: 'Application Status Update',
+        description:
+            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
+        date: '2025-10-24T14:00:00Z',
+        itemType: 'application',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: '2025-10-20T14:00:00Z',
+            time: '02:00 PM',
+        },
+    },
+    {
+        title: 'Application Status Update',
+        description:
+            'Your application for Product Manager at Tech Trinity Studio has moved to the interview stage.',
+        date: 'Friday, October 10, 2025',
+        itemType: 'profile',
+        itemDetails: {
+            position: 'Senior React Developer',
+            companyName: 'TechCorp Inc',
+            location: 'San Francisco, CA',
+            date: 'Friday, October 10, 2025',
+            time: '11:30 AM',
+        },
+    },
+];
