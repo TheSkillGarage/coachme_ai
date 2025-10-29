@@ -96,8 +96,8 @@ export default function JobDetailsPage() {
           <p className="text-gray-500 mb-6">
             The job you're looking for doesn't exist in our database.
           </p>
-          <Link to="/user/jobs">
-            <Button variant="outline" icon={<ArrowLeft className="w-4 h-4 text-primary-700 m-auto" />} iconPosition="left" className="text-primary-700">
+          <Link to="/user/jobs" className="mx-auto flex justify-center">
+            <Button variant="outline" icon={<ArrowLeft className="w-4 h-4 text-primary-700" />} iconPosition="left" className="text-primary-700">
               Return to Job Search
             </Button>
           </Link>
