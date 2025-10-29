@@ -49,7 +49,7 @@ export const ApplicationsGrid: React.FC<ApplicationsGridProps> = ({
               <MapPin className="text-grey-300 w-5 h-5" />
               <p className="text-grey-300">{applicationItem.location}</p>
             </div>
-            <div className="flex justify-between mb-6">
+            <div className="flex flex-col md:flex-row gap-3 justify-between mb-6">
               <div className="flex items-center gap-2">
                 <Clock className="text-grey-300 w-5 h-5" />
                 <p className="text-grey-300">

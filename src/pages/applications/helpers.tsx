@@ -4,15 +4,15 @@ import type { Application } from '.';
 export const renderBadgeByStatus = (status: string) => {
   switch (status) {
     case 'Applied':
-      return 'bg-[#DBEAFE] text-[#1E40AF] min-w-fit max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#1E40AF]';
+      return 'bg-[#DBEAFE] text-[#1E40AF] min-w-max max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#1E40AF]';
     case 'Interview Scheduled':
-      return 'bg-[#FEF9C3] text-[#904D0E] min-w-fit max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#904D0E]';
+      return 'bg-[#FEF9C3] text-[#904D0E] min-w-max max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#904D0E]';
     case 'Offer Received':
-      return 'bg-[#F0FDF4] text-[#166534] min-w-fit max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#166534]';
+      return 'bg-[#F0FDF4] text-[#166534] min-w-max max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#166534]';
     case 'Rejected':
-      return 'bg-[#FFEEEE] text-[#C80000] min-w-fit max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#C80000]';
+      return 'bg-[#FFEEEE] text-[#C80000] min-w-max max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#C80000]';
     default:
-      return 'bg-[#DBEAFE] text-[#1E40AF] min-w-fit max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#1E40AF]';
+      return 'bg-[#DBEAFE] text-[#1E40AF] min-w-max max-h-[30px] px-1 xl:py-1 xl:px-2 border border-[#1E40AF]';
   }
 };
 
@@ -121,7 +121,7 @@ export const calculateMonthlyChangeByStatus = (data: Application[]) => {
 export const renderTitleByStatus = (status: string) => {
   switch (status) {
     case 'Applied':
-      return 'Pending Applications';
+      return 'Awaiting Response';
     case 'Interview Scheduled':
       return 'Interviews Scheduled';
     case 'Offer Received':

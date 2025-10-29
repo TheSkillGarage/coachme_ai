@@ -38,7 +38,6 @@ export function Table<T>({
 }: TableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Calculate pagination details
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   const paginatedData = useMemo(() => {
@@ -50,14 +49,13 @@ export function Table<T>({
   return (
     <div
       className={cn(
-        'overflow-hidden w-full border border-gray-200 bg-white',
+        'w-full border border-gray-200 bg-white',
         rounded && 'rounded-xl shadow-sm',
         className
       )}
     >
-      {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse">
+        <table className="min-w-[700px] w-full border-collapse">
           <thead className="bg-gray-50 text-gray-700 text-sm font-semibold">
             <tr>
               {columns.map((col) => (

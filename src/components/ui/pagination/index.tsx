@@ -49,15 +49,26 @@ export const Pagination: React.FC<PaginationProps> = ({
           >
             <ChevronLeft className="w-full h-full" />
           </button>
-          {pages.map((p) => {
-            return p === currentPage ? (
-              <p className="text-white bg-primary-500 py-1.5 px-[13px] rounded-sm">
+          {pages.map((p, i) =>
+            p === '...' ? (
+              <span key={`ellipsis-${i}`} className="px-2 text-gray-400">
                 {p}
-              </p>
+              </span>
             ) : (
-              <p className="text-grey-200 font-medium">{p}</p>
-            );
-          })}{' '}
+              <button
+                key={`page-${p}-${i}`}
+                onClick={() => setCurrentPage(Number(p))}
+                className={cn(
+                  'py-1.5 px-[13px] rounded-sm transition cursor-pointer',
+                  p === currentPage
+                    ? 'text-white bg-primary-500'
+                    : 'text-gray-600 hover:bg-gray-100'
+                )}
+              >
+                {p}
+              </button>
+            )
+          )}
           <button
             onClick={nextPage}
             disabled={currentPage === totalPages}

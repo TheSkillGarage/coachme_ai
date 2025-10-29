@@ -39,10 +39,10 @@ export const ApplicationsTable: React.FC<ApplicationsTableProps> = ({
   ];
 
   return (
-    <Table
-      columns={applicationsColumns}
-      data={filtered}
-      striped={false}
-    />
+    <div className="max-w-[392px] md:max-w-full">
+      <div className="overflow-x-hidden">
+        <Table columns={applicationsColumns} data={filtered} striped={false} />
+      </div>
+    </div>
   );
 };

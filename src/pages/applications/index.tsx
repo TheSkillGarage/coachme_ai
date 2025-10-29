@@ -32,38 +32,38 @@ export interface Application {
 export default function Main() {
   const [tableView, setTableView] = useState('table');
   const [isShowDetails, setIsShowDetails] = useState(false);
-  const [filtered, setFiltered] = useState<Application[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedApplication, setSelectedApplication] = useState<Application>();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
 
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
-
-  const paginatedData = useMemo(() => {
-    const sorted = [...filtered].sort(
-      (a, b) =>
-        parseDMY(b.dateApplied).getTime() - parseDMY(a.dateApplied).getTime()
-    );
-
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-
-    return sorted.slice(start, end);
-  }, [currentPage, filtered, itemsPerPage]);
-
-  useEffect(() => {
-    if (!applicationsData) return;
-
-    const search = applicationsData.filter((item: Application) =>
+  const filtered = useMemo(() => {
+    return applicationsData.filter((item: Application) =>
       Object.values(item)
         .join(' ')
         .toLowerCase()
         .includes(searchQuery.toLowerCase())
     );
+  }, [applicationsData, searchQuery]);
 
-    setFiltered(search);
-  }, [searchQuery, applicationsData]);
+  const sorted = useMemo(() => {
+    return [...filtered].sort(
+      (a, b) =>
+        parseDMY(b.dateApplied).getTime() - parseDMY(a.dateApplied).getTime()
+    );
+  }, [filtered]);
+
+  const totalPages = Math.ceil(sorted.length / itemsPerPage);
+
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return sorted.slice(start, end);
+  }, [sorted, currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   const changeView = (view: string) => {
     setTableView(view);
@@ -78,12 +78,11 @@ export default function Main() {
 
   return (
     <HelmetLayout {...tags}>
-      <div className="flex-1 overflow-y-hidden overflow-x-hidden">
+      <div className="min-h-screen bg-background p-0">
         <p className="mb-2 font-semibold text-2xl">Application Tracker</p>
         <p className="mb-6 font-normal text-[16px]">
           Track and manage your job applications
         </p>
-        
         <div
           className="
             grid
@@ -114,7 +113,7 @@ export default function Main() {
                   icon={<ListFilter />}
                   iconPosition="left"
                   variant="outline"
-                  className="text-grey-200 border-grey-200"
+                  className="text-grey-200 border-grey-200 p-2"
                 >
                   Filter
                 </Button>
