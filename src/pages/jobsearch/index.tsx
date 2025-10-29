@@ -169,7 +169,7 @@ export default function JobSearch() {
 
         <SwitchAI />
         
-        <div className="">
+        <div className="mb-4">
           <SearchBar 
             jobSearch={searchQuery}
             setJobSearch={setSearchQuery}
@@ -177,61 +177,94 @@ export default function JobSearch() {
             setLocationSearch={setLocationQuery}
           />
         </div>
-        <div className="py-4 flex flex-col xl:flex-row justify-between items-center">
-          <div className="w-full xl:w-[23%] flex items-center bg-gray-100 rounded-lg p-1">
-            <button
-              onClick={() => setActiveTab("all")}
-              className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
-                activeTab === "all"
-                  ? "bg-white text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              All Jobs
-            </button>
-            <button
-              onClick={() => setActiveTab("saved")}
-              className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
-                activeTab === "saved"
-                  ? "bg-white text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Saved Jobs
-            </button>
-          </div>
-          <div className="flex flex-col xl:flex-row gap-3 items-center w-full xl:w-auto">
-            <div className="xl:hidden flex justify-between items-center w-full my-4">
-              <p>{activeTab === "all" ? `All Jobs ` : `Saved Jobs`}</p>
-              <Button
-                variant="outline"
-                className="border-foreground text-foreground hover:bg-secondary bg-transparent"
-                onClick={() => setShowFiltersDrawer(true)}
-                icon={<Filter className="w-4 h-4" />}
-              >
-                Filters
-              </Button>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2 bg-white border w-full xl:w-auto"
-              icon={<Bell className="w-4 h-4 text-primary-500" />}
-            >
-              <span className="text-primary-500">Create Job Alert</span>
-            </Button>
-          </div>
-        </div>
+
         <div className="py-4 xl:py-8">
-          <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-            <div className="hidden xl:block xl:col-span-1">
+          <div className="grid grid-cols-1 xl:grid-cols-[350px_1fr] gap-8">
+            <div className="hidden xl:block">
+              <div className="mb-4 flex items-center bg-gray-100 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveTab("all")}
+                  className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
+                    activeTab === "all"
+                      ? "bg-white text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  All Jobs
+                </button>
+                <button
+                  onClick={() => setActiveTab("saved")}
+                  className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
+                    activeTab === "saved"
+                      ? "bg-white text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Saved Jobs
+                </button>
+              </div>
               <FiltersSidebar 
                 filters={filters} 
                 setFilters={setFilters}
                 onClearAll={clearAllFilters}
               />
             </div>
-            <div className="lg:col-span-3">
+            <div className="space-y-4">
+              <div className="xl:hidden">
+                <div className="mb-4 flex items-center bg-gray-100 rounded-lg p-1">
+                  <button
+                    onClick={() => setActiveTab("all")}
+                    className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
+                      activeTab === "all"
+                        ? "bg-white text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    All Jobs
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("saved")}
+                    className={`w-full px-4 py-2 text-sm font-medium rounded-md cursor-pointer transition-colors ${
+                      activeTab === "saved"
+                        ? "bg-white text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Saved Jobs
+                  </button>
+                </div>
+
+                <div className="flex justify-between items-center gap-3 mb-4">
+                  <p className="font-medium">
+                    {activeTab === "all" ? "All Jobs" : "Saved Jobs"}
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="border-foreground text-foreground hover:bg-secondary bg-transparent"
+                    onClick={() => setShowFiltersDrawer(true)}
+                    icon={<Filter className="w-4 h-4" />}
+                  >
+                    Filters
+                  </Button>
+                </div>
+                <Button
+                  variant="outline"
+                  className="flex items-center justify-center gap-2 bg-white border w-full mb-4"
+                  icon={<Bell className="w-4 h-4 text-primary-500" />}
+                >
+                  <span className="text-primary-500">Create Job Alert</span>
+                </Button>
+              </div>
+              <div className="hidden xl:flex justify-end mb-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2 bg-white border"
+                  icon={<Bell className="w-4 h-4 text-primary-500" />}
+                >
+                  <span className="text-primary-500">Create Job Alert</span>
+                </Button>
+              </div>
               <JobListings 
                 jobs={filteredJobs}
                 savedJobs={savedJobs}
@@ -241,7 +274,6 @@ export default function JobSearch() {
             </div>
           </div>
         </div>
-
         <FiltersMobileDrawer
           open={showFiltersDrawer}
           onOpenChange={setShowFiltersDrawer}
