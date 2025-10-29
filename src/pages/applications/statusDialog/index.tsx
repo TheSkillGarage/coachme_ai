@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Clock, MapPin } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  MapPin,
+  X,
+  CheckIcon,
+} from 'lucide-react';
 
 import Button from '../../../components/ui/button/button';
 import Dialog from '../../../components/ui/dialog';
@@ -36,6 +43,23 @@ export const StatusDialog: React.FC<StatusDialogProps> = ({
       onClose={() => setIsShowDetails(false)}
       title="Application Details"
       titleSize="2xl"
+      footer={
+        <div className="flex flex-col md:flex-row pb-2 md:pb-6 justify-end gap-4">
+          <Button
+            onClick={() => setIsShowDetails(false)}
+            className="p-4 min-w-28 text-grey-500 bg-white border border-grey-200 rounded"
+            icon={<X className="w-4 h-4 text-grey-500" />}
+          >
+            Cancel
+          </Button>
+          <Button
+            icon={<CheckIcon className="w-4 h-4" />}
+            className="p-4 min-w-28 bg-primary-600 text-white rounded"
+          >
+            Save
+          </Button>
+        </div>
+      }
     >
       <div>
         <div className="flex justify-between mb-2">
@@ -54,7 +78,7 @@ export const StatusDialog: React.FC<StatusDialogProps> = ({
           <MapPin className="text-grey-300 w-5 h-5" />
           <p className="text-grey-300">{applicationItem.location}</p>
         </div>
-        <div className="flex flex-col md:flex-row justify-between mb-6">
+        <div className="flex flex-col md:flex-row justify-between mb-6 gap-3">
           <div className="flex items-center gap-2">
             <Clock className="text-grey-300 w-5 h-5" />
             <p className="text-grey-300">
@@ -68,44 +92,42 @@ export const StatusDialog: React.FC<StatusDialogProps> = ({
         </div>
       </div>
       <p className="mb-2 text-grey-500">Update Status</p>
-      <CustomDropdown
-        open={open}
-        setOpen={setOpen}
-        width="min-w-[360px] md:min-w-[568px]"
-        align="right"
-        trigger={
-          <Button
-            className="min-w-[360px] md:min-w-[568px] min-h-[56px] px-4 border border-[#E8E8E8] text-grey-500 text-[16px] justify-start box-border"
-            variant="outline"
-          >
-            <div className="flex justify-between items-center min-w-[327px] md:min-w-[534px] box-border">
-              {selectedItem || applicationItem.status}
-              {open ? (
-                <ChevronUp className="w-4 h-4 text-grey-200" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-grey-200" />
-              )}
-            </div>
-          </Button>
-        }
-      >
-        <div className="">
-          <div className="">
-            {statuses.map((status) => {
-              return (
-                <button
-                  className="
+      <div className="mb-8">
+        <CustomDropdown
+          open={open}
+          setOpen={setOpen}
+          width="w-full min-w-full"
+          align="right"
+          trigger={
+            <Button
+              className="min-w-full [&>span]:min-w-full min-h-[56px] px-4 border border-[#E8E8E8] text-grey-500 text-[16px] justify-start box-border"
+              variant="outline"
+            >
+              <div className="flex justify-between items-center min-w-full box-border">
+                {selectedItem || applicationItem.status}
+                {open ? (
+                  <ChevronUp className="w-4 h-4 text-grey-200" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-grey-200" />
+                )}
+              </div>
+            </Button>
+          }
+        >
+          {statuses.map((status) => {
+            return (
+              <button
+                className="
                     block w-full min-h-[54px] text-left text-grey-500 hover:bg-purple-500 rounded-md px-4 cursor-pointer
                 "
-                  onClick={() => handleChange(status)}
-                >
-                  {status}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </CustomDropdown>
+                onClick={() => handleChange(status)}
+              >
+                {status}
+              </button>
+            );
+          })}
+        </CustomDropdown>
+      </div>
     </Dialog>
   );
 };
