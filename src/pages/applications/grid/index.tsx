@@ -37,8 +37,8 @@ export const ApplicationsGrid: React.FC<ApplicationsGridProps> = ({
                   applicationItem.status
                 )} cursor-pointer`}
                 onClick={() => {
-                  setIsShowDetails(true),
-                    setSelectedApplication(applicationItem);
+                  setIsShowDetails(true);
+                  setSelectedApplication(applicationItem);
                 }}
               >
                 {applicationItem.status}

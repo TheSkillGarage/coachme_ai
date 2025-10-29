@@ -12,9 +12,7 @@ import {
 import { applicationsData } from '../data';
 import { cn } from '../../../utils/utils';
 
-interface TopCardsProps {}
-
-export const TopCards: React.FC<TopCardsProps> = () => {
+export const TopCards: React.FC = () => {
   const metrics = useMemo(
     () => calculateMonthlyChangeByStatus(applicationsData),
     []

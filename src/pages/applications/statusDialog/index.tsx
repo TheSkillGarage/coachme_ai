@@ -38,7 +38,7 @@ export const StatusDialog: React.FC<StatusDialogProps> = ({
 
   return (
     <Dialog
-      className="min-w-[392px] md:min-w-[632px] pt-2 md:pt-6 md:px-4"
+      className="min-w-[392px] md:min-w-[632px] pt-2 md:pt-6 md:px-4 rounded-3xl"
       isOpen={isShowDetails}
       onClose={() => setIsShowDetails(false)}
       title="Application Details"
@@ -47,14 +47,14 @@ export const StatusDialog: React.FC<StatusDialogProps> = ({
         <div className="flex flex-col md:flex-row pb-2 md:pb-6 justify-end gap-4">
           <Button
             onClick={() => setIsShowDetails(false)}
-            className="p-4 min-w-28 text-grey-500 bg-white border border-grey-200 rounded"
+            className="p-4 min-w-28 text-grey-500 bg-white border border-grey-200"
             icon={<X className="w-4 h-4 text-grey-500" />}
           >
             Cancel
           </Button>
           <Button
             icon={<CheckIcon className="w-4 h-4" />}
-            className="p-4 min-w-28 bg-primary-600 text-white rounded"
+            className="p-4 min-w-28 bg-primary-600 text-white"
           >
             Save
           </Button>

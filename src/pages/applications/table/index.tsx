@@ -26,7 +26,7 @@ export const ApplicationsTable: React.FC<ApplicationsTableProps> = ({
       render: (applicationItem: Application) => (
         <Badge
           className={`${renderBadgeByStatus(applicationItem.status)}`}
-          onClick={(e: any) => {
+          onClick={(e) => {
             e.stopPropagation();
             setIsShowDetails(true);
             setSelectedApplication(applicationItem);
