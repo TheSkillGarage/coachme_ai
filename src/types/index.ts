@@ -42,3 +42,28 @@ export interface FilterState {
     company: string;
   }
   
+  export interface NotificationDetails {
+    position: string;
+    companyName: string;
+    location: string;
+    date: string;
+    time: string;
+  }
+  
+  export type NotificationType = 'interview' | 'application' | 'profile';
+  
+  export interface Notification {
+    title: string;
+    description: string;
+    date: string;
+    itemType: NotificationType;
+    itemDetails: NotificationDetails;
+  }
+
+  export interface StatCard {
+    label: string
+    value: number
+    icon: React.ReactNode
+    color: string
+    bgColor: string
+  }
