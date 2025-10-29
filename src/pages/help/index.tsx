@@ -1,4 +1,5 @@
 
+import { Tabs } from '../../components/ui/tab';
 import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
 export default function Main() {
     const tags: HelmetProps = {
@@ -8,6 +9,7 @@ export default function Main() {
     return (
         <HelmetLayout {...tags}>
             <div className=''>Help
+                <Tabs tabs={[]} />
             </div>
         </HelmetLayout>
     )

@@ -28,7 +28,7 @@ export default function Main() {
           <div className="w-full ">
             <div className="flex flex-col md:flex-row justify-between md:items-center mb-8 gap-4">
               <div className="hidden md:block">
-                <h1 className="text-2xl font-semibold text-gray-800">
+                <h1 className="text-2xl font-semibold text-gray-800 mb-2">
                   Profile Setup
                 </h1>
                 <p className="text-gray-500 text-sm">
@@ -40,7 +40,7 @@ export default function Main() {
                 Save Changes
               </button>
             </div>
-            <div className="border rounded-lg border-grey-50 p-6 bg-white rounded-lg">
+            <div className="border rounded-lg border-grey-50 p-6 bg-white">
             <div className="border bg-white rounded-lg shadow-sm w-full p-5  border-grey-50">
               <h2 className="text-lg font-semibold mb-6 text-gray-800">
                 Basic Information
@@ -61,9 +61,9 @@ export default function Main() {
                   )}
                 </div>
 
-                <div className="flex flex-col">
-                  <p className="font-semibold text-grey-500">Profile Photo</p>
-                  <p className="text-sm text-[#1B1B1B] mb-3">
+                <div className="flex flex-col gap-2">
+                  <p className="font-semibold text-grey-500 text-center md:text-left">Profile Photo</p>
+                  <p className="text-sm text-[#1B1B1B] mb-3 text-center  md:text-left">
                     Upload a professional photo to help employers recognize you
                   </p>
                   <div className="flex items-center gap-4 flex-wrap">

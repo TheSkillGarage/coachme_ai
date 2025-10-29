@@ -7,7 +7,7 @@ interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "
     label?: string;
     leftIcon?: LucideIcon;
     rightIcon?: LucideIcon;
-    onRightIconClick?: () => void; // 👈 added
+    onRightIconClick?: () => void;
     error?: string;
     helperText?: string;
     size?: "sm" | "md" | "lg";
@@ -23,7 +23,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             label,
             leftIcon: LeftIcon,
             rightIcon: RightIcon,
-            onRightIconClick, // 👈 added
+            onRightIconClick,
             error,
             helperText,
             size = "md",
@@ -88,7 +88,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         ref={ref}
                         {...props}
                         className={cn(
-                            "flex-1 bg-transparent outline-none placeholder:text-gray-400",
+                            "flex-1 bg-transparent outline-none placeholder:text-grey-100",
                             LeftIcon && "pl-9",
                             RightIcon && "pr-9",
                             "w-full",
@@ -116,7 +116,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         {error}
                     </motion.p>
                 ) : helperText ? (
-                    <p className="text-xs text-gray-500 mt-1">{helperText}</p>
+                    <p className="text-xs text-grey-50 mt-1">{helperText}</p>
                 ) : null}
             </div>
         );

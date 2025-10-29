@@ -23,14 +23,20 @@ interface MenuItem {
 // Helper to recursively find the current route title
 const findRouteTitle = (items: MenuItem[], pathname: string): string | null => {
     for (const item of items) {
-      if (item.pathname === pathname) return item.title;
-      if (item.subMenu) {
-        const subResult = findRouteTitle(item.subMenu, pathname);
-        if (subResult) return subResult;
-      }
+        // Exact match
+        if (item.pathname === pathname) return item.title;        
+        // Partial match - check if current pathname starts with item's pathname
+        if (item.pathname && pathname.startsWith(item.pathname + '/')) {
+            return item.title;
+        }       
+        // Check submenus recursively
+        if (item.subMenu) {
+            const subResult = findRouteTitle(item.subMenu, pathname);
+            if (subResult) return subResult;
+        }
     }
     return null;
-  };
+};
 
 // Helper to get initials from full name
 const getInitials = (name: string) => {

@@ -63,7 +63,7 @@ const TestimonialBlock: React.FC<{ testimonial: Testimonial }> = ({
       <div>
         <div className="flex gap-2 mb-4">
           <Avatar size="lg" className="min-w-12" src={testimonial.avatarSrc} />
-          <div className="flex flex-col">
+          <div className="flex flex-col min-h-[72px]">
             <p className="font-semibold text-[18px] md:text-[20px] mb-1 leading-[140%]">
               {testimonial.fullName}
             </p>
@@ -91,10 +91,11 @@ const TestimonialBlock: React.FC<{ testimonial: Testimonial }> = ({
 const TestimonialsSection: React.FC = () => {
   return (
     <section
-      id='testimonials'
+      id="testimonials"
       className="flex flex-col items-center justify-center
          px-5 md:px-20
-         mb-12 mx-auto max-w-7xl " 
+         mb-12 mx-auto max-w-7xl
+         mt-12"
     >
       <Badge className="bg-transparent border border-primary-500 gap-2 mb-4 py-1 px-3 text-primary-500">
         Testimonials
