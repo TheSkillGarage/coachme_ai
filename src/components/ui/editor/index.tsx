@@ -104,7 +104,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     onSave,
     title = 'Rich Text Editor',
     subtitle = 'Write or edit your content below.',
-    placeholder = 'Start typing...',
     saveButtonText = 'Save',
     onCancel
 }) => {

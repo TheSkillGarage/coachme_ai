@@ -7,7 +7,7 @@ interface LoadProp {
 export default function Initiaditor(props: LoadProp) {
 
     return (
-        <Card hoverable={false} className='flex px-10 flex-col justify-center items-center bg-grey-50 shadow-none border-none rounded-lg  w-full min-h-[80vh] gap-y-4'>
+        <Card hoverable={false} className='flex px-10 flex-col justify-center items-center bg-grey-50 shadow-none border-none rounded-lg  w-full lg:min-h-[80vh] sm:min-h-40'>
             {props?.loading ? <GradientLoader /> : <>
                 <FileText size={30} className='h-30 w-40 text-grey-400' />
                 <h1 className='text-sm font-medium text-grey-500'>Your cover letter will appear here </h1>
