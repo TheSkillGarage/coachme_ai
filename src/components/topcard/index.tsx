@@ -6,7 +6,7 @@ interface TopCardProps {
     title: string;
     description: string;
     icon?: React.ReactNode;
-    iconBg?: string; // 👈 customizable background color for the icon
+    iconBg?: string; //customizable background color for the icon
     actionText?: string;
     onActionClick?: () => void;
     cardProps?: Partial<React.ComponentProps<typeof Card>>
@@ -16,7 +16,7 @@ export const TopCard: React.FC<TopCardProps> = ({
     title,
     description,
     icon,
-    iconBg = "bg-primary-100", // 👈 default color
+    iconBg = "bg-primary-100", // default color
     actionText = "Get Started",
     onActionClick,
     cardProps,

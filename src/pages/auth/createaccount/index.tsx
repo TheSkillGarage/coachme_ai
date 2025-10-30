@@ -8,7 +8,7 @@ const SignupPage = () => {
         console.log("Signup data:", data);
         setLogData(data);
         await new Promise((res) => setTimeout(res, 1000));
-        // alert("✅ Logged in successfully!");
+        // alert("Logged in successfully!");
         return { status: 200 };
     };
     console.log("Login Page Rendered", logData);

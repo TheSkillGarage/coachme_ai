@@ -1,4 +1,3 @@
-// components/ui/checkbox.tsx
 import React from "react";
 import { Check } from "lucide-react";
 import { cn } from "../../../utils/utils";
@@ -7,6 +6,7 @@ interface CheckboxProps {
     name?: string;
     checked?: boolean;
     onChange?: (checked: boolean) => void;
+    onClick?: (e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => void; // <-- new
     label?: string;
     disabled?: boolean;
     color?: string;
@@ -17,6 +17,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     name,
     checked = false,
     onChange,
+    onClick,
     label,
     disabled = false,
     color = "bg-primary-500",
@@ -36,6 +37,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
     return (
         <label
+            onClick={onClick} // <-- attach here
             className={cn(
                 "inline-flex items-center gap-2 cursor-pointer select-none",
                 disabled && "opacity-50 cursor-not-allowed"
