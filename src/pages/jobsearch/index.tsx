@@ -10,6 +10,8 @@ import FiltersMobileDrawer from "./filters/mobile";
 import type { FilterState, Job } from "../../types";
 import { parseSalary } from "../../utils/utils";
 import { mockJobs } from "../../data";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import InfiniteScrollLoader from "../../components/ui/infiniteLoader"
 import "rc-slider/assets/index.css";
 
 
@@ -34,6 +36,20 @@ export default function JobSearch() {
     salaryRange: [0, 200],
     experience: [],
     company: "",
+  });
+
+  const { 
+    displayedItems: displayedJobs, 
+    loaderRef, 
+    isLoading, 
+    hasMore,
+    totalCount 
+  } = useInfiniteScroll<Job>({
+    items: filteredJobs,
+    itemsPerPage: 20,
+    loadMoreDelay: 500,
+    rootMargin: '100px',
+    threshold: 0.1
   });
 
   // Pre-optimized jobs with parsed salaries and searchable text
@@ -122,6 +138,7 @@ export default function JobSearch() {
 
     setFilteredJobs(jobs);
   }, [activeTab, savedJobs, searchQuery, locationQuery, filters, optimizedJobs]);
+
 
   const toggleSaveJob = useCallback((jobId: number) => {
     setSavedJobs(prev => 
@@ -265,12 +282,18 @@ export default function JobSearch() {
                   <span className="text-primary-500">Create Job Alert</span>
                 </Button>
               </div>
-              <JobListings 
-                jobs={filteredJobs}
+            <JobListings 
+                jobs={displayedJobs}
                 savedJobs={savedJobs}
                 onToggleSave={toggleSaveJob}
                 onShare={shareJob}
               />
+            <InfiniteScrollLoader 
+                loaderRef={loaderRef}
+                isLoading={isLoading}
+                hasMore={hasMore}
+                totalItems={totalCount}
+            />
             </div>
           </div>
         </div>
