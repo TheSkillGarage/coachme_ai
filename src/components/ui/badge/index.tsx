@@ -8,6 +8,7 @@ interface BadgeProps {
     size?: "sm" | "md" | "lg";              // Badge size
     rounded?: string;                       // e.g. "rounded-full", "rounded-md"
     className?: string;                     // Custom styles
+    onClick?: (e: React.MouseEvent) => void;
 }
 
 export const Badge: React.FC<BadgeProps> = ({
@@ -17,6 +18,7 @@ export const Badge: React.FC<BadgeProps> = ({
     size = "md",
     rounded = "rounded-full",
     className,
+    onClick
 }) => {
     // Size styles
     const sizeClasses =
@@ -42,6 +44,7 @@ export const Badge: React.FC<BadgeProps> = ({
                 variantClasses,
                 className
             )}
+            onClick={onClick}
         >
             {children}
         </span>
