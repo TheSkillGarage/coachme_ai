@@ -7,7 +7,7 @@ export interface Option {
     value: string;
 }
 
-// 🔧 Create a generic type that changes return type based on `multiple`
+// Create a generic type that changes return type based on `multiple`
 interface BaseSelectProps<T> {
     label?: React.ReactNode;
     placeholder?: string;
