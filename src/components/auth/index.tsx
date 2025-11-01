@@ -17,7 +17,7 @@ interface AuthCardProps {
     onSubmit: (data: any) => Promise<{ status: number }>;
 }
 
-// 🔹 Password strength calculation helper
+//Password strength calculation helper
 const calculatePasswordStrength = (password: string) => {
     let score = 0;
     const feedback = {
@@ -50,7 +50,7 @@ const calculatePasswordStrength = (password: string) => {
     return { score, strength, barColor, widthPercent: score === 0 ? 0 : widthPercent };
 };
 
-// 🔹 Password strength bar component
+// Password strength bar component
 const PasswordStrengthBar: React.FC<{ password: string }> = ({ password }) => {
     if (!password) return null;
 
@@ -106,7 +106,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         special: false,
     });
 
-    // ✅ Yup Validation Schema
+    // Yup Validation Schema
     const validationSchema = useMemo(() => {
         const passwordRules = yup
             .string()
@@ -156,7 +156,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         return yup.object();
     }, [internalMode, resetStep]);
 
-    // ✅ Validation handler
+    // Validation handler
     const validateForm = async () => {
         try {
             await validationSchema.validate(formData, { abortEarly: false });
@@ -174,7 +174,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         }
     };
 
-    // 🔹 Field change handler
+    // Field change handler
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
         setFormData((prev: any) => ({
@@ -198,7 +198,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         setFormData((prev: any) => ({ ...prev, otp: value }));
     };
 
-    // ✅ Form submission
+    // Form submission
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const valid = await validateForm();
@@ -244,7 +244,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         return false;
     }, [internalMode, resetStep, formData]);
 
-    // 🔹 Dynamic headings
+    // Dynamic headings
     const title = useMemo(() => {
         if (internalMode === "signup") return "Create Your Account";
         if (internalMode === "login") return "Welcome Back";
@@ -293,7 +293,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                 <h2 className="text-2xl font-semibold text-center mb-1">{title}</h2>
                 <p className="text-center text-xs text-grey-300 mb-4">{description}</p>
 
-                {/* 🔹 Forms */}
+                {/*Forms */}
                 <AnimatePresence mode="wait">
                     <motion.form
                         key={`${internalMode}-${resetStep}`}
