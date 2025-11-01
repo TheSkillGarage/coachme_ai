@@ -13,7 +13,7 @@ const LoginPage = () => {
         // Simulate API delay
         await new Promise((res) => setTimeout(res, 1000));
 
-        // ✅ Store user in localStorage (simulate login)
+        // Store user in localStorage (simulate login)
         const fakeUser = {
             name: "John Doe",
             email: data.email,
@@ -25,7 +25,7 @@ const LoginPage = () => {
         localStorage.setItem("user", JSON.stringify(fakeUser));
         console.log("User stored in localStorage:", fakeUser);
 
-        // ✅ Redirect to dashboard after successful login
+        // Redirect to dashboard after successful login
         navigate("/user/dashboard");
         window.location.href = "/"
         return { status: 200 };

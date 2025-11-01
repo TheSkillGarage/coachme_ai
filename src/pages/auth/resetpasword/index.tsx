@@ -16,7 +16,7 @@ const ResetPage = () => {
         // Here, check if this is the last step (step 3)
         if (data.step === 3) {
             // Redirect to login page after successful password reset
-            navigate("/login", { replace: true });
+            // navigate("/login", { replace: true });
         }
 
         return { status: 200 };
