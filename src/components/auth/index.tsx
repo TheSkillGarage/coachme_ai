@@ -223,7 +223,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         }
     };
 
-    // 🔹 Button disabling logic
+    // Button disabling logic
     const isButtonDisabled = useMemo(() => {
         if (internalMode === "signup") {
             return !(
@@ -576,22 +576,25 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                             </>
                         )}
 
-                        {/* Submit Button */}
-                        <Button
-                            disabled={isButtonDisabled}
-                            type="submit"
-                            className={`w-full mt-4 ${isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
-                        >
-                            {internalMode === "signup"
-                                ? "Create Account"
-                                : internalMode === "login"
-                                    ? "Login"
-                                    : resetStep === 1
-                                        ? "Send Code"
-                                        : resetStep === 2
-                                            ? "Verify"
-                                            : "Reset Password"}
-                        </Button>
+                        {/* Submission Button for non-success modes */}
+                        {internalMode !== "success" && (
+                            <Button
+                                type="submit"
+                                className="w-full mt-4 bg-primary-600 hover:bg-primary-700 text-white"
+                                disabled={isButtonDisabled}
+                            >
+                                {internalMode === "signup"
+                                    ? "Sign Up"
+                                    : internalMode === "login"
+                                        ? "Login"
+                                        : resetStep === 1
+                                            ? "Send Verification Code"
+                                            : resetStep === 2
+                                                ? "Verify"
+                                                : "Reset Password"}
+                            </Button>
+                        )}
+
                         {/* Navigational Links */}
                         {internalMode === "login" && (
                             <p className="text-center text-sm mt-3 pt-3 flex justify-between text-sm mt-3 pt-3">
