@@ -218,7 +218,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
             const res = await onSubmit({ step: resetStep, ...stepData });
             if (res.status === 200) {
                 if (resetStep < 3) setResetStep((prev) => (prev + 1) as 1 | 2 | 3);
-                else setInternalMode("login");
+                else navigate("/login");
             }
         } else {
             console.log("Submitting login data:", formData);
@@ -478,7 +478,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                                         </label>
                                     </div>
                                     <p
-                                        onClick={() => setInternalMode("reset")}
+                                        onClick={() => navigate("/reset-password")}
                                         className="text-primary-600 cursor-pointer hover:underline"
                                     >
                                         Forgot password?
