@@ -74,16 +74,17 @@ export default function SettingsForm() {
                     onClick={() => setShowDemographics(!showDemographics)}
                 >
                     <div className="flex flex-col gap-2">
-                        <div className="flex justify-between">
-                            <h2 className="font-semibold text-lg text-gray-900">Demographics Information</h2>
-                            {showDemographics ? (
-                                <EyeOff className="transition-transform" />
-                            ) : (
-                                <Eye className="transition-transform" />
-                            )}</div>
-                        <p className="text-sm text-gray-500">
+
+                        <h2 className="font-semibold text-lg text-gray-900">Demographics Information</h2>
+
+                        <p className="text-sm text-gray-500 w-[90%]">
                             This information is used to auto-fill demographics forms in job applications. It's completely optional and kept private</p>
                     </div>
+                    {showDemographics ? (
+                        <EyeOff className="transition-transform sm:w-8 sm:h-8 w-18 h-18 mt-[-130px] sm:mt-[-60px]" />
+                    ) : (
+                        <Eye className="transition-transform sm:w-8 sm:h-8 w-18 h-18 mt-[-130px] sm:mt-[-60px]" />
+                    )}
                 </div>
 
                 {/* Shield section when demographics are hidden */}
