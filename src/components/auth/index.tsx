@@ -417,6 +417,27 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                             </>
                         )}
 
+                        {/* Success */}
+                        {internalMode === "success" && (
+                            <div className="flex flex-col justify-center items-center">
+                                <div className="bg-purple-500 h-25 w-25 rounded-full flex items-center justify-center">
+                                    <CheckCircle2 size={80} className="text-primary-500 rounded-full text-thin" />
+                                </div>
+                                <h3 className="text-xl font-semibold mb-2 text-grey-500">
+                                    Congratulations
+                                </h3>
+                                <p className="text-grey-200 text-center text-sm">
+                                    Your account has been created successfully. You can now proceed to login
+                                </p>
+                                <Button
+                                    className="w-full mt-4 bg-primary-600 hover:bg-primary-700 text-white"
+                                    onClick={() => navigate("/login")} // Use handleModeSwitch
+                                >
+                                    Login
+                                </Button>
+                            </div>
+                        )}
+
                         {/* Login */}
                         {internalMode === "login" && (
                             <>
