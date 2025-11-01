@@ -1,4 +1,5 @@
 import { Avatar } from '../ui/avatar';
+import { useToast } from "../../components/uiToast/ToastProvider";
 
 interface UserAvatarProps {
   user: { name: string; avatar?: string | null };
@@ -6,6 +7,7 @@ interface UserAvatarProps {
 
 export const UserAvatar: React.FC<UserAvatarProps> = ({ user }) => {
   // Helper to get initials from full name
+  const { showToast } = useToast();
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -21,7 +23,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({ user }) => {
             src={user.avatar}
             name={user.name}
             size="md"
-            onClick={() => alert('Avatar clicked!')}
+            onClick={() => showToast('Avatar clicked!')}
             className="cursor-pointer"
           />
         </div>

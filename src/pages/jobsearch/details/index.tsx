@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useToast } from "../../../components/uiToast/ToastProvider";
 import {
   Bookmark,
   Share2,
@@ -13,6 +14,7 @@ import Button from "../../../components/ui/button/button";
 import { mockJobs } from "../../../data";
 
 export default function JobDetailsPage() {
+  const { showToast } = useToast();
   const { id } = useParams<{ id: string }>();
   const [isSaved, setIsSaved] = useState(false);
   const [savedJobs, setSavedJobs] = useState<number[]>([]);
@@ -83,7 +85,7 @@ export default function JobDetailsPage() {
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      alert('Job link copied to clipboard!');
+      showToast('Job link copied to clipboard!');
     }
   };
 
