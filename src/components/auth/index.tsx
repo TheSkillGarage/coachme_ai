@@ -571,6 +571,25 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                                             ? "Verify"
                                             : "Reset Password"}
                         </Button>
+                        {/* Navigational Links */}
+                        {internalMode === "login" && (
+                            <p className="text-center text-sm mt-3 pt-3 flex justify-between text-sm mt-3 pt-3">
+                                Don’t have an account?
+                                <button type="button" onClick={() => navigate("/signup")} className="text-primary-600 hover:underline font-medium cursor-pointer">
+                                    Sign Up
+                                </button>
+                            </p>
+                        )}
+
+                        {internalMode === "signup" && (
+                            <p className="text-center flex justify-between text-sm mt-3 pt-3">
+                                Already have an account?
+                                <button type="button" onClick={() => navigate("/login")} className="text-primary-600 hover:underline font-medium cursor-pointer">
+                                    Login
+                                </button>
+                            </p>
+                        )}
+
                     </motion.form>
                 </AnimatePresence>
             </Card>
