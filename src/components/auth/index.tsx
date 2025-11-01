@@ -198,13 +198,14 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         setFormData((prev: any) => ({ ...prev, otp: value }));
     };
 
-    // Form submission
+    // Submit
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const valid = await validateForm();
         if (!valid) return;
 
         if (internalMode === "signup") {
+            console.log("Submitting signup data:", formData);
             const res = await onSubmit(formData);
             if (res.status === 200) setInternalMode("success");
         } else if (internalMode === "reset") {
@@ -213,12 +214,14 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
             else if (resetStep === 2) stepData = { otp: formData.otp };
             else stepData = { password: formData.password, confirmPassword: formData.confirmPassword };
 
+            console.log(`Submitting reset step ${resetStep}:`, stepData);
             const res = await onSubmit({ step: resetStep, ...stepData });
             if (res.status === 200) {
                 if (resetStep < 3) setResetStep((prev) => (prev + 1) as 1 | 2 | 3);
                 else setInternalMode("login");
             }
         } else {
+            console.log("Submitting login data:", formData);
             await onSubmit(formData);
         }
     };
