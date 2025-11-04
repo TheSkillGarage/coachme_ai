@@ -1,7 +1,7 @@
 import React from "react";
 import { AuthCard } from "../../../components/auth";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "../../../components/uiToast/ToastProvider";
+import { useToast } from "../../../hooks/useToast";
 
 const LoginPage = () => {
     const [logData, setLogData] = React.useState({});

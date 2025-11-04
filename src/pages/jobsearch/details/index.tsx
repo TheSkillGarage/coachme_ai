@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useToast } from "../../../components/uiToast/ToastProvider";
+import { useToast } from "../../../hooks/useToast";
 import {
   Bookmark,
   Share2,

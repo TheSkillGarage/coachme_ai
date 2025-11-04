@@ -1,6 +1,6 @@
 import React from "react";
 import { AuthCard } from "../../../components/auth";
-import { useToast } from "../../../components/uiToast/ToastProvider";
+import { useToast } from "../../../hooks/useToast";
 
 const SignupPage = () => {
     const [logData, setLogData] = React.useState({});

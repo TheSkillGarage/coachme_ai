@@ -1,5 +1,5 @@
 import { Avatar } from '../ui/avatar';
-import { useToast } from "../../components/uiToast/ToastProvider";
+import { useToast } from '../../hooks/useToast';
 
 interface UserAvatarProps {
   user: { name: string; avatar?: string | null };

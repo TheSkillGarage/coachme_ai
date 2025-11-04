@@ -1,31 +1,9 @@
-"use client";
-
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import type { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, XCircle, Info, X } from "lucide-react";
-
-type ToastType = "success" | "error" | "info";
-
-interface Toast {
-  id: number;
-  message: string;
-  type: ToastType;
-}
-
-interface ToastContextType {
-  showToast: (message: string, type?: ToastType) => void;
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-export const useToast = (): ToastContextType => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error("useToast must be used within a ToastProvider");
-  }
-  return context;
-};
+import { ToastContext } from "./ToastContext";
+import type { Toast, ToastType } from "./ToastContext";
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -33,14 +11,11 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const showToast = (message: string, type: ToastType = "info") => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 4000);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 4000);
   };
 
-  const removeToast = (id: number) => {
+  const removeToast = (id: number) =>
     setToasts((prev) => prev.filter((t) => t.id !== id));
-  };
 
   return (
     <ToastContext.Provider value={{ showToast }}>
@@ -62,15 +37,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
                   : "bg-blue-600"
               }`}
             >
-              {toast.type === "success" && (
-                <CheckCircle className="w-5 h-5 text-white" />
-              )}
-              {toast.type === "error" && (
-                <XCircle className="w-5 h-5 text-white" />
-              )}
-              {toast.type === "info" && <Info className="w-5 h-5 text-white" />}
+              {toast.type === "success" && <CheckCircle className="w-5 h-5" />}
+              {toast.type === "error" && <XCircle className="w-5 h-5" />}
+              {toast.type === "info" && <Info className="w-5 h-5" />}
               <span className="flex-1">{toast.message}</span>
-
               <button
                 onClick={() => removeToast(toast.id)}
                 className="text-white/70 hover:text-white transition"

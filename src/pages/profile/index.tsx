@@ -2,7 +2,7 @@ import HelmetLayout, { type HelmetProps } from "../../layouts/helmetlayout";
 import { Save } from "lucide-react";
 import { Upload } from "lucide-react";
 import React, { useState, useRef } from "react";
-import { useToast } from "../../components/uiToast/ToastProvider";
+import { useToast } from "../../hooks/useToast";
 
 export default function Main() {
   

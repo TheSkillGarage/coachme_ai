@@ -12,7 +12,7 @@ import { Sparkles } from "lucide-react";
 import LetterScreen from "./letterscreen";
 import Initiaditor from "./lnitiaditor";
 import { defaultData } from "./data";
-import { useToast } from "../../components/uiToast/ToastProvider";
+import { useToast } from "../../hooks/useToast";
 
 export default function Main() {
     const tags: HelmetProps = {

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from './store/store.ts'
 import { BrowserRouter } from 'react-router-dom'
 import Router from './router/index.tsx'
-import { ToastProvider } from "./components/uiToast/ToastProvider";
+import { ToastProvider } from "./context/ToastProvider.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
