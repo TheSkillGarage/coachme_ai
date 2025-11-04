@@ -161,23 +161,31 @@ export default function Main() {
             )}
 
             {/* Action Buttons */}
-            <div className="flex gap-3 justify-end">
-              <Button variant="outline" onClick={handleCancel}>
+
+            <div className="flex justify-end gap-4 mt-8">
+              <Button
+                variant="outline"
+                onClick={handleCancel}
+                rounded="lg"
+                className="px-6 py-2 border-border text-foreground hover:bg-muted/40 transition-all"
+              >
                 Cancel
               </Button>
+
               <Button
                 onClick={handleUploadResume}
                 disabled={!selectedFile}
                 bg="bg-purple-700"
                 color="text-white"
                 rounded="lg"
-                className="hover:bg-purple-800 disabled:opacity-50"
+                className="px-6 py-2 hover:bg-purple-800 disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
                 icon={<Upload className="w-4 h-4" />}
                 iconPosition="left"
               >
                 Upload Resume
               </Button>
             </div>
+
           </div>
         </div>
 
