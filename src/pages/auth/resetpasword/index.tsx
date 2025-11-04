@@ -1,10 +1,12 @@
 import React from "react";
 import { AuthCard } from "../../../components/auth";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../../hooks/useToast";
 
 const ResetPage = () => {
     const [logData, setLogData] = React.useState({});
     const navigate = useNavigate();
+    const { showToast } = useToast()
 
     const handleReset = async (data: any): Promise<{ status: number }> => {
         console.log("Reset data:", data);
@@ -15,8 +17,8 @@ const ResetPage = () => {
 
         // Here, check if this is the last step (step 3)
         if (data.step === 3) {
-            // Redirect to login page after successful password reset
-            // navigate("/login", { replace: true });
+            showToast("✅ Password reset successful!", "success");
+            navigate("/login", { replace: true });
         }
 
         return { status: 200 };
