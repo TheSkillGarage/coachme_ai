@@ -7,7 +7,7 @@ interface IntroProps {
 }
 
 export default function CreateCoverLetterIntro({ onStart }: IntroProps) {
-    const [data, setData] = useState(true)
+    const [data] = useState(true)
     return (
         <>
             {data ? <CoverLetters onStart={onStart} /> : <div className="flex flex-col items-center justify-center text-center space-y-6 py-10">

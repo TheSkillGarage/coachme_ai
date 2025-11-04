@@ -2,22 +2,35 @@ import HelmetLayout, { type HelmetProps } from "../../layouts/helmetlayout";
 import { Save } from "lucide-react";
 import { Upload } from "lucide-react";
 import React, { useState, useRef } from "react";
+import { useToast } from "../../hooks/useToast";
 
 export default function Main() {
+  
+const { showToast } = useToast();
   const [photo, setPhoto] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => setPhoto(reader.result as string);
+      reader.onloadend = () => {
+        setPhoto(reader.result as string);
+        showToast("✅ Photo uploaded successfully!", "success");
+      };
       reader.readAsDataURL(file);
+    } else {
+      showToast("⚠️ No file selected!", "info");
     }
   };
 
-  const handleRemovePhoto = () => {
-    setPhoto(null);
+   const handleRemovePhoto = () => {
+    if (photo) {
+      setPhoto(null);
+      showToast("🗑️ Photo removed successfully!", "success");
+    } else {
+      showToast("⚠️ No photo to remove!", "info");
+    }
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -89,7 +102,7 @@ export default function Main() {
                     </label>
                     <button
                       onClick={handleRemovePhoto}
-                      className="text-[#C80000] text-sm font-medium cursor-pointer hover:text-red-500 cursor-pointer"
+                      className="text-[#C80000] text-sm font-medium cursor-pointer hover:text-red-500"
                     >
                       Remove
                     </button>
