@@ -91,7 +91,7 @@ const PasswordStrengthBar: React.FC<{ password: string }> = ({ password }) => {
 };
 
 export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit }) => {
-    const [internalMode, setInternalMode] = useState<"signup" | "login" | "reset" | "success">(mode);
+    const [internalMode, setInternalMode] = useState<"signup" | "login" | "reset" | "success" | "verify">(mode);
     const [formData, setFormData] = useState<any>({});
     const [errors, setErrors] = useState<any>({});
     const [showPassword, setShowPassword] = useState(false);
@@ -129,7 +129,11 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                     .required("Confirm your password"),
                 terms: yup.boolean().oneOf([true], "You must agree to continue"),
             });
-        } else if (internalMode === "login") {
+        }
+        else if (internalMode === "verify") return yup.object({
+            otp: yup.string().length(6, "Enter 6-digit OTP").required("OTP is required"),
+        });
+        else if (internalMode === "login") {
             return yup.object({
                 email: yup.string().email("Invalid email").required("Email is required"),
                 password: yup.string().required("Password is required"),
@@ -207,8 +211,18 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
         if (internalMode === "signup") {
             console.log("Submitting signup data:", formData);
             const res = await onSubmit(formData);
-            if (res.status === 200) setInternalMode("success");
-        } else if (internalMode === "reset") {
+            if (res.status === 200) {
+                // Move to verification step after signup
+                setInternalMode("verify");
+            }
+        } else if (internalMode === "verify") {
+            console.log("Verifying email OTP:", formData.otp);
+            const res = await onSubmit({ otp: formData.otp });
+            if (res.status === 200) {
+                setInternalMode("success");
+            }
+        }
+        else if (internalMode === "reset") {
             let stepData: any = {};
             if (resetStep === 1) stepData = { email: formData.email };
             else if (resetStep === 2) stepData = { otp: formData.otp };
@@ -237,7 +251,10 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                 formData.confirmPassword &&
                 formData.terms
             );
-        } else if (internalMode === "login") {
+        } else if (internalMode === "verify") {
+            return !(formData.otp && formData.otp.length === 6);
+        }
+        else if (internalMode === "login") {
             return !(formData.email && formData.password);
         } else if (internalMode === "reset") {
             if (resetStep === 1) return !formData.email;
@@ -250,10 +267,11 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
     // Dynamic headings
     const title = useMemo(() => {
         if (internalMode === "signup") return "Create Your Account";
+        if (internalMode === "verify") return "Verify Your Email";
         if (internalMode === "login") return "Welcome Back";
         if (internalMode === "reset") {
             if (resetStep === 1) return "Forgot Password";
-            if (resetStep === 2) return "Verify Your Email";
+            if (resetStep === 2) return "Your 6-Digit OTP Code";
             if (resetStep === 3) return "Reset Password";
         }
         return "";
@@ -262,6 +280,12 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
     const description = useMemo(() => {
         if (internalMode === "signup")
             return "Fill in the details below to create your CoachMe AI account";
+        if (internalMode === "verify") return (
+            <div className="text-xs text-grey-300">
+                We’ve sent a verification code to
+                <span className="text-grey-400 text-semibold"> blessingbella@gmail.com</span>
+            </div>
+        );
         if (internalMode === "login") return "Sign in to your CoachMe AI account";
         if (internalMode === "reset") {
             if (resetStep === 1) return "Enter your email address to reset your password";
@@ -418,6 +442,15 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                                 </div>
                                 {errors.terms && <p className="text-red-500 text-sm">{errors.terms}</p>}
                             </>
+                        )}
+
+                        {/* Verify */}
+                        {internalMode === "verify" && (
+                            <CustomOtpInputAny
+                                length={6}
+                                onChange={handleOtpChange}
+                                value={formData.otp || ""}
+                            />
                         )}
 
                         {/* Success */}
@@ -588,13 +621,15 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                             >
                                 {internalMode === "signup"
                                     ? "Sign Up"
-                                    : internalMode === "login"
-                                        ? "Login"
-                                        : resetStep === 1
-                                            ? "Send Verification Code"
-                                            : resetStep === 2
-                                                ? "Verify"
-                                                : "Reset Password"}
+                                    : internalMode === "verify"
+                                        ? "Verify"
+                                        : internalMode === "login"
+                                            ? "Login"
+                                            : resetStep === 1
+                                                ? "Send Verification Code"
+                                                : resetStep === 2
+                                                    ? "Verify"
+                                                    : "Reset Password"}
                             </Button>
                         )}
 
@@ -613,6 +648,14 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
                                 Already have an account?
                                 <button type="button" onClick={() => navigate("/login")} className="text-primary-600 hover:underline font-medium cursor-pointer">
                                     Login
+                                </button>
+                            </p>
+                        )}
+                        {internalMode === "verify" && (
+                            <p className="text-center flex justify-between text-sm mt-3 pt-3">
+                                Didn’t receive a code?
+                                <button type="button" onClick={() => setInternalMode("verify")} className="text-primary-600 hover:underline font-medium cursor-pointer">
+                                    Resend Code
                                 </button>
                             </p>
                         )}

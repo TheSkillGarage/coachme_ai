@@ -6,7 +6,7 @@ const LoginPage = () => {
     const [logData, setLogData] = React.useState({});
     const navigate = useNavigate();
 
-    const handleLogin = async (data: any): Promise<{ status: number }> => {
+    const handleLogin = async (data): Promise<{ status: number }> => {
         console.log("Login data:", data);
         setLogData(data);
 
