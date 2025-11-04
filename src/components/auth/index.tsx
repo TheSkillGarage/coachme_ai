@@ -635,7 +635,7 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
 
                         {/* Navigational Links */}
                         {internalMode === "login" && (
-                            <p className="text-center text-sm mt-3 pt-3 flex justify-between text-sm mt-3 pt-3">
+                            <p className="text-center text-sm mt-3 pt-3 flex justify-between">
                                 Don’t have an account?
                                 <button type="button" onClick={() => navigate("/signup")} className="text-primary-600 hover:underline font-medium cursor-pointer">
                                     Sign Up
