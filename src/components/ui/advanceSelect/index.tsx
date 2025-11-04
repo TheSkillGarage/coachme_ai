@@ -47,7 +47,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const isMulti = Array.isArray(value);
+    // const isMulti = Array.isArray(value);
     const selectedValues = multiple
         ? (value as string[])
         : value
