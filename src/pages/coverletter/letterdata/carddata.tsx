@@ -91,8 +91,9 @@ export default function CoverLetters({ onStart }: IntroProps) {
                         className="
                             flex flex-col justify-between 
                             w-full sm:w-[48%] lg:w-[31.5%]
-                            rounded-2xl border border-gray-200 bg-white 
+                            rounded-2xl border border-gray-200 bg-transparent 
                             shadow-sm hover:shadow-md transition-all duration-200
+                            
                         "
                     >
                         {/* Top Content */}
