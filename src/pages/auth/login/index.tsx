@@ -39,7 +39,7 @@ const LoginPage = () => {
 
     return { status: 200 };
 };
-
+console.log(logData)
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
             <AuthCard mode="login" onSubmit={handleLogin} />
