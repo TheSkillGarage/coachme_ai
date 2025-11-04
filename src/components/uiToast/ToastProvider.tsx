@@ -1,6 +1,9 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+
+import { createContext, useContext, useState } from "react";
+import type { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle, XCircle, Info, X } from "lucide-react";
 
 type ToastType = "success" | "error" | "info";
 
@@ -16,9 +19,11 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-export const useToast = () => {
+export const useToast = (): ToastContextType => {
   const context = useContext(ToastContext);
-  if (!context) throw new Error("useToast must be used within ToastProvider");
+  if (!context) {
+    throw new Error("useToast must be used within a ToastProvider");
+  }
   return context;
 };
 
@@ -29,32 +34,49 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, 3000);
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  const removeToast = (id: number) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="fixed top-4 right-4 z-50 space-y-2">
+      <div className="fixed top-6 right-6 flex flex-col gap-3 z-50 items-end">
         <AnimatePresence>
           {toasts.map((toast) => (
             <motion.div
               key={toast.id}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.2 }}
-              className={`px-4 py-2 rounded-lg shadow-lg text-white text-sm font-medium
-                ${
-                  toast.type === "success"
-                    ? "bg-green-500"
-                    : toast.type === "error"
-                    ? "bg-red-500"
-                    : "bg-blue-500"
-                }`}
+              initial={{ opacity: 0, x: 50, y: -20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, x: 50, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className={`flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg text-white font-medium tracking-wide backdrop-blur-md bg-opacity-90 border border-white/20 min-w-[250px] ${
+                toast.type === "success"
+                  ? "bg-green-600"
+                  : toast.type === "error"
+                  ? "bg-red-600"
+                  : "bg-blue-600"
+              }`}
             >
-              {toast.message}
+              {toast.type === "success" && (
+                <CheckCircle className="w-5 h-5 text-white" />
+              )}
+              {toast.type === "error" && (
+                <XCircle className="w-5 h-5 text-white" />
+              )}
+              {toast.type === "info" && <Info className="w-5 h-5 text-white" />}
+              <span className="flex-1">{toast.message}</span>
+
+              <button
+                onClick={() => removeToast(toast.id)}
+                className="text-white/70 hover:text-white transition"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </motion.div>
           ))}
         </AnimatePresence>
