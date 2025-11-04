@@ -17,7 +17,7 @@ const LoginPage = () => {
         // Simulate API delay
         await new Promise((res) => setTimeout(res, 1000));
 
-        // ✅ Store user in localStorage (simulate login)
+        // Store user in localStorage (simulate login)
         const fakeUser = {
             name: "John Doe",
             email: data.email,
