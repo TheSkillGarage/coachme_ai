@@ -37,7 +37,7 @@ export const UploadResumeFlow: React.FC<UploadResumeFlowProps> = ({
   onUpload,
 }) => {
   return (
-    <div className="min-h-full bg-background px-6 py-8">
+    <div className="min-h-full bg-background p-0 lg:px-6 lg:py-8">
       <div className="mx-auto">
         <div className="mb-8">
           <Button
@@ -81,7 +81,7 @@ export const UploadResumeFlow: React.FC<UploadResumeFlowProps> = ({
             />
           )}
 
-          <div className="flex justify-between gap-4 mt-8">
+          <div className="flex flex-col lg:flex-row justify-between gap-4 mt-8">
             <Button
               variant="outline"
               onClick={onCancel}

@@ -28,7 +28,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
     >
       <div className="flex flex-col items-center justify-center">
         <img src={UploadIcon} alt="upload icon" className="mb-2" />
-        <p className="text-foreground font-medium mb-1">
+        <p className="text-foreground font-medium mb-1 text-center">
           Drag & Drop your file here or{" "}
           <span className="text-primary-400 mx-1">Browse Files</span> to Upload
         </p>
