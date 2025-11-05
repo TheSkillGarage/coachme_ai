@@ -67,3 +67,14 @@ export interface FilterState {
     color: string
     bgColor: string
   }
+
+  export interface Resume {
+    id: string;
+    name: string;
+    uploadedAt: string;
+    size: string;
+  }
+  
+  export type UploadState = "idle" | "uploading" | "success";
+  
+  export type UploadStage = "list" | "upload" | "success";
