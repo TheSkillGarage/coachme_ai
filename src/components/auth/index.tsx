@@ -34,7 +34,7 @@ const calculatePasswordStrength = (password: string) => {
 
     let strength: "Weak" | "Medium" | "Strong" | "" = "";
     let barColor: "red" | "yellow" | "green" | "gray" = "gray";
-    let widthPercent = (score / 4) * 100;
+    const widthPercent = (score / 4) * 100;
 
     if (score === 4) {
         strength = "Strong";
