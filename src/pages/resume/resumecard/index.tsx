@@ -1,6 +1,15 @@
-import { MoreVertical, Upload } from 'lucide-react';
+import {
+  Trash2,
+  Download,
+  Edit,
+  MoreVertical,
+  Upload,
+  Eye,
+} from 'lucide-react';
 import Button from '../../../components/ui/button/button';
-import { Card } from '../../../components/ui/card';
+// import { Card } from '../../../components/ui/card';
+import { CustomDropdown } from '../../../components/ui/dropdown';
+import { useState } from 'react';
 
 interface ResumeCard {
   id: number;
@@ -18,59 +27,107 @@ interface ResumeCard {
 interface IntroProps {
   onStart?: () => void;
 }
+const resumes: ResumeCard[] = [
+  {
+    id: 1,
+    firstName: 'BLESSSING',
+    lastName: 'BELLA',
+    location: 'Nigeria',
+    email: 'blessingbella@gmail.com',
+    linedIn: 'linkedin.com/in/blessingbella',
+    summary:
+      'Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
+    fileName: 'Blessing Resume',
+    createdAt: '18/5/25',
+    isDefault: true,
+  },
+  {
+    id: 2,
+    firstName: 'BLESSSING',
+    lastName: 'BELLA',
+    location: 'Nigeria',
+    email: 'blessingbella@gmail.com',
+    linedIn: 'linkedin.com/in/blessingbella',
+    summary:
+      'Detail-oriented software engineer with 5+ years of experience developing scalable web applications. Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
+    fileName: 'Developer Resume',
+    createdAt: '18/5/25',
+  },
+  {
+    id: 3,
+    firstName: 'BLESSSING',
+    lastName: 'BELLA',
+    location: 'Nigeria',
+    email: 'blessingbella@gmail.com',
+    linedIn: 'linkedin.com/in/blessingbella',
+    summary:
+      'Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
+    fileName: 'Product Resume',
+    createdAt: '18/5/25',
+  },
+  {
+    id: 4,
+    firstName: 'BLESSSING',
+    lastName: 'BELLA',
+    location: 'Nigeria',
+    email: 'blessingbella@gmail.com',
+    linedIn: 'linkedin.com/in/blessingbella',
+    summary:
+      'Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
+    fileName: 'Designer Resume',
+    createdAt: '18/5/25',
+  },
+];
 
 export default function Resumes({ onStart }: IntroProps) {
-  const resumes: ResumeCard[] = [
-    {
-      id: 1,
-      firstName: 'BLESSSING',
-      lastName: 'BELLA',
-      location: 'Nigeria',
-      email: 'blessingbella@gmail.com',
-      linedIn: 'linkedin.com/in/blessingbella',
-      summary:
-        'Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
-      fileName: 'Blessing Resume',
-      createdAt: '18/5/25',
-      isDefault: true,
-    },
-    {
-      id: 2,
-      firstName: 'BLESSSING',
-      lastName: 'BELLA',
-      location: 'Nigeria',
-      email: 'blessingbella@gmail.com',
-      linedIn: 'linkedin.com/in/blessingbella',
-      summary:
-        'Detail-oriented software engineer with 5+ years of experience developing scalable web applications. Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
-      fileName: 'Blessing Resume',
-      createdAt: '18/5/25',
-    },
-    {
-      id: 3,
-      firstName: 'BLESSSING',
-      lastName: 'BELLA',
-      location: 'Nigeria',
-      email: 'blessingbella@gmail.com',
-      linedIn: 'linkedin.com/in/blessingbella',
-      summary:
-        'Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
-      fileName: 'Blessing Resume',
-      createdAt: '18/5/25',
-    },
-    {
-      id: 4,
-      firstName: 'BLESSSING',
-      lastName: 'BELLA',
-      location: 'Nigeria',
-      email: 'blessingbella@gmail.com',
-      linedIn: 'linkedin.com/in/blessingbella',
-      summary:
-        'Detail-oriented software engineer with 5+ years of experience developing scalable web applications',
-      fileName: 'Blessing Resume',
-      createdAt: '18/5/25',
-    },
-  ];
+  const [openId, setOpenId] = useState<number | null>(null);
+  const [resumesArray, setResumesArray] = useState<ResumeCard[]>(resumes);
+
+  const handleToggle = (id: number) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
+
+  const handleDeleteResume = (id: number) => {
+    setResumesArray(resumesArray.filter((resume) => resume.id !== id));
+  };
+
+  const downloadResume = (
+    content: string,
+    fileName: string,
+    format: 'pdf' | 'docx' | 'txt'
+  ) => {
+    if (format === 'txt') {
+      const blob = new Blob([content], { type: 'text/plain' });
+      triggerDownload(blob, `${fileName}.txt`);
+    } else if (format === 'docx') {
+      const html = `
+        <!DOCTYPE html>
+        <html><head><meta charset="utf-8"></head>
+        <body><pre>${content}</pre></body></html>`;
+      const blob = new Blob([html], {
+        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+      triggerDownload(blob, `${fileName}.docx`);
+    } else if (format === 'pdf') {
+      import('jspdf').then(({ jsPDF }) => {
+        const doc = new jsPDF();
+        const lines = doc.splitTextToSize(content, 180);
+        doc.text(lines, 10, 10);
+        doc.save(`${fileName}.pdf`);
+      });
+    }
+  };
+
+  function triggerDownload(blob: Blob, fileName: string) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="w-full space-y-6">
@@ -78,7 +135,7 @@ export default function Resumes({ onStart }: IntroProps) {
         className="
           flex flex-col
           justify-between items-start mb-8
-          sm:flex-row sm:items-center
+          lg:flex-row lg:items-center
         "
       >
         <div>
@@ -100,8 +157,9 @@ export default function Resumes({ onStart }: IntroProps) {
             bg-[#67005E]
             rounded-lg
             hover:bg-[#52004A] items-center gap-2 py-4 px-2
-            sm:mt-0
-            md:w-[213px]
+            mt-2
+            lg:mt-0
+            lg:w-[213px]
           "
         >
           Upload New Resume
@@ -118,8 +176,8 @@ export default function Resumes({ onStart }: IntroProps) {
           md:gap-7
         "
       >
-        {resumes.map((resume) => (
-          <Card
+        {resumesArray.map((resume) => (
+          <div
             key={resume.id}
             className="
               flex flex-col
@@ -129,7 +187,6 @@ export default function Resumes({ onStart }: IntroProps) {
               rounded-2xl border border-gray-200
               shadow-sm transition-all
               justify-between hover:shadow-md duration-200
-              sm:w-[47%]
               xl:w-[251px]
             "
           >
@@ -164,7 +221,90 @@ export default function Resumes({ onStart }: IntroProps) {
                   <h3 className="font-semibold text-[15px]">
                     {resume.fileName}
                   </h3>
-                  <MoreVertical className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                  <div>
+                    <CustomDropdown
+                      key={resume.id}
+                      open={openId === resume.id}
+                      trigger={
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggle(resume.id);
+                          }}
+                        >
+                          <MoreVertical className="w-5 h-5 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                        </div>
+                      }
+                      width="w-[127px]"
+                      align="right"
+                    >
+                      <div className="py-3 flex flex-col gap-2">
+                        <button
+                          onClick={() => {
+                            setOpenId(null);
+                          }}
+                          className="
+                            flex
+                            w-full
+                            text-left text-grey-500
+                            items-center gap-2 hover:bg-gray-100 px-3 cursor-pointer
+                           hover:opacity-100
+                          "
+                        >
+                          <Eye className="w-4 h-4" />
+                          <p>View</p>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setOpenId(null);
+                          }}
+                          className="
+                            flex
+                            w-full
+                            text-left text-grey-500
+                            items-center gap-2 hover:bg-gray-100 px-3 cursor-pointer
+                          "
+                        >
+                          <Edit className="w-4 h-4" />
+                          <p>Edit</p>
+                        </button>
+                        <button
+                          onClick={() => {
+                            downloadResume(
+                              resume.summary,
+                              resume.fileName,
+                              'pdf'
+                            );
+                            setOpenId(null);
+                          }}
+                          className="
+                            flex
+                            w-full
+                            text-left text-grey-500
+                            items-center gap-2 hover:bg-gray-100 px-3 cursor-pointer
+                          "
+                        >
+                          <Download className="w-4 h-4 shrink-0" />
+                          <p>Download</p>
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleDeleteResume(resume.id);
+                            setOpenId(null);
+                          }}
+                          className="
+                            flex
+                            w-full
+                            text-left text-grey-500
+                            items-center gap-2 hover:bg-gray-100 px-3 cursor-pointer
+                          "
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          <p>Delete</p>
+                        </button>
+                      </div>
+                    </CustomDropdown>
+                  </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-gray-400">
@@ -185,7 +325,7 @@ export default function Resumes({ onStart }: IntroProps) {
                 </div>
               </div>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
     </div>
