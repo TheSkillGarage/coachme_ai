@@ -1,5 +1,6 @@
 
 import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
+import ResumeInformation from '../resume/resumeinfo';
 export default function Main() {
     const tags: HelmetProps = {
         pageTitle: 'Analytics',
@@ -7,8 +8,7 @@ export default function Main() {
     }
     return (
         <HelmetLayout {...tags}>
-            <div className=''>Analytics
-            </div>
+            <ResumeInformation />
         </HelmetLayout>
     )
 }
