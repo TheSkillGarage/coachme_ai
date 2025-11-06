@@ -10,6 +10,8 @@ import Button from '../../../components/ui/button/button';
 // import { Card } from '../../../components/ui/card';
 import { CustomDropdown } from '../../../components/ui/dropdown';
 import { useState } from 'react';
+import Dialog from '../../../components/ui/dialog';
+import { useNavigate } from 'react-router-dom';
 
 interface ResumeCard {
   id: number;
@@ -25,7 +27,8 @@ interface ResumeCard {
 }
 
 interface IntroProps {
-  onStart?: () => void;
+  setCurrentStep: (step: string) => void;
+  setRedirectFromList: (value: boolean) => void;
 }
 const resumes: ResumeCard[] = [
   {
@@ -79,9 +82,19 @@ const resumes: ResumeCard[] = [
   },
 ];
 
-export default function Resumes({ onStart }: IntroProps) {
+export default function Resumes({
+  setCurrentStep,
+  setRedirectFromList,
+}: IntroProps) {
+  const navigate = useNavigate();
   const [openId, setOpenId] = useState<number | null>(null);
   const [resumesArray, setResumesArray] = useState<ResumeCard[]>(resumes);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [selectedResume, setSelectedResume] = useState<ResumeCard>();
+
+  const handleRedirect = (id: number) => {
+    navigate(`/resume/${id}`);
+  };
 
   const handleToggle = (id: number) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -89,6 +102,7 @@ export default function Resumes({ onStart }: IntroProps) {
 
   const handleDeleteResume = (id: number) => {
     setResumesArray(resumesArray.filter((resume) => resume.id !== id));
+    setIsDeleteOpen(false);
   };
 
   const downloadResume = (
@@ -149,7 +163,10 @@ export default function Resumes({ onStart }: IntroProps) {
         <Button
           icon={<Upload className="w-4 h-4" />}
           iconPosition="left"
-          onClick={onStart}
+          onClick={() => {
+            setRedirectFromList(true);
+            setCurrentStep('upload');
+          }}
           className="
             flex
             w-full
@@ -241,7 +258,7 @@ export default function Resumes({ onStart }: IntroProps) {
                       <div className="py-3 flex flex-col gap-2">
                         <button
                           onClick={() => {
-                            setOpenId(null);
+                            handleRedirect(Number(openId));
                           }}
                           className="
                             flex
@@ -256,7 +273,7 @@ export default function Resumes({ onStart }: IntroProps) {
                         </button>
                         <button
                           onClick={() => {
-                            setOpenId(null);
+                            handleRedirect(Number(openId));
                           }}
                           className="
                             flex
@@ -289,8 +306,9 @@ export default function Resumes({ onStart }: IntroProps) {
                         </button>
                         <button
                           onClick={() => {
-                            handleDeleteResume(resume.id);
-                            setOpenId(null);
+                            setOpenId(0);
+                            setIsDeleteOpen(true);
+                            setSelectedResume(resume);
                           }}
                           className="
                             flex
@@ -328,6 +346,33 @@ export default function Resumes({ onStart }: IntroProps) {
           </div>
         ))}
       </div>
+
+      {isDeleteOpen && (
+        <Dialog
+          title="Delete Resume"
+          isOpen={isDeleteOpen}
+          onClose={() => setIsDeleteOpen(false)}
+        >
+          <div>
+            <p>
+              Are you sure you want to delete{' '}
+              <span className="font-semibold">{selectedResume?.fileName}</span>?
+            </p>
+            <Button
+              className="bg-red-500 w-full mt-4 text-white"
+              onClick={() => handleDeleteResume(Number(selectedResume?.id))}
+            >
+              Yes, delete
+            </Button>
+            <Button
+              className="bg-gray-100 text-gray-600 w-full mt-4"
+              onClick={() => setIsDeleteOpen(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </Dialog>
+      )}
     </div>
   );
 }
