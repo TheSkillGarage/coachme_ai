@@ -8,9 +8,10 @@ import type { UploadStage } from "../../../types";
 
 interface UploadResumeProps {
   onContinueToNextStep?: () => void;
+  redirectFromList?: boolean;
 }
 
-export default function UploadResume({ onContinueToNextStep }: UploadResumeProps) {
+export default function UploadResume({ onContinueToNextStep, redirectFromList }: UploadResumeProps) {
   const [currentStage, setCurrentStage] = useState<UploadStage>("list");
 
   const {
@@ -69,7 +70,7 @@ export default function UploadResume({ onContinueToNextStep }: UploadResumeProps
     );
   }
 
-  if (currentStage === "upload") {
+  if (currentStage === "upload" || redirectFromList) {
     return (
       <>
         <UploadResumeFlow
