@@ -87,14 +87,21 @@ export default function ResumeInformation() {
     // Handlers
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const updatedData = { ...formData, [name]: value };
+        setFormData(updatedData);
 
         try {
-            await personalSchema.validateAt(name, { ...formData, [name]: value });
-            setErrors((prev) => ({ ...prev, personal: { ...prev.personal, [name]: undefined } }));
+            await personalSchema.validateAt(name, updatedData);
+            setErrors((prev) => ({
+                ...prev,
+                personal: { ...prev.personal, [name]: undefined },
+            }));
         } catch (err) {
             if (err instanceof yup.ValidationError) {
-                setErrors((prev) => ({ ...prev, personal: { ...prev.personal, [name]: err.message } }));
+                setErrors((prev) => ({
+                    ...prev,
+                    personal: { ...prev.personal, [name]: err.message },
+                }));
             }
         }
     };
