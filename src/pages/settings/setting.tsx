@@ -283,7 +283,7 @@ export default function SettingsForm() {
 
                 <div className="flex flex-col gap-6 pt-6">
                     <div className="flex justify-between items-center">
-                        <div>
+                        <div className="w-[88%]">
                             <span className="text-sm font-medium text-gray-700">
                                 Enable AI Application
                             </span>
@@ -337,7 +337,7 @@ export default function SettingsForm() {
 
                 <div className="flex flex-col gap-6 pt-6">
                     <div className="flex justify-between items-center">
-                        <div>
+                        <div className="w-[88%]">
                             <h2 className="text-sm font-medium text-gray-700">Enable Auto-fill</h2>
                             <p className="text-sm text-grey-300">Automatically fill application forms with saved information</p>
                         </div>
@@ -348,7 +348,7 @@ export default function SettingsForm() {
                     </div>
 
                     <div className="flex justify-between items-center">
-                        <div>
+                        <div className="w-[88%]">
                             <h2 className="text-sm font-medium text-gray-700">Notify Before Auto-fill</h2>
                             <p className="text-sm text-grey-300">Show confirmation before filling sensitive information</p>
                         </div>

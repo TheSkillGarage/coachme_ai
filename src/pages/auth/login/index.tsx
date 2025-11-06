@@ -33,13 +33,13 @@ const LoginPage = () => {
 
         // ✅ Redirect to dashboard after successful login
         setTimeout(() => {
-        navigate("/user/dashboard");
-        window.location.href = "/"
-    },1000);
+            navigate("/user/dashboard");
+            window.location.href = "/"
+        }, 1000);
 
-    return { status: 200 };
-};
-console.log(logData)
+        return { status: 200 };
+    };
+    console.log(logData)
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
             <AuthCard mode="login" onSubmit={handleLogin} />
