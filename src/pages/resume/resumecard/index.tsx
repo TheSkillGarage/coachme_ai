@@ -93,7 +93,7 @@ export default function Resumes({
   const [selectedResume, setSelectedResume] = useState<ResumeCard>();
 
   const handleRedirect = (id: number) => {
-    navigate(`/resume/${id}`);
+    navigate(`/user/resume/${id}`);
   };
 
   const handleToggle = (id: number) => {
@@ -202,7 +202,7 @@ export default function Resumes({
               p-0
               bg-transparent
               rounded-2xl border border-gray-200
-              shadow-sm transition-all
+              shadow-2xs transition-all
               justify-between hover:shadow-md duration-200
               xl:w-[251px]
             "
