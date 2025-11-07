@@ -64,7 +64,7 @@ export const ResumeDetails = () => {
       </div>
 
       {resume ? (
-        <Card hoverable={false} className="box-border">
+        <Card hoverable={false} className="box-border shadow-2xs">
           <div className="flex flex-col mb-8 gap-2 items-center justify-center">
             <p className="text-xl font-semibold md:text-2xl">
               {resume?.firstName} {resume?.lastName}
