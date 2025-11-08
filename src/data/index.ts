@@ -1,4 +1,4 @@
-import  type { Job, Notification } from "../types";
+import  type { Job, Notification, ResumeDetails } from "../types";
 
 export const mockJobs: Job[] = [
     {
@@ -616,3 +616,46 @@ export const mockJobs: Job[] = [
     },
     
 ];
+
+
+export const mockResumes: ResumeDetails[] = [
+  {
+    id: 1,
+    firstName: 'Blessing',
+    lastName: 'Bella',
+    location: 'Nigeria',
+    email: 'blessingbella@gmail.com',
+    phone: '+2349045637645',
+    summary: 'Experienced software developer with 5+ years of experience in web development, specializing in React and TypeScript. Passionate about creating user-friendly applications with clean, maintainable code',
+    experience: [
+      {
+        id: 1,
+        jobTitle: 'Senior Frontend Developer',
+        startDate: 'Jan 2023',
+        endDate: 'April 2025',
+        company: 'TechCorp Inc.',
+        description: "Led the development of the company's flagship product using React and TypeScript. Improved application performance by 40% through code optimization and lazy loading. Implemented CI/CD pipelines to streamline the development process. Mentored junior developers and conducted code reviews."
+      },
+       {
+        id: 2,
+        jobTitle: 'Frontend Developer',
+        startDate: 'March 2022',
+        endDate: 'Dec 2022',
+        company: 'WebSolutions',
+        description: "Developed responsive web applications using React, Redux, and Node.js. Collaborated with UX designers to implement user-friendly interfaces. Integrated RESTful APIs and GraphQL endpoints. Participated in agile development processes and sprint planning."
+      }
+    ],
+    education: [
+      {
+        id: 1,
+        degree: 'Bachelor of Science',
+        course: 'Computer Science',
+        institution: 'University of Wesley',
+        graduationDate: 'Jan 2018 - Dec 2022',
+        location: ''
+      }
+    ],
+    skills: ['React', 'TypeScript', 'JavaScript', 'HTML/CSS', 'Node.js', 'Redux', 'Git', 'CI/CD', 'Agile'],
+    fileName: 'Blessing Resume'
+  }
+]

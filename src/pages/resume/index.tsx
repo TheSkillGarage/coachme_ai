@@ -1,10 +1,12 @@
 import { useState } from "react";
 import UploadResume from "./upload";
+import Resumes from "./resumecard";
 
-type ResumeStep = "upload" | "create-resume" | "preview" | "complete";
+type ResumeStep = "upload" | "create-resume" | "preview" | "complete" | "resumes-list";
 
 export default function Resume() {
-  const [currentStep, setCurrentStep] = useState<ResumeStep>("upload");
+  const [currentStep, setCurrentStep] = useState<ResumeStep | string>("resumes-list");
+  const [redirectFromList, setRedirectFromList] = useState(false);
 
   const handleUploadComplete = () => {
     // Move to the next step after upload is complete
@@ -25,7 +27,10 @@ export default function Resume() {
     <div className="min-h-screen">
       {/* Step 1: Upload Resume */}
       {currentStep === "upload" && (
-        <UploadResume onContinueToNextStep={handleUploadComplete} />
+        <UploadResume 
+          onContinueToNextStep={handleUploadComplete} 
+          redirectFromList={redirectFromList} 
+        />
       )}
 
       {/* Step 2: Create Resume Form (Not yet implemented) */}
@@ -105,6 +110,14 @@ export default function Resume() {
           </div>
         </div>
       )}
+
+       {/* Step 5: Resumes list */}
+       {currentStep === "resumes-list" && (
+          <Resumes 
+            setCurrentStep={setCurrentStep} 
+            setRedirectFromList={setRedirectFromList} 
+          />
+        )}
     </div>
   );
 }
