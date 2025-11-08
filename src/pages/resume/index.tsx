@@ -1,11 +1,22 @@
 import { useState } from "react";
 import UploadResume from "./upload";
 import Resumes from "./resumecard";
+import ResumeName from "./nameyourresume/resumename";
+import ResumeComplete from "./nameyourresume/resumecomplete";
 
-type ResumeStep = "upload" | "create-resume" | "preview" | "complete" | "resumes-list";
+type ResumeStep =
+  | "upload"
+  | "create-resume"
+  | "preview"
+  | "complete"
+  | "resumes-list"
+  | "resumename"
+  | "resumecomplete";
 
 export default function Resume() {
-  const [currentStep, setCurrentStep] = useState<ResumeStep | string>("resumes-list");
+  const [currentStep, setCurrentStep] = useState<ResumeStep | string>(
+    "resumes-list"
+  );
   const [redirectFromList, setRedirectFromList] = useState(false);
 
   const handleUploadComplete = () => {
@@ -19,17 +30,16 @@ export default function Resume() {
   };
 
   const handleComplete = () => {
-    // Final step
-    setCurrentStep("complete");
-  };
+  setCurrentStep("resumename"); // apna step open hoga unke complete ke baad
+};
 
   return (
     <div className="min-h-screen">
       {/* Step 1: Upload Resume */}
       {currentStep === "upload" && (
-        <UploadResume 
-          onContinueToNextStep={handleUploadComplete} 
-          redirectFromList={redirectFromList} 
+        <UploadResume
+          onContinueToNextStep={handleUploadComplete}
+          redirectFromList={redirectFromList}
         />
       )}
 
@@ -38,7 +48,9 @@ export default function Resume() {
         <div className="min-h-full bg-background px-6 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white p-8 rounded-xl border border-[#e8e8e8]">
-              <h2 className="text-2xl font-semibold mb-4">Create Your Resume</h2>
+              <h2 className="text-2xl font-semibold mb-4">
+                Create Your Resume
+              </h2>
               <p className="text-muted-foreground mb-6">
                 Fill in your details to create a professional resume
               </p>
@@ -65,7 +77,9 @@ export default function Resume() {
         <div className="min-h-full bg-background px-6 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white p-8 rounded-xl border border-[#e8e8e8]">
-              <h2 className="text-2xl font-semibold mb-4">Preview Your Resume</h2>
+              <h2 className="text-2xl font-semibold mb-4">
+                Preview Your Resume
+              </h2>
               {/* TODO: Add ResumePreview component here */}
               <div className="p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
                 <p className="text-gray-500">Resume Preview Component</p>
@@ -103,7 +117,9 @@ export default function Resume() {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold mb-2">Resume Created Successfully!</h2>
+            <h2 className="text-2xl font-semibold mb-2">
+              Resume Created Successfully!
+            </h2>
             <p className="text-muted-foreground">
               Your resume is ready to download and share
             </p>
@@ -111,13 +127,22 @@ export default function Resume() {
         </div>
       )}
 
-       {/* Step 5: Resumes list */}
-       {currentStep === "resumes-list" && (
-          <Resumes 
-            setCurrentStep={setCurrentStep} 
-            setRedirectFromList={setRedirectFromList} 
-          />
-        )}
+      {/* Step 5: Resumes list */}
+      {currentStep === "resumes-list" && (
+        <Resumes
+          setCurrentStep={setCurrentStep}
+          setRedirectFromList={setRedirectFromList}
+        />
+      )}
+      {/* Step 6: Name Your Resume */}
+      {currentStep === "resumename" && (
+        <ResumeName setCurrentStep={setCurrentStep} />
+      )}
+
+      {/* Step 7: Resume Complete */}
+      {currentStep === "resumecomplete" && (
+        <ResumeComplete setCurrentStep={setCurrentStep} />
+      )}
     </div>
   );
 }
