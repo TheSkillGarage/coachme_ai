@@ -96,6 +96,10 @@ export default function Resumes({
     navigate(`/user/resume/${id}`);
   };
 
+  const handleResumeEdit = (id: number) => {
+    navigate(`/user/resume/edit/${id}`);
+  };
+
   const handleToggle = (id: number) => {
     setOpenId((prev) => (prev === id ? null : id));
   };
@@ -273,7 +277,7 @@ export default function Resumes({
                         </button>
                         <button
                           onClick={() => {
-                            handleRedirect(Number(openId));
+                            handleResumeEdit(Number(openId));
                           }}
                           className="
                             flex

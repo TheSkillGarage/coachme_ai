@@ -18,6 +18,7 @@ import SignupPage from "../pages/auth/createaccount"
 import ResetPage from "../pages/auth/resetpasword"
 import JobDetailsPage from "../pages/jobsearch/details"
 import { ResumeDetails } from "../pages/resume/details"
+import EditResume from "../pages/resume/create-edit/edit"
 const Router = () => {
     const routes = [
         {
@@ -75,6 +76,10 @@ const Router = () => {
                     element: <ResumeDetails />
                 },
                 {
+                    path: "resume/edit/:id",
+                    element: <EditResume />
+                },
+                {
                     path: "profile",
                     element: <Profile />
                 },
@@ -101,7 +106,7 @@ const Router = () => {
                 {
                     path: "jobs/:id",
                     element: <JobDetailsPage />,
-                  },
+                },
                 {
                     path: "analytics",
                     element: <Analytics />

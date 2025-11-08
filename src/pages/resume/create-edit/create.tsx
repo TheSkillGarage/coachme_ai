@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "../../../components/ui/card";
 import { Input } from "../../../components/ui/input/input";
 import Button from "../../../components/ui/button/button";
-import { Plus, Trash2 } from "lucide-react";
+import { FilePlayIcon, Plus, Trash2 } from "lucide-react";
 import * as yup from "yup";
 
 interface PersonalData {
@@ -405,8 +405,9 @@ export default function CreateResume() {
                     <Button variant="outline" className="text-gray-500 w-full sm:w-auto">
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} className="w-full sm:w-auto">
-                        Continue →
+                    <Button icon={<FilePlayIcon className="w-4 h-4" />}
+                        iconPosition="left" onClick={handleSubmit} className="w-full sm:w-auto">
+                        Save Changes
                     </Button>
                 </div>
             </motion.div>
