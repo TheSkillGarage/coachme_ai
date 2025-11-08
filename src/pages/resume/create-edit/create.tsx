@@ -33,7 +33,7 @@ interface Education {
 
 type ErrorMessages = Partial<Record<string, string | string[]>>;
 
-export default function ResumeInformation() {
+export default function CreateResume() {
     // Yup Schemas
     const personalSchema = yup.object().shape({
         firstName: yup.string().required("First name is required"),
@@ -87,21 +87,14 @@ export default function ResumeInformation() {
     // Handlers
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        const updatedData = { ...formData, [name]: value };
-        setFormData(updatedData);
+        setFormData((prev) => ({ ...prev, [name]: value }));
 
         try {
-            await personalSchema.validateAt(name, updatedData);
-            setErrors((prev) => ({
-                ...prev,
-                personal: { ...prev.personal, [name]: undefined },
-            }));
+            await personalSchema.validateAt(name, { ...formData, [name]: value });
+            setErrors((prev) => ({ ...prev, personal: { ...prev.personal, [name]: undefined } }));
         } catch (err) {
             if (err instanceof yup.ValidationError) {
-                setErrors((prev) => ({
-                    ...prev,
-                    personal: { ...prev.personal, [name]: err.message },
-                }));
+                setErrors((prev) => ({ ...prev, personal: { ...prev.personal, [name]: err.message } }));
             }
         }
     };
@@ -254,7 +247,7 @@ export default function ResumeInformation() {
                 <Card className="w-full shadow-none mb-6" hoverable={false}>
                     <h3 className="text-lg font-semibold mb-4">Personal</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                        {["firstName", "lastName", "email", "phone", "location"].map((field) => (
+                        {["first Name", "last Name", "email", "phone", "location"].map((field) => (
                             <div key={field}>
                                 <Input
                                     label={field.charAt(0).toUpperCase() + field.slice(1)}

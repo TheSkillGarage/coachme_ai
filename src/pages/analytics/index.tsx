@@ -1,6 +1,6 @@
 
 import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
-import ResumeInformation from '../resume/resumeinfo';
+import EditResume from '../resume/create-edit/edit';
 export default function Main() {
     const tags: HelmetProps = {
         pageTitle: 'Analytics',
@@ -8,7 +8,8 @@ export default function Main() {
     }
     return (
         <HelmetLayout {...tags}>
-            <ResumeInformation />
+            {/* <CreateResume /> */}
+            <EditResume />
         </HelmetLayout>
     )
 }
