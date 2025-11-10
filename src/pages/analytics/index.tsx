@@ -7,8 +7,7 @@ export default function Main() {
     }
     return (
         <HelmetLayout {...tags}>
-            <div className=''>Analytics
-            </div>
+
         </HelmetLayout>
     )
 }
