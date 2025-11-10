@@ -8,7 +8,7 @@ import FaqSection from './FAQs';
 export default function Main() {
     const tags: HelmetProps = {
         pageTitle: 'Home',
-        description: ""
+        description: "Land your dream job faster with automated job application, smart resumes, and tailored cover letters  all in one platform."
     }
     return (
         <HelmetLayout {...tags}>
@@ -17,7 +17,7 @@ export default function Main() {
                 <FeaturesSection />
                 <HowItWorks />
                 <TestimonialsSection />
-                <FaqSection/>
+                <FaqSection />
             </PageLayout>
         </HelmetLayout>
     )
