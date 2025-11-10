@@ -39,7 +39,7 @@ export const ApplicationsTable: React.FC<ApplicationsTableProps> = ({
   ];
 
   return (
-    <div className="max-w-[392px] md:max-w-full">
+    <div className="max-w-[360px] md:max-w-[500px] lg:max-w-[700px] xl:max-w-full">
       <div className="overflow-x-hidden">
         <Table columns={applicationsColumns} data={filtered} striped={false} />
       </div>
