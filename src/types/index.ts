@@ -113,3 +113,29 @@ export interface ResumeDetails extends PersonalData {
     skills: string[];
     fileName: string;
 }
+
+export interface ParsedResumeData {
+  personal: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    location: string;
+    summary: string;
+  };
+  experiences: Array<{
+    jobTitle: string;
+    company: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
+  educations: Array<{
+    degree: string;
+    course: string;
+    institution: string;
+    graduationDate: string;
+    location: string;
+  }>;
+  skills: string[];
+}

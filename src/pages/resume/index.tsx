@@ -1,8 +1,8 @@
 import { useState } from "react";
 import UploadResume from "./upload";
 import Resumes from "./resumecard";
-import ResumeName from "./nameyourresume/resumename";
-import ResumeComplete from "./nameyourresume/resumecomplete";
+import CreateResume from "./create-edit/create";
+import type { ParsedResumeData } from "../../types";
 
 type ResumeStep =
   | "upload"
@@ -18,9 +18,12 @@ export default function Resume() {
     "resumes-list"
   );
   const [redirectFromList, setRedirectFromList] = useState(false);
+  const [parsedResumeData, setParsedResumeData] = useState<ParsedResumeData | null>(null);
 
-  const handleUploadComplete = () => {
-    // Move to the next step after upload is complete
+  const handleUploadComplete = (extractedData: ParsedResumeData | null) => {
+    // Store the parsed resume data
+    setParsedResumeData(extractedData);
+    // Move to the next step
     setCurrentStep("create-resume");
   };
 
@@ -43,33 +46,13 @@ export default function Resume() {
         />
       )}
 
-      {/* Step 2: Create Resume Form (Not yet implemented) */}
+      {/* Step 2: Create Resume Form - Now with prefilled data */}
       {currentStep === "create-resume" && (
-        <div className="min-h-full bg-background px-6 py-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white p-8 rounded-xl border border-[#e8e8e8]">
-              <h2 className="text-2xl font-semibold mb-4">
-                Create Your Resume
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                Fill in your details to create a professional resume
-              </p>
-              {/* TODO: Add CreateResumeForm component here */}
-              <div className="p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
-                <p className="text-gray-500">Create Resume Form Component</p>
-                <p className="text-sm text-gray-400 mt-2">To be implemented</p>
-              </div>
-              <div className="mt-6 flex justify-end">
-                <button
-                  onClick={handleResumeCreated}
-                  className="px-6 py-2 bg-[#66005e] text-white rounded-lg hover:bg-[#4d0048]"
-                >
-                  Preview Resume
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CreateResume 
+          initialData={parsedResumeData}
+          onSave={handleResumeCreated}
+          onCancel={() => setCurrentStep("resumes-list")}
+        />
       )}
 
       {/* Step 3: Preview Resume (Not yet implemented) */}
@@ -77,10 +60,7 @@ export default function Resume() {
         <div className="min-h-full bg-background px-6 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white p-8 rounded-xl border border-[#e8e8e8]">
-              <h2 className="text-2xl font-semibold mb-4">
-                Preview Your Resume
-              </h2>
-              {/* TODO: Add ResumePreview component here */}
+              <h2 className="text-2xl font-semibold mb-4">Preview Your Resume</h2>
               <div className="p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
                 <p className="text-gray-500">Resume Preview Component</p>
                 <p className="text-sm text-gray-400 mt-2">To be implemented</p>
@@ -98,7 +78,7 @@ export default function Resume() {
         </div>
       )}
 
-      {/* Step 4: Complete (Not yet implemented) */}
+      {/* Step 4: Complete */}
       {currentStep === "complete" && (
         <div className="min-h-full bg-background px-6 py-8 flex items-center justify-center">
           <div className="text-center">
@@ -129,19 +109,10 @@ export default function Resume() {
 
       {/* Step 5: Resumes list */}
       {currentStep === "resumes-list" && (
-        <Resumes
-          setCurrentStep={setCurrentStep}
-          setRedirectFromList={setRedirectFromList}
+        <Resumes 
+          setCurrentStep={setCurrentStep} 
+          setRedirectFromList={setRedirectFromList} 
         />
-      )}
-      {/* Step 6: Name Your Resume */}
-      {currentStep === "resumename" && (
-        <ResumeName setCurrentStep={setCurrentStep} />
-      )}
-
-      {/* Step 7: Resume Complete */}
-      {currentStep === "resumecomplete" && (
-        <ResumeComplete setCurrentStep={setCurrentStep} />
       )}
     </div>
   );

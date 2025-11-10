@@ -4,15 +4,18 @@ import { useResumeManager } from "../../../hooks/useResumeManager";
 import { EmptyResumeState } from "./EmptyResume";
 import { UploadResumeFlow } from "./UploadResume";
 import { UploadSuccessState } from "./UploadSuccess";
-import type { UploadStage } from "../../../types";
+import type { UploadStage, ParsedResumeData } from "../../../types";
+import { parseResumeFile } from "../../../utils/resumeParser";
 
 interface UploadResumeProps {
-  onContinueToNextStep?: () => void;
+  onContinueToNextStep?: (extractedData: ParsedResumeData | null) => void;
   redirectFromList?: boolean;
 }
 
 export default function UploadResume({ onContinueToNextStep, redirectFromList }: UploadResumeProps) {
   const [currentStage, setCurrentStage] = useState<UploadStage>("list");
+  const [parsedData, setParsedData] = useState<ParsedResumeData | null>(null);
+  const [isParsing, setIsParsing] = useState(false);
 
   const {
     selectedFile,
@@ -40,6 +43,19 @@ export default function UploadResume({ onContinueToNextStep, redirectFromList }:
   const handleUploadResume = async () => {
     if (selectedFile) {
       await uploadResume(selectedFile);
+    
+      setIsParsing(true);
+      try {
+        const extractedData = await parseResumeFile(selectedFile);
+        setParsedData(extractedData);
+        console.log("Extracted resume data:", extractedData);
+      } catch (error) {
+        console.error("Error parsing resume:", error);
+        setParsedData(null);
+      } finally {
+        setIsParsing(false);
+      }
+      
       setCurrentStage("success");
       clearSelectedFile();
     }
@@ -48,6 +64,7 @@ export default function UploadResume({ onContinueToNextStep, redirectFromList }:
   const handleCancelUpload = () => {
     clearSelectedFile();
     resetUploadState();
+    setParsedData(null);
     setCurrentStage("upload");
   };
 
@@ -56,7 +73,7 @@ export default function UploadResume({ onContinueToNextStep, redirectFromList }:
     setCurrentStage("list");
     
     if (onContinueToNextStep) {
-      onContinueToNextStep();
+    onContinueToNextStep(parsedData);
     }
   };
 
@@ -66,6 +83,7 @@ export default function UploadResume({ onContinueToNextStep, redirectFromList }:
         fileName={uploadedFileName}
         onCancel={handleCancelUpload}
         onContinue={handleContinue}
+        isParsing={isParsing}
       />
     );
   }
