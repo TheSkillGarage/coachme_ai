@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
-// Props ka type: sirf do steps use ho rahe hain
-type Step = "resumename" | "resumecomplete";
+type Step = "resumename" | "complete";
 
 interface ResumeNameProps {
   setCurrentStep: (step: Step) => void;
@@ -13,8 +12,7 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
   const [isDefault, setIsDefault] = useState<boolean>(false);
 
   const handleContinue = () => {
-    // yahi main fix hai: next step pe bhejo
-    setCurrentStep("resumecomplete");
+    setCurrentStep("complete");
   };
 
   return (
@@ -38,8 +36,6 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
           Give your resume a name to help you identify it when applying for
           jobs.
         </p>
-
-        {/* Inner Box */}
         <div className="border border-[#E5E5E5] rounded-xl p-6 mt-6">
           <label className="text-sm font-medium text-[#1D1D1F]">
             Resume Name
@@ -55,7 +51,6 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
             Choose a name that helps you remember what this resume is for
           </p>
 
-          {/* Toggle */}
           <div className="mt-6 flex items-center gap-3">
             <button
               type="button"
@@ -75,14 +70,12 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
             </span>
           </div>
 
-          {/* Info */}
           <div className="mt-6 bg-[#F5F5F5] p-4 rounded-md text-sm text-[#1D1D1F]">
             Your resume will be saved and ready to use when applying for jobs.
             You can edit it anytime from your resume dashboard.
           </div>
         </div>
 
-        {/* Buttons */}
         <div className="mt-8 flex flex-col md:flex-row justify-between gap-3 md:gap-0">
           <button
             type="button"
