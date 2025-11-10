@@ -45,7 +45,7 @@ const ResumeComplete: React.FC<ResumeCompleteProps> = ({ setCurrentStep }) => {
           </button>
 
           <button
-            onClick={() => navigate("/jobs")}
+            onClick={() => navigate("/user/jobs")}
             className="cursor-pointer px-6 py-2 bg-[#6D0079] text-white rounded-md hover:bg-[#580062] transition w-full md:w-auto"
           >
             Start Job Search

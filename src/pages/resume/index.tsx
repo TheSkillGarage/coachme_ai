@@ -2,8 +2,8 @@ import { useState } from "react";
 import UploadResume from "./upload";
 import Resumes from "./resumecard";
 import CreateResume from "./create-edit/create";
-import ResumeName from "./nameyourresume/resumename";
-import ResumeComplete from "./nameyourresume/resumecomplete";
+import ResumeName from "./resume-name/resumename";
+import ResumeComplete from "./resume-name/resumecomplete";
 import type { ParsedResumeData } from "../../types";
 
 type ResumeStep =
