@@ -7,24 +7,28 @@ export interface Option {
     value: string;
 }
 
-interface CustomSelectProps {
+// Create a generic type that changes return type based on `multiple`
+interface BaseSelectProps<T> {
     label?: React.ReactNode;
     placeholder?: string;
     options: Option[];
-    value?: string | string[];
-    onChange?: (value: string | string[]) => void;
+    value?: T;
+    onChange?: (value: T) => void;
     searchable?: boolean;
-    multiple?: boolean;
     variant?: "solid" | "outline" | "ghost";
     disabled?: boolean;
     className?: string;
 }
 
+type SingleSelectProps = BaseSelectProps<string> & { multiple?: false };
+type MultiSelectProps = BaseSelectProps<string[]> & { multiple: true };
+type CustomSelectProps = SingleSelectProps | MultiSelectProps;
+
 const CustomSelect: React.FC<CustomSelectProps> = ({
     label,
     placeholder = "Select option",
     options,
-    value = [],
+    value,
     onChange,
     searchable = false,
     multiple = false,
@@ -47,9 +51,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const isMulti = Array.isArray(value);
     const selectedValues = multiple
-        ? (value as string[])
+        ? (Array.isArray(value) ? value : [])
         : value
             ? [value as string]
             : [];
@@ -71,20 +74,21 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
     const handleSelect = (val: string) => {
         if (multiple) {
-            if (selectedValues.includes(val)) {
-                onChange?.(selectedValues.filter((v) => v !== val));
-            } else {
-                onChange?.([...selectedValues, val]);
-            }
+            const newValues = selectedValues.includes(val)
+                ? selectedValues.filter((v) => v !== val)
+                : [...selectedValues, val];
+            onChange?.(newValues as any);
         } else {
-            onChange?.(val);
+            onChange?.(val as any);
             setIsOpen(false);
         }
     };
 
     const removeItem = (val: string, e: React.MouseEvent) => {
         e.stopPropagation();
-        onChange?.(selectedValues.filter((v) => v !== val));
+        if (!multiple) return;
+        const newValues = selectedValues.filter((v) => v !== val);
+        onChange?.(newValues as any);
     };
 
     return (
@@ -115,7 +119,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                                     return (
                                         <div
                                             key={val}
-                                            className="flex items-center gap-2 bg-grey-50 text-grey-500 px-3 py-1 rounded-lg text-sm"
+                                            className="flex items-center gap-2 bg-gray-50 text-gray-600 px-3 py-1 rounded-lg text-sm"
                                         >
                                             <span>{option?.label}</span>
                                             <button
@@ -149,12 +153,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
                 {isOpen && (
                     <div className="absolute z-50 mt-2 w-full bg-white border border-gray-200 rounded-2xl shadow-lg">
                         {searchable && (
-                            <div className="flex items-center px-3 py-2 border-b border-grey-100">
+                            <div className="flex items-center px-3 py-2 border-b border-gray-100">
                                 <Search className="w-4 h-4 text-gray-400 mr-2" />
                                 <input
                                     type="text"
                                     placeholder="Search..."
-                                    className="w-full text-sm outline-none bg-transparent placeholder:text-100"
+                                    className="w-full text-sm outline-none bg-transparent placeholder:text-gray-300"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     onClick={(e) => e.stopPropagation()}

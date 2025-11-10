@@ -12,6 +12,7 @@ import { Sparkles } from "lucide-react";
 import LetterScreen from "./letterscreen";
 import Initiaditor from "./lnitiaditor";
 import { defaultData } from "./data";
+import { useToast } from "../../hooks/useToast";
 
 export default function Main() {
     const tags: HelmetProps = {
@@ -19,6 +20,8 @@ export default function Main() {
         description: "",
     };
 
+    
+    const { showToast } = useToast();
     const [multi, setMulti] = useState<string[]>([]);
     const [singleSkill, setSingleSkill] = useState<string | undefined>(undefined);
     const [jobTitle, setJobTitle] = useState("");
@@ -52,7 +55,7 @@ export default function Main() {
 
     const handleGenerateLetter = () => {
         if (!jobTitle || !companyName || !jobDescription) {
-            alert("Please fill in all required fields before generating.");
+            showToast("Please fill in all required fields before generating.");
             return;
         }
 

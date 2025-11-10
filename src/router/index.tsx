@@ -17,6 +17,7 @@ import LoginPage from "../pages/auth/login"
 import SignupPage from "../pages/auth/createaccount"
 import ResetPage from "../pages/auth/resetpasword"
 import JobDetailsPage from "../pages/jobsearch/details"
+import { ResumeDetails } from "../pages/resume/details"
 const Router = () => {
     const routes = [
         {
@@ -68,6 +69,10 @@ const Router = () => {
                 {
                     path: "resume",
                     element: <Resume />
+                },
+                {
+                    path: "resume/:id",
+                    element: <ResumeDetails />
                 },
                 {
                     path: "profile",
