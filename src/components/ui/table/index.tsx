@@ -54,8 +54,8 @@ export function Table<T>({
         className
       )}
     >
-      <div className="overflow-x-auto">
-        <table className="min-w-[700px] w-full border-collapse">
+      <div className="w-full overflow-x-auto">
+        <table className="min-w-[600px] w-full border-collapse">
           <thead className="bg-gray-50 text-gray-700 text-sm font-semibold">
             <tr>
               {columns.map((col) => (

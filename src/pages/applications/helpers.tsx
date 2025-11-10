@@ -66,7 +66,7 @@ export const calculateMonthlyChangeByStatus = (data: Application[]) => {
       return d.getMonth() === lastMonth && d.getFullYear() === lastMonthYear;
     }).length;
 
-    const total = currentMonthCount + lastMonthCount;
+    const total = items.length;
     const diff = currentMonthCount - lastMonthCount;
     const percentChange =
       lastMonthCount === 0 ? 100 : (diff / lastMonthCount) * 100;
@@ -102,7 +102,7 @@ export const calculateMonthlyChangeByStatus = (data: Application[]) => {
     totalAll: {
       currentMonthCount: totalCurrentAll,
       lastMonthCount: totalLastAll,
-      total: totalCurrentAll + totalLastAll,
+      total: data.length,
       diff: overallDiff,
       percentChange: overallPercent,
       trend: overallDiff > 0 ? 'up' : overallDiff < 0 ? 'down' : 'steady',
