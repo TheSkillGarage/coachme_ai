@@ -12,6 +12,7 @@ import { CustomDropdown } from '../../../components/ui/dropdown';
 import { useState } from 'react';
 import Dialog from '../../../components/ui/dialog';
 import { useNavigate } from 'react-router-dom';
+import type {ResumeStep} from '../index'
 
 interface ResumeCard {
   id: number;
@@ -27,7 +28,7 @@ interface ResumeCard {
 }
 
 interface IntroProps {
-  setCurrentStep: (step: string) => void;
+  setCurrentStep: (step: ResumeStep) => void;
   setRedirectFromList: (value: boolean) => void;
 }
 const resumes: ResumeCard[] = [
