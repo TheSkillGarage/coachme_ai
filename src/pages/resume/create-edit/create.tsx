@@ -232,47 +232,76 @@ export default function CreateResume({ initialData, onSave, onCancel }: CreateRe
 
     const handleSubmit = async () => {
         try {
-            await personalSchema.validate(formData, { abortEarly: false });
-            await Promise.all(experiences.map((exp) => experienceSchema.validate(exp, { abortEarly: false })));
-            await Promise.all(educations.map((edu) => educationSchema.validate(edu, { abortEarly: false })));
+            const personalValidation = await personalSchema
+                .validate(formData, { abortEarly: false })
+                .then(() => null)
+                .catch((err) => err);
+
+            const experienceValidations = await Promise.all(
+                experiences.map((exp, i) =>
+                    experienceSchema
+                        .validate(exp, { abortEarly: false })
+                        .then(() => null)
+                        .catch((err) => ({ index: i, err }))
+                )
+            );
+
+            const educationValidations = await Promise.all(
+                educations.map((edu, i) =>
+                    educationSchema
+                        .validate(edu, { abortEarly: false })
+                        .then(() => null)
+                        .catch((err) => ({ index: i, err }))
+                )
+            );
+
+            const newErrors: {
+                personal?: ErrorMessages;
+                experiences?: ErrorMessages[];
+                educations?: ErrorMessages[];
+            } = { personal: {}, experiences: [], educations: [] };
+
+            if (personalValidation?.inner) {
+                personalValidation.inner.forEach((e: yup.ValidationError) => {
+                    if (e.path) newErrors.personal![e.path] = e.message;
+                });
+            }
+
+            experienceValidations.forEach((res) => {
+                if (res?.err?.inner) {
+                    const errObj: ErrorMessages = {};
+                    res.err.inner.forEach((e: yup.ValidationError) => (e.path ? (errObj[e.path] = e.message) : null));
+                    newErrors.experiences![res.index] = errObj;
+                }
+            });
+
+            educationValidations.forEach((res) => {
+                if (res?.err?.inner) {
+                    const errObj: ErrorMessages = {};
+                    res.err.inner.forEach((e: yup.ValidationError) => (e.path ? (errObj[e.path] = e.message) : null));
+                    newErrors.educations![res.index] = errObj;
+                }
+            });
+
+            const hasErrors =
+                Object.keys(newErrors.personal || {}).length > 0 ||
+                newErrors.experiences!.some((e) => e && Object.keys(e).length > 0) ||
+                newErrors.educations!.some((e) => e && Object.keys(e).length > 0);
+
+            if (hasErrors) {
+                setErrors(newErrors);
+                return;
+            }
+
             if (onSave) {
                 onSave();
             } else {
                 alert("Form submitted successfully!");
             }
         } catch (err) {
-            if (err instanceof yup.ValidationError) {
-                const personalErrors: ErrorMessages = {};
-                const experienceErrors: ErrorMessages[] = [];
-                const educationErrors: ErrorMessages[] = [];
-
-                err.inner.forEach((e) => {
-                    if (!e.path) return;
-                    if (Object.prototype.hasOwnProperty.call(formData, e.path)) {
-                        personalErrors[e.path] = e.message;
-                    } else {
-                        experiences.forEach((exp, idx) => {
-                            if (Object.prototype.hasOwnProperty.call(exp, e.path as string)) {
-                                experienceErrors[idx] = { ...(experienceErrors[idx] || {}), [e.path as string]: e.message };
-                            }
-                        });
-                        educations.forEach((edu, idx) => {
-                            if (Object.prototype.hasOwnProperty.call(edu, e.path as string)) {
-                                educationErrors[idx] = { ...(educationErrors[idx] || {}), [e.path as string]: e.message };
-                            }
-                        });
-                    }
-                });
-
-                setErrors({
-                    personal: personalErrors,
-                    experiences: experienceErrors,
-                    educations: educationErrors,
-                });
-            }
+            console.error("Unexpected validation error:", err);
         }
     };
-
     return (
         <Card hoverable={false} className="shadow-none w-full">
             <motion.div
