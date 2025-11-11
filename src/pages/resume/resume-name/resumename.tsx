@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
+
+// Props ka type: sirf do steps use ho rahe hain
 type Step = "resumename" | "complete";
 
 interface ResumeNameProps {
@@ -8,20 +11,25 @@ interface ResumeNameProps {
 }
 
 const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
+  const navigate = useNavigate();
   const [resumeName, setResumeName] = useState<string>("");
   const [isDefault, setIsDefault] = useState<boolean>(false);
 
   const handleContinue = () => {
+    // yahi main fix hai: next step pe bhejo
     setCurrentStep("complete");
   };
 
   return (
-    <div className="w-full h-full px-6 py-6">
+    <div className="w-full mx-auto px-6 py-8">
       {/* Back Button */}
       <button
         type="button"
-        onClick={() => setCurrentStep("resumename")} // same page me back ka visual; agar previous step aur hai to waha set karo
-        className="flex items-center gap-2 text-[#1D1D1F] hover:text-[#6D0079] transition mb-6"
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-[#1D1D1F] px-4 py-1 mb-7  bg-white
+            rounded-3xl border border-[rgba(255,255,255,1)]
+            transition-transform
+            hover:text-foreground hover:-translate-y-[1px] cursor-pointer"
       >
         <ArrowLeft size={18} />
         Back
@@ -36,6 +44,8 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
           Give your resume a name to help you identify it when applying for
           jobs.
         </p>
+
+        {/* Inner Box */}
         <div className="border border-[#E5E5E5] rounded-xl p-6 mt-6">
           <label className="text-sm font-medium text-[#1D1D1F]">
             Resume Name
@@ -51,16 +61,17 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
             Choose a name that helps you remember what this resume is for
           </p>
 
-          <div className="mt-6 flex items-center gap-3">
+          {/* Toggle */}
+          <div className="mt-6 flex items-center gap-2">
             <button
               type="button"
               onClick={() => setIsDefault((v) => !v)}
-              className={`w-11 h-6 rounded-full p-1 flex items-center transition ${
+              className={`w-13 h-8 rounded-full p-1 flex items-center transition ${
                 isDefault ? "bg-[#6D0079]" : "bg-gray-300"
               }`}
             >
               <div
-                className={`w-4 h-4 bg-white rounded-full transition ${
+                className={`w-6 h-6 bg-white rounded-full transition ${
                   isDefault ? "translate-x-5" : "translate-x-0"
                 }`}
               />
@@ -70,12 +81,14 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
             </span>
           </div>
 
+          {/* Info */}
           <div className="mt-6 bg-[#F5F5F5] p-4 rounded-md text-sm text-[#1D1D1F]">
             Your resume will be saved and ready to use when applying for jobs.
             You can edit it anytime from your resume dashboard.
           </div>
         </div>
 
+        {/* Buttons */}
         <div className="mt-8 flex flex-col md:flex-row justify-between gap-3 md:gap-0">
           <button
             type="button"
@@ -89,7 +102,7 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
             onClick={handleContinue}
             className="flex items-center gap-1 cursor-pointer w-full md:w-auto px-6 py-2 bg-[#6D0079] text-white rounded-md hover:bg-[#580062] transition"
           >
-            Continue <ArrowRight size={13}/>
+            Continue <ArrowRight size={13} />
           </button>
         </div>
       </div>

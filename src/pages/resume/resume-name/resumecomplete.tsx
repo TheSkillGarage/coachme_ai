@@ -16,7 +16,10 @@ const ResumeComplete: React.FC<ResumeCompleteProps> = ({ setCurrentStep }) => {
       {/* Back Button */}
       <button
         onClick={() => setCurrentStep("resumename")}
-        className="cursor-pointer flex items-center gap-2 text-[#1D1D1F] hover:text-[#6D0079] transition rounded-lg px-4 py-2 w-fit mb-6"
+        className="cursor-pointer flex items-center gap-2 text-[#1D1D1F] px-4 py-1 w-fit mb-6 bg-white
+            rounded-3xl border border-[rgba(255,255,255,1)]
+            transition-transform
+            hover:text-foreground hover:-translate-y-[1px] cursor-pointer"
       >
         <ArrowLeft size={18} />
         Back
