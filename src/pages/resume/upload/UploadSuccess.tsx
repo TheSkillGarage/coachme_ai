@@ -1,5 +1,5 @@
 import type React from "react";
-import { ArrowLeft, CheckCircle, X, ArrowRight, Loader2 } from "lucide-react"; // ✅ ADD Loader2
+import { CheckCircle, X, ArrowRight, Loader2 } from "lucide-react"; // ✅ ADD Loader2
 import Button from "../../../components/ui/button/button";
 
 interface UploadSuccessStateProps {
@@ -18,18 +18,6 @@ export const UploadSuccessState: React.FC<UploadSuccessStateProps> = ({
   return (
     <div className="min-h-full bg-background p-0 lg:px-6 lg:py-8">
       <div className="mx-auto">
-        <div className="mb-8">
-          <Button
-            variant="ghost"
-            onClick={onCancel}
-            className="text-muted-foreground hover:text-foreground rounded-full px-3 py-2 bg-white border border-[rgba(255,255,255,1)] transition-all"
-            icon={<ArrowLeft className="w-4 h-4" />}
-            iconPosition="left"
-          >
-            Back
-          </Button>
-        </div>
-
         <div className="bg-white px-4 md:px-10 pt-4 md:pt-10 pb-4 md:pb-12 rounded-xl border border-[#e8e8e8]">
           <h2 className="text-[#1b1b1b] text-xl md:text-2xl font-semibold mb-2">
             Upload Your Resume
