@@ -291,7 +291,7 @@ export default function EditResume() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="w-full max-w-4xl mx-auto py-4 sm:py-6"
+                className="w-full  mx-auto py-4 sm:py-6"
             >
                 <h2 className="text-2xl font-semibold mb-2">Resume Information</h2>
                 <p className="text-sm text-muted-foreground mb-6">
@@ -331,7 +331,7 @@ export default function EditResume() {
                 </Card>
 
                 {/* Experience Section */}
-                <section className="mt-6">
+                <Card className="mt-6 shadow-none w-full" hoverable={false}>
                     <AnimatePresence>
                         {experiences.map((exp, index) => (
                             <motion.div
@@ -341,7 +341,7 @@ export default function EditResume() {
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <Card className="relative p-4 bg-muted/20 mb-4 shadow-none w-full" hoverable={false}>
+                                <div className="relative py-4 bg-muted/20 mb-4 shadow-none w-full">
                                     <h3 className="text-lg font-semibold mb-4">Experience</h3>
                                     {index > 0 && (
                                         <button
@@ -380,23 +380,24 @@ export default function EditResume() {
                                             <p className="text-red-500 text-xs mt-1">{errors.experiences[index].description}</p>
                                         )}
                                     </div>
-                                </Card>
+
+                                </div>
                             </motion.div>
                         ))}
                     </AnimatePresence>
                     <Button
                         variant="outline"
-                        className="w-full text-primary-500 mb-6"
+                        className="w-full text-primary-500 my-4"
                         icon={<Plus />}
                         iconPosition="left"
                         onClick={addExperience}
                     >
                         Add Another Experience
                     </Button>
-                </section>
+                </Card>
 
                 {/* Education Section */}
-                <section className="mt-6">
+                <Card className="mt-6 shadow-none w-full" hoverable={false}>
                     <AnimatePresence>
                         {educations.map((edu, index) => (
                             <motion.div
@@ -406,7 +407,7 @@ export default function EditResume() {
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <Card className="relative p-4 bg-muted/20 mb-4 shadow-none w-full" hoverable={false}>
+                                <div className="relative py-4 bg-muted/20 mb-4 shadow-none w-full">
                                     <h3 className="text-lg font-semibold mb-4">Education</h3>
                                     {index > 0 && (
                                         <button
@@ -434,26 +435,28 @@ export default function EditResume() {
                                             )
                                         )}
                                     </div>
-                                </Card>
+
+                                </div>
                             </motion.div>
                         ))}
+                        <Button
+                            variant="outline"
+                            className="w-full text-primary-500 my-4"
+                            icon={<Plus />}
+                            iconPosition="left"
+                            onClick={addEducation}
+                        >
+                            Add Another Education
+                        </Button>
                     </AnimatePresence>
-                    <Button
-                        variant="outline"
-                        className="w-full text-primary-500 mt-4 mb-6"
-                        icon={<Plus />}
-                        iconPosition="left"
-                        onClick={addEducation}
-                    >
-                        Add Another Education
-                    </Button>
-                </section>
+
+                </Card>
 
                 {/* Skills Section */}
-                <section className="mt-6">
+                <Card hoverable={false} className="mt-6 shadow-none w-full">
                     <h3 className="text-lg font-semibold mb-4">Skills</h3>
                     <Input label="Skills" placeholder="React, TypeScript, Node.js, etc." className="w-full" />
-                </section>
+                </Card>
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
