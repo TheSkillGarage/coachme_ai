@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "../../../components/ui/card";
 import { Input } from "../../../components/ui/input/input";
 import Button from "../../../components/ui/button/button";
-import { FilePlayIcon, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, FilePlayIcon, Plus, Trash2 } from "lucide-react";
 import * as yup from "yup";
 import { faker } from "@faker-js/faker";
+import { useNavigate } from "react-router-dom";
 
 interface PersonalData {
     firstName: string;
@@ -35,6 +36,7 @@ interface Education {
 type ErrorMessages = Partial<Record<string, string | string[]>>;
 
 export default function EditResume() {
+    const navigate = useNavigate();
     // Yup Schemas
     const personalSchema = yup.object().shape({
         firstName: yup.string().required("First name is required"),
@@ -283,187 +285,212 @@ export default function EditResume() {
         }
     };
 
+    console.log("Form Data:", educations);
+
     return (
-        <Card hoverable={false} className="shadow-none w-full">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="w-full max-w-4xl mx-auto p-4 sm:p-6"
-            >
-                <h2 className="text-2xl font-semibold mb-2">Resume Information</h2>
-                <p className="text-sm text-muted-foreground mb-6">
-                    We’ve extracted information from your resume. Please review and make any necessary corrections.
-                </p>
+        <>
+            <div className="mb-8">
+                <Button
+                    variant="ghost"
+                    onClick={() => navigate('/user/resume')}
+                    color="text-muted-foreground"
+                    bg="bg-white"
+                    icon={<ArrowLeft className="w-4 h-4" />}
+                    iconPosition="left"
+                    className="
+            bg-white
+            rounded-3xl border border-[rgba(255,255,255,1)]
+            transition-transform
+            hover:text-foreground hover:-translate-y-[1px]
+          "
+                >
+                    Back
+                </Button>
+            </div>
+            <Card hoverable={false} className="shadow-none w-full">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full  mx-auto py-4 sm:py-6"
+                >
+                    <h2 className="text-2xl font-semibold mb-2">Resume Information</h2>
+                    <p className="text-sm text-muted-foreground mb-6">
+                        We’ve extracted information from your resume. Please review and make any necessary corrections.
+                    </p>
 
-                {/* Personal Section */}
-                <Card className="w-full shadow-none mb-6" hoverable={false}>
-                    <h3 className="text-lg font-semibold mb-4">Personal</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                        {["firstName", "lastName", "email", "phone", "location"].map((field) => (
-                            <div key={field}>
-                                <Input
-                                    label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                    name={field}
-                                    value={(formData as never)[field]}
-                                    onChange={handleChange}
-                                    placeholder={field === "email" ? "example@gmail.com" : field}
-                                    className="w-full"
-                                />
-                                {errors.personal?.[field] && <p className="text-red-500 text-xs mt-1">{errors.personal[field]}</p>}
-                            </div>
-                        ))}
-                    </div>
-                    <div className="mt-4">
-                        <label className="text-sm font-medium mb-1 block">Professional Summary</label>
-                        <textarea
-                            name="summary"
-                            value={formData.summary}
-                            onChange={handleChange}
-                            placeholder="Experienced software developer with 5+ years of experience..."
-                            className="w-full border rounded-lg p-3 text-sm bg-background focus:ring-2 focus:ring-primary"
-                            rows={4}
-                        />
-                        {errors.personal?.summary && <p className="text-red-500 text-xs mt-1">{errors.personal.summary}</p>}
-                    </div>
-                </Card>
+                    {/* Personal Section */}
+                    <Card className="w-full shadow-none mb-6" hoverable={false}>
+                        <h3 className="text-lg font-semibold mb-4">Personal</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                            {["firstName", "lastName", "email", "phone", "location"].map((field) => (
+                                <div key={field}>
+                                    <Input
+                                        label={field.charAt(0).toUpperCase() + field.slice(1)}
+                                        name={field}
+                                        value={(formData as never)[field]}
+                                        onChange={handleChange}
+                                        placeholder={field === "email" ? "example@gmail.com" : field}
+                                        className="w-full"
+                                    />
+                                    {errors.personal?.[field] && <p className="text-red-500 text-xs mt-1">{errors.personal[field]}</p>}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-4">
+                            <label className="text-sm font-medium mb-1 block">Professional Summary</label>
+                            <textarea
+                                name="summary"
+                                value={formData.summary}
+                                onChange={handleChange}
+                                placeholder="Experienced software developer with 5+ years of experience..."
+                                className="w-full border rounded-lg p-3 text-sm bg-background focus:ring-2 focus:ring-primary"
+                                rows={4}
+                            />
+                            {errors.personal?.summary && <p className="text-red-500 text-xs mt-1">{errors.personal.summary}</p>}
+                        </div>
+                    </Card>
 
-                {/* Experience Section */}
-                <section className="mt-6">
-                    <AnimatePresence>
-                        {experiences.map((exp, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <Card className="relative p-4 bg-muted/20 mb-4 shadow-none w-full" hoverable={false}>
-                                    <h3 className="text-lg font-semibold mb-4">Experience</h3>
-                                    {index > 0 && (
-                                        <button
-                                            onClick={() => removeExperience(index)}
-                                            className="absolute top-3 right-3 text-red-500 hover:text-red-700"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
-                                    )}
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                                        {(["jobTitle", "company", "startDate", "endDate"] as (keyof Experience)[]).map((field) => (
-                                            <div key={field}>
-                                                <Input
-                                                    label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                                    value={exp[field]}
-                                                    onChange={(e) => handleExperienceChange(index, field, e.target.value)}
-                                                    placeholder={field === "jobTitle" ? "Senior Frontend Developer" : field}
-                                                    className="w-full"
-                                                />
-                                                {errors.experiences?.[index]?.[field] && (
-                                                    <p className="text-red-500 text-xs mt-1">{errors.experiences[index][field]}</p>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="mt-4">
-                                        <label className="text-sm font-medium mb-1 block">Description</label>
-                                        <textarea
-                                            value={exp.description}
-                                            onChange={(e) => handleExperienceChange(index, "description", e.target.value)}
-                                            placeholder="Led development of the company’s flagship product using React and TypeScript..."
-                                            className="w-full border rounded-lg p-3 text-sm bg-background focus:ring-2 focus:ring-primary"
-                                            rows={3}
-                                        />
-                                        {errors.experiences?.[index]?.description && (
-                                            <p className="text-red-500 text-xs mt-1">{errors.experiences[index].description}</p>
+                    {/* Experience Section */}
+                    <Card className="mt-6 shadow-none w-full" hoverable={false}>
+                        <AnimatePresence>
+                            {experiences.map((exp, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <div className="relative py-4 bg-muted/20 mb-4 shadow-none w-full">
+                                        <h3 className="text-lg font-semibold mb-4">Experience</h3>
+                                        {index > 0 && (
+                                            <button
+                                                onClick={() => removeExperience(index)}
+                                                className="absolute top-3 right-3 text-red-500 hover:text-red-700"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
                                         )}
-                                    </div>
-                                </Card>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                    <Button
-                        variant="outline"
-                        className="w-full text-primary-500 mb-6"
-                        icon={<Plus />}
-                        iconPosition="left"
-                        onClick={addExperience}
-                    >
-                        Add Another Experience
-                    </Button>
-                </section>
-
-                {/* Education Section */}
-                <section className="mt-6">
-                    <AnimatePresence>
-                        {educations.map((edu, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <Card className="relative p-4 bg-muted/20 mb-4 shadow-none w-full" hoverable={false}>
-                                    <h3 className="text-lg font-semibold mb-4">Education</h3>
-                                    {index > 0 && (
-                                        <button
-                                            onClick={() => removeEducation(index)}
-                                            className="absolute top-3 right-3 text-red-500 hover:text-red-700"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
-                                    )}
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                                        {(["degree", "course", "institution", "graduationDate", "location"] as (keyof Education)[]).map(
-                                            (field) => (
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                            {(["jobTitle", "company", "startDate", "endDate"] as (keyof Experience)[]).map((field) => (
                                                 <div key={field}>
                                                     <Input
                                                         label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                                        value={edu[field]}
-                                                        onChange={(e) => handleEducationChange(index, field, e.target.value)}
-                                                        placeholder={field}
+                                                        value={exp[field]}
+                                                        onChange={(e) => handleExperienceChange(index, field, e.target.value)}
+                                                        placeholder={field === "jobTitle" ? "Senior Frontend Developer" : field}
                                                         className="w-full"
                                                     />
-                                                    {errors.educations?.[index]?.[field] && (
-                                                        <p className="text-red-500 text-xs mt-1">{errors.educations[index][field]}</p>
+                                                    {errors.experiences?.[index]?.[field] && (
+                                                        <p className="text-red-500 text-xs mt-1">{errors.experiences[index][field]}</p>
                                                     )}
                                                 </div>
-                                            )
-                                        )}
+                                            ))}
+                                        </div>
+                                        <div className="mt-4">
+                                            <label className="text-sm font-medium mb-1 block">Description</label>
+                                            <textarea
+                                                value={exp.description}
+                                                onChange={(e) => handleExperienceChange(index, "description", e.target.value)}
+                                                placeholder="Led development of the company’s flagship product using React and TypeScript..."
+                                                className="w-full border rounded-lg p-3 text-sm bg-background focus:ring-2 focus:ring-primary"
+                                                rows={3}
+                                            />
+                                            {errors.experiences?.[index]?.description && (
+                                                <p className="text-red-500 text-xs mt-1">{errors.experiences[index].description}</p>
+                                            )}
+                                        </div>
+
                                     </div>
-                                </Card>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                    <Button
-                        variant="outline"
-                        className="w-full text-primary-500 mt-4 mb-6"
-                        icon={<Plus />}
-                        iconPosition="left"
-                        onClick={addEducation}
-                    >
-                        Add Another Education
-                    </Button>
-                </section>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                        <Button
+                            variant="outline"
+                            className="w-full text-primary-500 my-4"
+                            icon={<Plus />}
+                            iconPosition="left"
+                            onClick={addExperience}
+                        >
+                            Add Another Experience
+                        </Button>
+                    </Card>
 
-                {/* Skills Section */}
-                <section className="mt-6">
-                    <h3 className="text-lg font-semibold mb-4">Skills</h3>
-                    <Input label="Skills" placeholder="React, TypeScript, Node.js, etc." className="w-full" />
-                </section>
+                    {/* Education Section */}
+                    <Card className="mt-6 shadow-none w-full" hoverable={false}>
+                        <AnimatePresence>
+                            {educations.map((edu, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <div className="relative py-4 bg-muted/20 mb-4 shadow-none w-full">
+                                        <h3 className="text-lg font-semibold mb-4">Education</h3>
+                                        {index > 0 && (
+                                            <button
+                                                onClick={() => removeEducation(index)}
+                                                className="absolute top-3 right-3 text-red-500 hover:text-red-700"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        )}
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                            {(["degree", "course", "institution", "graduationDate", "location"] as (keyof Education)[]).map(
+                                                (field) => (
+                                                    <div key={field}>
+                                                        <Input
+                                                            label={field.charAt(0).toUpperCase() + field.slice(1)}
+                                                            value={edu[field]}
+                                                            onChange={(e) => handleEducationChange(index, field, e.target.value)}
+                                                            placeholder={field}
+                                                            className="w-full"
+                                                        />
+                                                        {errors.educations?.[index]?.[field] && (
+                                                            <p className="text-red-500 text-xs mt-1">{errors.educations[index][field]}</p>
+                                                        )}
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
 
-                {/* Actions */}
-                <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
-                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto">
-                        Cancel
-                    </Button>
-                    <Button icon={<FilePlayIcon className="w-4 h-4" />}
-                        iconPosition="left" onClick={handleSubmit} className="w-full sm:w-auto">
-                        Save Changes
-                    </Button>
-                </div>
-            </motion.div>
-        </Card>
+                                    </div>
+                                </motion.div>
+                            ))}
+                            <Button
+                                variant="outline"
+                                className="w-full text-primary-500 my-4"
+                                icon={<Plus />}
+                                iconPosition="left"
+                                onClick={addEducation}
+                            >
+                                Add Another Education
+                            </Button>
+                        </AnimatePresence>
+
+                    </Card>
+
+                    {/* Skills Section */}
+                    <Card hoverable={false} className="mt-6 shadow-none w-full">
+                        <h3 className="text-lg font-semibold mb-4">Skills</h3>
+                        <Input label="Skills" placeholder="React, TypeScript, Node.js, etc." className="w-full" />
+                    </Card>
+
+                    {/* Actions */}
+                    <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
+                        <Button variant="outline" className="text-gray-500 w-full sm:w-auto">
+                            Cancel
+                        </Button>
+                        <Button icon={<FilePlayIcon className="w-4 h-4" />}
+                            iconPosition="left" onClick={handleSubmit} className="w-full sm:w-auto">
+                            Save Changes
+                        </Button>
+                    </div>
+                </motion.div>
+            </Card>
+        </>
     );
 }

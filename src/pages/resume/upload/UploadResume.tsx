@@ -1,5 +1,5 @@
 import type React from "react";
-import { ArrowLeft, Upload, X } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import Button from "../../../components/ui/button/button";
 import { FileDropZone } from "./FileDropZone";
 import { FilePreview } from "./FilePreview";
@@ -39,20 +39,6 @@ export const UploadResumeFlow: React.FC<UploadResumeFlowProps> = ({
   return (
     <div className="min-h-full bg-background p-0 lg:px-6 lg:py-8">
       <div className="mx-auto">
-        <div className="mb-8">
-          <Button
-            variant="ghost"
-            onClick={onCancel}
-            color="text-muted-foreground"
-            bg="bg-white"
-            className="hover:text-foreground rounded-3xl bg-white border border-[rgba(255,255,255,1)] transition-transform hover:-translate-y-[1px]"
-            icon={<ArrowLeft className="w-4 h-4" />}
-            iconPosition="left"
-          >
-            Back
-          </Button>
-        </div>
-
         <div className="bg-Neutral px-4 md:px-10 pt-4 md:pt-10 pb-4 md:pb-12 rounded-xl outline-1 outline-offset-[-1px] outline-[#e8e8e8]">
           <h2 className="text-[#1b1b1b] text-xl md:text-2xl font-semibold mb-2">
             Upload Your Resume
@@ -86,7 +72,7 @@ export const UploadResumeFlow: React.FC<UploadResumeFlowProps> = ({
               variant="outline"
               onClick={onCancel}
               disabled={uploadState === "uploading"}
-              className="px-6 py-2 bg-transparent text-primary-400"
+              className="px-6 py-2 bg-transparent text-grey-400 border-gray-500"
               icon={<X className="w-4 h-4" />}
               iconPosition="left"
             >

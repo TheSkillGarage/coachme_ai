@@ -38,9 +38,9 @@ interface CreateResumeProps {
     initialData?: ParsedResumeData | null;
     onSave?: () => void;
     onCancel?: () => void;
-  }
+}
 
-export default function CreateResume({initialData, onSave, onCancel}: CreateResumeProps) {
+export default function CreateResume({ initialData, onSave, onCancel }: CreateResumeProps) {
     // Yup Schemas
     const personalSchema = yup.object().shape({
         firstName: yup.string().required("First name is required"),
@@ -108,15 +108,15 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                 location: initialData.personal?.location || "",
                 summary: initialData.personal?.summary || "",
             });
-    
+
             if (initialData.experiences && initialData.experiences.length > 0) {
                 setExperiences(initialData.experiences);
             }
-    
+
             if (initialData.educations && initialData.educations.length > 0) {
                 setEducations(initialData.educations);
             }
-    
+
             if (initialData.skills && initialData.skills.length > 0) {
                 setSkills(initialData.skills.join(", "));
             }
@@ -279,38 +279,38 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="w-full max-w-4xl mx-auto p-4 sm:p-6"
+                className="w-full  mx-auto py-4 sm:py-6"
             >
                 <h2 className="text-2xl font-semibold mb-2">Resume Information</h2>
                 <p className="text-sm text-muted-foreground mb-6">
-                {initialData 
-                    ? "We've extracted information from your resume. Please review and make any necessary corrections."
-                    : "Fill in your resume information below."}
+                    {initialData
+                        ? "We've extracted information from your resume. Please review and make any necessary corrections."
+                        : "Fill in your resume information below."}
                 </p>
 
                 {/* Personal Section */}
                 <Card className="w-full shadow-none mb-6" hoverable={false}>
                     <h3 className="text-lg font-semibold mb-4">Personal</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                    {["firstName", "lastName", "email", "phone", "location"].map((field) => (
-                    <div key={field}>
-                        <Input
-                            label={field === "firstName" ? "First Name" 
-                                : field === "lastName" ? "Last Name"
-                                : field.charAt(0).toUpperCase() + field.slice(1)}
-                            name={field}
-                            value={formData[field as keyof PersonalData]}
-                            onChange={handleChange}
-                            placeholder={field === "email" ? "example@gmail.com" : field}
-                            className="w-full"
-                        />
-                        {errors.personal?.[field] && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {errors.personal[field]}
-                            </p>
-                        )}
-                    </div>
-                ))}
+                        {["firstName", "lastName", "email", "phone", "location"].map((field) => (
+                            <div key={field}>
+                                <Input
+                                    label={field === "firstName" ? "First Name"
+                                        : field === "lastName" ? "Last Name"
+                                            : field.charAt(0).toUpperCase() + field.slice(1)}
+                                    name={field}
+                                    value={formData[field as keyof PersonalData]}
+                                    onChange={handleChange}
+                                    placeholder={field === "email" ? "example@gmail.com" : field}
+                                    className="w-full"
+                                />
+                                {errors.personal?.[field] && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.personal[field]}
+                                    </p>
+                                )}
+                            </div>
+                        ))}
 
                     </div>
                     <div className="mt-4">
@@ -328,7 +328,7 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                 </Card>
 
                 {/* Experience Section */}
-                <section className="mt-6">
+                <Card className="mt-6 shadow-none w-full" hoverable={false}>
                     <AnimatePresence>
                         {experiences.map((exp, index) => (
                             <motion.div
@@ -338,7 +338,7 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <Card className="relative p-4 bg-muted/20 mb-4 shadow-none w-full" hoverable={false}>
+                                <div className="relative py-4 bg-muted/20 mb-4 shadow-none w-full">
                                     <h3 className="text-lg font-semibold mb-4">Experience</h3>
                                     {index > 0 && (
                                         <button
@@ -377,23 +377,23 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                                             <p className="text-red-500 text-xs mt-1">{errors.experiences[index].description}</p>
                                         )}
                                     </div>
-                                </Card>
+                                </div>
                             </motion.div>
                         ))}
                     </AnimatePresence>
                     <Button
                         variant="outline"
-                        className="w-full text-primary-500 mb-6"
+                        className="w-full text-primary-500 my-4"
                         icon={<Plus />}
                         iconPosition="left"
                         onClick={addExperience}
                     >
                         Add Another Experience
                     </Button>
-                </section>
+                </Card>
 
                 {/* Education Section */}
-                <section className="mt-6">
+                <Card className="mt-6 shadow-none w-full" hoverable={false}>
                     <AnimatePresence>
                         {educations.map((edu, index) => (
                             <motion.div
@@ -403,7 +403,7 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                                 exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <Card className="relative p-4 bg-muted/20 mb-4 shadow-none w-full" hoverable={false}>
+                                <div className="relative py-4 bg-muted/20 mb-4 shadow-none w-full">
                                     <h3 className="text-lg font-semibold mb-4">Education</h3>
                                     {index > 0 && (
                                         <button
@@ -431,36 +431,36 @@ export default function CreateResume({initialData, onSave, onCancel}: CreateResu
                                             )
                                         )}
                                     </div>
-                                </Card>
+                                </div>
                             </motion.div>
                         ))}
                     </AnimatePresence>
                     <Button
                         variant="outline"
-                        className="w-full text-primary-500 mt-4 mb-6"
+                        className="w-full text-primary-500 mt-4 my-4"
                         icon={<Plus />}
                         iconPosition="left"
                         onClick={addEducation}
                     >
                         Add Another Education
                     </Button>
-                </section>
+                </Card>
 
                 {/* Skills Section */}
-                <section className="mt-6">
+                <Card className="mt-6 shadow-none w-full" hoverable={false}>
                     <h3 className="text-lg font-semibold mb-4">Skills</h3>
-                    <Input 
-                    label="Skills" 
-                    placeholder="React, TypeScript, Node.js, etc." 
-                    className="w-full" 
-                    value={skills} 
-                    onChange={(e) => setSkills(e.target.value)}
+                    <Input
+                        label="Skills"
+                        placeholder="React, TypeScript, Node.js, etc."
+                        className="w-full"
+                        value={skills}
+                        onChange={(e) => setSkills(e.target.value)}
                     />
-                </section>
+                </Card>
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
-                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto"  onClick={onCancel} >
+                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto border-gray-500" onClick={onCancel} >
                         Cancel
                     </Button>
                     <Button icon={<FilePlayIcon className="w-4 h-4" />}

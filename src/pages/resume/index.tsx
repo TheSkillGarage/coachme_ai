@@ -5,69 +5,97 @@ import CreateResume from "./create-edit/create";
 import ResumeName from "./resume-name/resumename";
 import ResumeComplete from "./resume-name/resumecomplete";
 import type { ParsedResumeData } from "../../types";
+import { BackButton } from "./ui/back-button";
 
-type ResumeStep =
+export type ResumeStep =
   | "upload"
   | "create-resume"
   | "preview"
   | "complete"
   | "resumes-list"
-  | "resumename"
+  | "resumename";
 
 export default function Resume() {
-  const [currentStep, setCurrentStep] = useState<ResumeStep | string>(
-    "resumes-list"
-  );
+  const [currentStep, setCurrentStep] = useState<ResumeStep>("resumes-list");
+  const [stepHistory, setStepHistory] = useState<ResumeStep[]>([]);
   const [redirectFromList, setRedirectFromList] = useState(false);
   const [parsedResumeData, setParsedResumeData] = useState<ParsedResumeData | null>(null);
 
+  const navigateToStep = (step: ResumeStep) => {
+    if (currentStep !== step) {
+      setStepHistory((prev) => [...prev, currentStep]);
+      setCurrentStep(step);
+    }
+  };
+
+  const goBack = () => {
+    if (stepHistory.length > 0) {
+      const previousStep = stepHistory[stepHistory.length - 1];
+      setStepHistory((prev) => prev.slice(0, -1));
+      setCurrentStep(previousStep);
+    }
+  };
+
+  const shouldShowBackButton = 
+    stepHistory.length > 0 && 
+    currentStep !== "resumes-list" && 
+    currentStep !== "upload";
+
   const handleUploadComplete = (extractedData: ParsedResumeData | null) => {
     setParsedResumeData(extractedData);
-    setCurrentStep("create-resume");
+    navigateToStep("create-resume");
   };
 
-  const handleResumeCreated = () => {
-    setCurrentStep("resumename");
-  };
 
-//   const handleComplete = () => {
-//   setCurrentStep("resumes-list");
-// };
 
   return (
     <div className="min-h-screen">
+      {shouldShowBackButton && (<BackButton onClick={goBack} />)}
+
       {/* Step 1: Upload Resume */}
       {currentStep === "upload" && (
         <UploadResume
           onContinueToNextStep={handleUploadComplete}
           redirectFromList={redirectFromList}
+          onBackToList={() => goBack()}
+          onCancel={() => {
+            setStepHistory([]);
+            setCurrentStep("resumes-list");
+          }}
         />
       )}
 
-      {/* Step 2: Create Resume Form - Now with prefilled data */}
+      {/* Step 2: Create Resume Form */}
       {currentStep === "create-resume" && (
-        <CreateResume 
+        <CreateResume
           initialData={parsedResumeData}
-          onSave={handleResumeCreated}
-          onCancel={() => setCurrentStep("resumes-list")}
+          onSave={() => navigateToStep("resumename")}
+          onCancel={() => {
+            setStepHistory([]);
+            setCurrentStep("resumes-list");
+          }}
         />
       )}
 
       {/* Step 6: Name Your Resume */}
       {currentStep === "resumename" && (
-        <ResumeName setCurrentStep={setCurrentStep} />
+        <ResumeName onContinue={() => navigateToStep("complete")}            
+         onCancel={() => {
+          setStepHistory([]);
+          setCurrentStep("resumes-list");
+        }}/>
       )}
 
       {/* Step 7: Resume Complete */}
       {currentStep === "complete" && (
-        <ResumeComplete setCurrentStep={setCurrentStep} />
+        <ResumeComplete onComplete={() => navigateToStep("resumes-list")}  />
       )}
 
       {/* Step 5: Resumes list */}
       {currentStep === "resumes-list" && (
-        <Resumes 
-          setCurrentStep={setCurrentStep} 
-          setRedirectFromList={setRedirectFromList} 
+        <Resumes
+          setCurrentStep={navigateToStep}
+          setRedirectFromList={setRedirectFromList}
         />
       )}
     </div>

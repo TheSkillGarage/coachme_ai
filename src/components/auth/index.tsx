@@ -3,7 +3,7 @@ import { Card } from "../ui/card";
 import Button from "../ui/button/button";
 import { Input } from "../ui/input/input";
 import { Checkbox } from "../ui/checkbox";
-import { CheckCircle2, Circle, Eye, EyeOff, Mail, User } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Circle, Eye, EyeOff, Mail, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as yup from "yup";
 import { CustomOtpInput } from "../ui/otpinput";
@@ -309,6 +309,9 @@ export const AuthCard: React.FC<AuthCardProps> = ({ mode = "signup", onSubmit })
 
     return (
         <div className="w-[100%] flex flex-col items-center justify-center">
+            <div className="my-8 flex items-center justify-left w-full max-w-md px-6">
+                <Button onClick={() => navigate('/')} icon={<ArrowLeft className="w-4 h-4 " />} className="bg-transparent rounded-2xl shadow-sm text-grey-500">Back</Button>
+            </div>
             <img src={Logo} className="h-8 w-12 mb-1" alt="CoachMe AI Logo" />
             <h1 className="text-lg font-semibold text-primary-500 mb-3">CoachMe AI</h1>
 

@@ -1,31 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Check } from "lucide-react";
-
-type Step = "resumes-list" | "resumename";
+import { Check } from "lucide-react";
+import Button from "../../../components/ui/button/button";
 
 interface ResumeCompleteProps {
-  setCurrentStep: (step: Step) => void;
+  onComplete: () => void;
 }
 
-const ResumeComplete: React.FC<ResumeCompleteProps> = ({ setCurrentStep }) => {
+const ResumeComplete: React.FC<ResumeCompleteProps> = ({ onComplete }) => {
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full px-6 py-6 flex flex-col">
+    <div className="w-full h-full lg:px-6 py-6 flex flex-col">
 
-      {/* Back Button */}
-      <button
-        onClick={() => setCurrentStep("resumename")}
-        className="cursor-pointer flex items-center gap-2 text-[#1D1D1F] px-4 py-1 w-fit mb-6 bg-white
-            rounded-3xl border border-[rgba(255,255,255,1)]
-            transition-transform
-            hover:text-foreground hover:-translate-y-[1px] cursor-pointer"
-      >
-        <ArrowLeft size={18} />
-        Back
-      </button>
-
-      <div className="bg-white border border-[#E5E5E5] rounded-2xl p-10 w-full max-w-4xl mx-auto shadow-sm text-center">
+      <div className="bg-white border border-[#E5E5E5] rounded-2xl p-10 w-full max-w-7xl mx-auto shadow-sm text-center">
 
         <div className="w-14 h-14 rounded-full bg-[#E8FAEA] flex items-center justify-center mx-auto">
           <Check size={30} className="text-green-600" />
@@ -40,19 +27,23 @@ const ResumeComplete: React.FC<ResumeCompleteProps> = ({ setCurrentStep }) => {
         </p>
 
         <div className="mt-8 flex flex-col md:flex-row justify-center gap-4">
-          <button
-            onClick={() => setCurrentStep("resumes-list")}
-            className="cursor-pointer px-6 py-2 border border-[#6E6E73] text-[#1D1D1F] rounded-md hover:bg-gray-100 w-full md:w-auto"
-          >
+          <Button
+            variant="outline"
+            onClick={onComplete}
+            className="px-6 py-2 bg-transparent text-grey-500"
+            >
             View All Resumes
-          </button>
+            </Button>
 
-          <button
-            onClick={() => navigate("/user/jobs")}
-            className="cursor-pointer px-6 py-2 bg-[#6D0079] text-white rounded-md hover:bg-[#580062] transition w-full md:w-auto"
-          >
-            Start Job Search
-          </button>
+            <Button
+             onClick={() => navigate("/user/jobs")}
+              bg="bg-[#66005e]"
+              color="text-white"
+              rounded="lg"
+              className="px-6 py-2 disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
+            >
+             Start Job Search
+              </Button>
         </div>
 
       </div>
