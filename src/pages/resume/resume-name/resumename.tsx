@@ -1,34 +1,20 @@
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, X } from "lucide-react";
-
-type Step = "resumename" | "complete";
+import { Switch } from "../../../components/ui/switch";
+import { ArrowRight, X } from "lucide-react";
+import Button from "../../../components/ui/button/button";
 
 interface ResumeNameProps {
-  setCurrentStep: (step: Step) => void;
+  onContinue: () => void;
+  onCancel: () => void;
 }
 
-const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
+const ResumeName: React.FC<ResumeNameProps> = ({ onContinue, onCancel }) => {
   const [resumeName, setResumeName] = useState<string>("");
-  const [isDefault, setIsDefault] = useState<boolean>(false);
-
-  const handleContinue = () => {
-    setCurrentStep("complete");
-  };
+  const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="w-full h-full px-6 py-6">
-      {/* Back Button */}
-      <button
-        type="button"
-        onClick={() => setCurrentStep("resumename")} // same page me back ka visual; agar previous step aur hai to waha set karo
-        className="flex items-center gap-2 text-[#1D1D1F] hover:text-[#6D0079] transition mb-6"
-      >
-        <ArrowLeft size={18} />
-        Back
-      </button>
-
-      {/* Card Container */}
-      <div className="bg-white border border-[#E5E5E5] rounded-2xl p-10 max-w-4xl mx-auto shadow-sm">
+    <div className="w-full lg:px-6 py-8">
+      <div className="bg-white border border-[#E5E5E5] rounded-2xl p-10 lg:max-w-7xl mx-auto shadow-sm">
         <h2 className="text-2xl font-semibold text-[#1D1D1F]">
           Name Your Resume
         </h2>
@@ -50,26 +36,16 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
           <p className="text-xs text-[#6E6E73] mt-2">
             Choose a name that helps you remember what this resume is for
           </p>
-
-          <div className="mt-6 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setIsDefault((v) => !v)}
-              className={`w-11 h-6 rounded-full p-1 flex items-center transition ${
-                isDefault ? "bg-[#6D0079]" : "bg-gray-300"
-              }`}
-            >
-              <div
-                className={`w-4 h-4 bg-white rounded-full transition ${
-                  isDefault ? "translate-x-5" : "translate-x-0"
-                }`}
-              />
-            </button>
+          <div className="mt-6 flex items-center gap-2">
+          <Switch
+            size="xl"
+            checked={isActive}
+            onChange={(val) => setIsActive(val)}
+          />
             <span className="text-sm font-medium text-[#1D1D1F]">
               Set as default resume
             </span>
           </div>
-
           <div className="mt-6 bg-[#F5F5F5] p-4 rounded-md text-sm text-[#1D1D1F]">
             Your resume will be saved and ready to use when applying for jobs.
             You can edit it anytime from your resume dashboard.
@@ -77,20 +53,27 @@ const ResumeName: React.FC<ResumeNameProps> = ({ setCurrentStep }) => {
         </div>
 
         <div className="mt-8 flex flex-col md:flex-row justify-between gap-3 md:gap-0">
-          <button
-            type="button"
-            className="flex items-center gap-1 cursor-pointer w-full md:w-auto px-6 py-2 border border-[#6E6E73] rounded-md text-[#6E6E73] hover:bg-gray-100"
-          >
-            <X size={13} /> Cancel
-          </button>
+          <Button
+              variant="outline"
+              onClick={onCancel}
+              className="px-6 py-2 bg-transparent text-grey-400 border-gray-500"
+              icon={<X className="w-4 h-4" />}
+              iconPosition="left"
+            >
+              Cancel
+            </Button>
 
-          <button
-            type="button"
-            onClick={handleContinue}
-            className="flex items-center gap-1 cursor-pointer w-full md:w-auto px-6 py-2 bg-[#6D0079] text-white rounded-md hover:bg-[#580062] transition"
-          >
-            Continue <ArrowRight size={13}/>
-          </button>
+            <Button
+              onClick={onContinue}
+              bg="bg-[#66005e]"
+              color="text-white"
+              rounded="lg"
+              className="px-6 py-2 disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
+              icon={ <ArrowRight className="w-4 h-4" />}
+              iconPosition="right"
+            >
+              Continue
+            </Button>
         </div>
       </div>
     </div>

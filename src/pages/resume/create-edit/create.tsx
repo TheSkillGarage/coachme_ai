@@ -460,7 +460,7 @@ export default function CreateResume({ initialData, onSave, onCancel }: CreateRe
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
-                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto" onClick={onCancel} >
+                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto border-gray-500" onClick={onCancel} >
                         Cancel
                     </Button>
                     <Button icon={<FilePlayIcon className="w-4 h-4" />}

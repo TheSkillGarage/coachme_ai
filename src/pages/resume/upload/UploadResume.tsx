@@ -72,7 +72,7 @@ export const UploadResumeFlow: React.FC<UploadResumeFlowProps> = ({
               variant="outline"
               onClick={onCancel}
               disabled={uploadState === "uploading"}
-              className="px-6 py-2 bg-transparent text-primary-400"
+              className="px-6 py-2 bg-transparent text-grey-400 border-gray-500"
               icon={<X className="w-4 h-4" />}
               iconPosition="left"
             >

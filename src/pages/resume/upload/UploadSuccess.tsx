@@ -52,7 +52,7 @@ export const UploadSuccessState: React.FC<UploadSuccessStateProps> = ({
               variant="outline"
               onClick={onCancel}
               disabled={isParsing}
-              className="px-6 py-2 bg-transparent text-primary-400"
+              className="px-6 py-2 bg-transparent text-grey-400 border-gray-500"
               icon={<X className="w-4 h-4" />}
               iconPosition="left"
             >
@@ -65,7 +65,7 @@ export const UploadSuccessState: React.FC<UploadSuccessStateProps> = ({
               bg="bg-[#66005e]"
               color="text-white"
               rounded="lg"
-              className="px-6 py-2 hover:bg-purple-800 disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
+              className="px-6 py-2  disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
               icon={isParsing ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />} // ✅ CHANGE: Show spinner while parsing
               iconPosition="right"
             >

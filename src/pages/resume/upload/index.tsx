@@ -12,12 +12,14 @@ interface UploadResumeProps {
   onContinueToNextStep?: (extractedData: ParsedResumeData | null) => void;
   redirectFromList?: boolean;
   onBackToList?: () => void; 
+  onCancel: () => void;
 }
 
 export default function UploadResume({ 
   onContinueToNextStep, 
   redirectFromList,
-  onBackToList
+  onBackToList,
+  onCancel
 }: UploadResumeProps) {
   const [currentStage, setCurrentStage] = useState<UploadStage>("list");
   const [stageHistory, setStageHistory] = useState<UploadStage[]>([]);
@@ -116,7 +118,7 @@ export default function UploadResume({
           {showBackButton && <BackButton onClick={handleCancelUpload} />}
           <UploadSuccessState
             fileName={uploadedFileName}
-            onCancel={handleCancelUpload}
+            onCancel={onCancel}
             onContinue={handleContinue}
             isParsing={isParsing}
           />
@@ -141,7 +143,7 @@ export default function UploadResume({
             onDrop={handleDrop}
             onFileInputClick={() => fileInputRef.current?.click()}
             onFileRemove={clearSelectedFile}
-            onCancel={handleCancelUpload}
+            onCancel={onCancel}
             onUpload={handleUploadResume}
             fileInputRef={fileInputRef}
           />

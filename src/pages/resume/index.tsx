@@ -46,9 +46,7 @@ export default function Resume() {
     navigateToStep("create-resume");
   };
 
-  const handleResumeCreated = () => {
-    navigateToStep("resumename");
-  };
+
 
   return (
     <div className="min-h-screen">
@@ -60,6 +58,10 @@ export default function Resume() {
           onContinueToNextStep={handleUploadComplete}
           redirectFromList={redirectFromList}
           onBackToList={() => goBack()}
+          onCancel={() => {
+            setStepHistory([]);
+            setCurrentStep("resumes-list");
+          }}
         />
       )}
 
@@ -67,9 +69,9 @@ export default function Resume() {
       {currentStep === "create-resume" && (
         <CreateResume
           initialData={parsedResumeData}
-          onSave={handleResumeCreated}
+          onSave={() => navigateToStep("resumename")}
           onCancel={() => {
-            setStepHistory([]); // Clear history
+            setStepHistory([]);
             setCurrentStep("resumes-list");
           }}
         />
@@ -77,12 +79,16 @@ export default function Resume() {
 
       {/* Step 6: Name Your Resume */}
       {currentStep === "resumename" && (
-        <ResumeName setCurrentStep={setCurrentStep} />
+        <ResumeName onContinue={() => navigateToStep("complete")}            
+         onCancel={() => {
+          setStepHistory([]);
+          setCurrentStep("resumes-list");
+        }}/>
       )}
 
       {/* Step 7: Resume Complete */}
       {currentStep === "complete" && (
-        <ResumeComplete setCurrentStep={setCurrentStep} />
+        <ResumeComplete onComplete={() => navigateToStep("resumes-list")}  />
       )}
 
       {/* Step 5: Resumes list */}
