@@ -4,7 +4,7 @@ export const applicationsData: Application[] = [
   {
     id: 0,
     jobTitle: 'Senior React Developer',
-    company: 'TechCorp Inc.',
+    company: 'AAA Inc.',
     location: 'San Francisco, CA',
     salary: '$50,000 - $120,000',
     dateApplied: '15/09/2025',
@@ -15,7 +15,7 @@ export const applicationsData: Application[] = [
   {
     id: 1,
     jobTitle: 'Senior React Developer',
-    company: 'TechCorp Inc.',
+    company: 'CCC Inc.',
     location: 'San Francisco, CA',
     salary: '$50,000 - $120,000',
     dateApplied: '15/09/2025',
@@ -25,7 +25,7 @@ export const applicationsData: Application[] = [
   },
   {
     id: 2,
-    jobTitle: 'Senior React Developer',
+    jobTitle: 'Architect',
     company: 'TechCorp Inc.',
     location: 'San Francisco, CA',
     salary: '$50,000 - $120,000',

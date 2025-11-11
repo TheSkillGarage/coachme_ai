@@ -1,4 +1,4 @@
-import { Search, X, List, Grip, ListFilter } from 'lucide-react';
+import { Search, X, ArrowUp, ArrowDown } from 'lucide-react';
 
 import HelmetLayout, { type HelmetProps } from '../../layouts/helmetlayout';
 import { Card } from '../../components/ui/card';
@@ -12,6 +12,7 @@ import { ApplicationsGrid } from './grid';
 import { TopCards } from './topCards';
 import { Pagination } from '../../components/ui/pagination';
 import { parseDMY } from './helpers';
+import { ApplicationsSort } from './sort';
 
 const tags: HelmetProps = {
   pageTitle: 'User Dashboard',
@@ -36,6 +37,21 @@ export default function Main() {
   const [selectedApplication, setSelectedApplication] = useState<Application>();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  const [sortConfig, setSortConfig] = useState<{
+    field: string;
+    direction: 'asc' | 'desc';
+  }>({
+    field: 'dateApplied',
+    direction: 'desc',
+  });
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const sortLabels: Record<string, string> = {
+    dateApplied: 'Date',
+    jobTitle: 'Title',
+    company: 'Company',
+    status: 'Status',
+  };
 
   const filtered = useMemo(() => {
     return applicationsData.filter((item: Application) =>
@@ -44,14 +60,37 @@ export default function Main() {
         .toLowerCase()
         .includes(searchQuery.toLowerCase())
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationsData, searchQuery]);
 
   const sorted = useMemo(() => {
-    return [...filtered].sort(
-      (a, b) =>
-        parseDMY(b.dateApplied).getTime() - parseDMY(a.dateApplied).getTime()
-    );
-  }, [filtered]);
+    return [...filtered].sort((a, b) => {
+      let aValue, bValue;
+
+      if (sortConfig.field === 'dateApplied') {
+        aValue = parseDMY(a.dateApplied).getTime();
+        bValue = parseDMY(b.dateApplied).getTime();
+      } else if (sortConfig.field === 'company') {
+        aValue = a.company.toLowerCase();
+        bValue = b.company.toLowerCase();
+      } else if (sortConfig.field === 'jobTitle') {
+        aValue = a.jobTitle.toLowerCase();
+        bValue = b.jobTitle.toLowerCase();
+      } else if (sortConfig.field === 'status') {
+        aValue = a.status.toLowerCase();
+        bValue = b.status.toLowerCase();
+      }
+
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortConfig.direction === 'asc'
+          ? aValue - bValue
+          : bValue - aValue;
+      } else {
+        const result = String(aValue).localeCompare(String(bValue));
+        return sortConfig.direction === 'asc' ? result : -result;
+      }
+    });
+  }, [filtered, sortConfig]);
 
   const totalPages = Math.ceil(sorted.length / itemsPerPage);
 
@@ -65,76 +104,82 @@ export default function Main() {
     setCurrentPage(1);
   }, [searchQuery]);
 
-  const changeView = (view: string) => {
-    setTableView(view);
-    setSearchQuery('');
-
-    if (view === 'grid') {
-      setItemsPerPage(6);
-    } else {
-      setItemsPerPage(5);
-    }
-  };
-
   return (
     <HelmetLayout {...tags}>
-      <div className="min-h-screen bg-background p-0">
-        <p className="mb-2 font-semibold text-2xl">Application Tracker</p>
-        <p className="mb-6 font-normal text-[16px]">
+      <div className="min-h-screen p-0 bg-background box-border overflow-x-hidden">
+        <p className="font-semibold text-2xl mb-2">Application Tracker</p>
+        <p className="font-normal text-[16px] mb-6">
           Track and manage your job applications
         </p>
         <div
           className="
-            grid
-            grid-cols-1          
-            xl:grid-cols-5    
-            gap-3
+            grid grid-cols-1
+            mb-6 gap-3 box-border
             md:gap-4
-            mb-6
-        "
+            xl:grid-cols-5
+          "
         >
           <TopCards />
         </div>
 
-        <div>
-          <Card hoverable={false} shadow="none">
-            <div className="flex justify-between mb-8 gap-4">
-              <div className="flex items-center gap-4">
+        <div className="box-border">
+          <Card
+            hoverable={false}
+            shadow="none"
+            className="pt-4 px-2 box-border md:p-4"
+          >
+            <div className="flex flex-col mb-8 gap-4 box-border xl:flex-row">
+              <div>
                 <Input
-                  className="xl:min-w-[484px]"
                   placeholder="Search"
                   leftIcon={Search}
                   rightIcon={X}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onRightIconClick={() => setSearchQuery('')}
+                  className="[&>div]:h-[51px] xl:max-w-[239px]"
                 />
-                <Button
-                  icon={<ListFilter />}
-                  iconPosition="left"
-                  variant="outline"
-                  className="text-grey-200 border-grey-200 p-2"
-                >
-                  Filter
-                </Button>
               </div>
-              <div className="flex bg-[#F8F8F8] p-1 rounded-xl">
-                <div
-                  className={`${
-                    tableView === 'grid' ? 'bg-purple-500' : 'bg-[#F8F8F8]'
-                  } cursor-pointer p-2.5 rounded-lg`}
-                  onClick={() => changeView('grid')}
+              <ApplicationsSort
+                setTableView={setTableView}
+                setItemsPerPage={setItemsPerPage}
+                setSearchQuery={setSearchQuery}
+                setSortConfig={setSortConfig}
+                setDrawerOpen={setDrawerOpen}
+                searchQuery={searchQuery}
+                sortConfig={sortConfig}
+                tableView={tableView}
+                drawerOpen={drawerOpen}
+              />
+              <div className="flex items-center gap-2 lg:hidden">
+                <p className="text-[#888888] text-[16px]">Sorted by:</p>
+
+                <Button
+                  onClick={() => {
+                    setSortConfig((prev) => ({
+                      ...prev,
+                      direction: prev.direction === 'asc' ? 'desc' : 'asc',
+                    }));
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setDrawerOpen(true);
+                  }}
+                  className="
+                    text-primary-500
+                    bg-purple-500
+                    [&>span]:flex [&>span]:items-center px-3 py-[15px] cursor-pointer
+                  "
                 >
-                  <Grip />
-                </div>
-                <div
-                  className={`${
-                    tableView === 'table' ? 'bg-purple-500' : 'bg-[#F8F8F8]'
-                  } cursor-pointer p-2.5 rounded-lg`}
-                  onClick={() => changeView('table')}
-                >
-                  <List />
-                </div>
+                  <span className="mr-2">
+                    {sortLabels[sortConfig.field] ?? 'Sort'}
+                  </span>
+                  {sortConfig.direction === 'asc' ? (
+                    <ArrowUp className="w-4 h-4 text-current" />
+                  ) : (
+                    <ArrowDown className="w-4 h-4 text-current" />
+                  )}
+                </Button>
               </div>
             </div>
             {tableView === 'table' ? (

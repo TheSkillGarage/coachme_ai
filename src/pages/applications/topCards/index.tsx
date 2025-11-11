@@ -34,7 +34,7 @@ export const TopCards: React.FC = () => {
           className: 'min-w-[204px]',
         }}
       >
-        <p className="font-semibold text-2xl mb-4">{metrics.totalAll.total}</p>
+        <p className="font-semibold text-2xl mb-4">{applicationsData.length}</p>
         <p className="flex text-grey-400 text-sm gap-1">
           <span
             className={cn(

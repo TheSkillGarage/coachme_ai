@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "../../../components/ui/card";
 import { Input } from "../../../components/ui/input/input";
 import Button from "../../../components/ui/button/button";
 import { FilePlayIcon, Plus, Trash2 } from "lucide-react";
 import * as yup from "yup";
+import type { ParsedResumeData } from "../../../types";
 
 interface PersonalData {
     firstName: string;
@@ -33,7 +34,13 @@ interface Education {
 
 type ErrorMessages = Partial<Record<string, string | string[]>>;
 
-export default function CreateResume() {
+interface CreateResumeProps {
+    initialData?: ParsedResumeData | null;
+    onSave?: () => void;
+    onCancel?: () => void;
+  }
+
+export default function CreateResume({initialData, onSave, onCancel}: CreateResumeProps) {
     // Yup Schemas
     const personalSchema = yup.object().shape({
         firstName: yup.string().required("First name is required"),
@@ -60,29 +67,61 @@ export default function CreateResume() {
         location: yup.string().required("Location is required"),
     });
 
-    // States
     const [formData, setFormData] = useState<PersonalData>({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        location: "",
-        summary: "",
+        firstName: initialData?.personal?.firstName || "",
+        lastName: initialData?.personal?.lastName || "",
+        email: initialData?.personal?.email || "",
+        phone: initialData?.personal?.phone || "",
+        location: initialData?.personal?.location || "",
+        summary: initialData?.personal?.summary || "",
     });
 
-    const [experiences, setExperiences] = useState<Experience[]>([
-        { jobTitle: "", company: "", startDate: "", endDate: "", description: "" },
-    ]);
+    const [experiences, setExperiences] = useState<Experience[]>(
+        initialData?.experiences && initialData.experiences.length > 0
+            ? initialData.experiences
+            : [{ jobTitle: "", company: "", startDate: "", endDate: "", description: "" }]
+    );
 
-    const [educations, setEducations] = useState<Education[]>([
-        { degree: "", course: "", institution: "", graduationDate: "", location: "" },
-    ]);
+    const [educations, setEducations] = useState<Education[]>(
+        initialData?.educations && initialData.educations.length > 0
+            ? initialData.educations
+            : [{ degree: "", course: "", institution: "", graduationDate: "", location: "" }]
+    );
+
+    const [skills, setSkills] = useState<string>(
+        initialData?.skills?.join(", ") || ""
+    );
 
     const [errors, setErrors] = useState<{
         personal?: ErrorMessages;
         experiences?: ErrorMessages[];
         educations?: ErrorMessages[];
     }>({});
+
+    useEffect(() => {
+        if (initialData) {
+            setFormData({
+                firstName: initialData.personal?.firstName || "",
+                lastName: initialData.personal?.lastName || "",
+                email: initialData.personal?.email || "",
+                phone: initialData.personal?.phone || "",
+                location: initialData.personal?.location || "",
+                summary: initialData.personal?.summary || "",
+            });
+    
+            if (initialData.experiences && initialData.experiences.length > 0) {
+                setExperiences(initialData.experiences);
+            }
+    
+            if (initialData.educations && initialData.educations.length > 0) {
+                setEducations(initialData.educations);
+            }
+    
+            if (initialData.skills && initialData.skills.length > 0) {
+                setSkills(initialData.skills.join(", "));
+            }
+        }
+    }, [initialData]);
 
     // Handlers
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -196,7 +235,11 @@ export default function CreateResume() {
             await personalSchema.validate(formData, { abortEarly: false });
             await Promise.all(experiences.map((exp) => experienceSchema.validate(exp, { abortEarly: false })));
             await Promise.all(educations.map((edu) => educationSchema.validate(edu, { abortEarly: false })));
-            alert("Form submitted successfully!");
+            if (onSave) {
+                onSave();
+            } else {
+                alert("Form submitted successfully!");
+            }
         } catch (err) {
             if (err instanceof yup.ValidationError) {
                 const personalErrors: ErrorMessages = {};
@@ -240,26 +283,35 @@ export default function CreateResume() {
             >
                 <h2 className="text-2xl font-semibold mb-2">Resume Information</h2>
                 <p className="text-sm text-muted-foreground mb-6">
-                    We’ve extracted information from your resume. Please review and make any necessary corrections.
+                {initialData 
+                    ? "We've extracted information from your resume. Please review and make any necessary corrections."
+                    : "Fill in your resume information below."}
                 </p>
 
                 {/* Personal Section */}
                 <Card className="w-full shadow-none mb-6" hoverable={false}>
                     <h3 className="text-lg font-semibold mb-4">Personal</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                        {["first Name", "last Name", "email", "phone", "location"].map((field) => (
-                            <div key={field}>
-                                <Input
-                                    label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                    name={field}
-                                    value={(formData as never)[field]}
-                                    onChange={handleChange}
-                                    placeholder={field === "email" ? "example@gmail.com" : field}
-                                    className="w-full"
-                                />
-                                {errors.personal?.[field] && <p className="text-red-500 text-xs mt-1">{errors.personal[field]}</p>}
-                            </div>
-                        ))}
+                    {["firstName", "lastName", "email", "phone", "location"].map((field) => (
+                    <div key={field}>
+                        <Input
+                            label={field === "firstName" ? "First Name" 
+                                : field === "lastName" ? "Last Name"
+                                : field.charAt(0).toUpperCase() + field.slice(1)}
+                            name={field}
+                            value={formData[field as keyof PersonalData]}
+                            onChange={handleChange}
+                            placeholder={field === "email" ? "example@gmail.com" : field}
+                            className="w-full"
+                        />
+                        {errors.personal?.[field] && (
+                            <p className="text-red-500 text-xs mt-1">
+                                {errors.personal[field]}
+                            </p>
+                        )}
+                    </div>
+                ))}
+
                     </div>
                     <div className="mt-4">
                         <label className="text-sm font-medium mb-1 block">Professional Summary</label>
@@ -397,12 +449,18 @@ export default function CreateResume() {
                 {/* Skills Section */}
                 <section className="mt-6">
                     <h3 className="text-lg font-semibold mb-4">Skills</h3>
-                    <Input label="Skills" placeholder="React, TypeScript, Node.js, etc." className="w-full" />
+                    <Input 
+                    label="Skills" 
+                    placeholder="React, TypeScript, Node.js, etc." 
+                    className="w-full" 
+                    value={skills} 
+                    onChange={(e) => setSkills(e.target.value)}
+                    />
                 </section>
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
-                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto">
+                    <Button variant="outline" className="text-gray-500 w-full sm:w-auto"  onClick={onCancel} >
                         Cancel
                     </Button>
                     <Button icon={<FilePlayIcon className="w-4 h-4" />}
