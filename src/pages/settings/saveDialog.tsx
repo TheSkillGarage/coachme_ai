@@ -4,9 +4,10 @@ interface SaveDialogProps {
     isOpen: boolean;
     onClose: () => void;
     onDiscard: () => void;
+    onSave: () => void;
 }
 
-export default function SaveDialog({ isOpen, onClose, onDiscard }: SaveDialogProps) {
+export default function SaveDialog({ isOpen, onClose, onDiscard, onSave }: SaveDialogProps) {
     return (
         <Dialog title="Discard Changes" isOpen={isOpen} onClose={onClose}>
             <p className='text-sm text-grey-300'>
@@ -21,7 +22,7 @@ export default function SaveDialog({ isOpen, onClose, onDiscard }: SaveDialogPro
                     Discard Changes
                 </Button>
                 <Button
-                    onClick={() => onClose()}
+                    onClick={onSave}
                 >
                     Save Changes
                 </Button>
