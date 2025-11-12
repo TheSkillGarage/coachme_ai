@@ -62,7 +62,7 @@ export default function FiltersMobileDrawer({
       onClose={() => onOpenChange(false)}
       side="bottom"
       title="Filters"
-      height="h-[90vh]"
+      height="h-[70vh]"
       showCloseButton={true}
       closeOnOverlayClick={true}
       className="rounded-t-lg"
