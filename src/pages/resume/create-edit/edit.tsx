@@ -37,7 +37,8 @@ type ErrorMessages = Partial<Record<string, string | string[]>>;
 
 export default function EditResume() {
     const navigate = useNavigate();
-    // Yup Schemas
+
+    // ✅ Yup Schemas
     const personalSchema = yup.object().shape({
         firstName: yup.string().required("First name is required"),
         lastName: yup.string().required("Last name is required"),
@@ -63,7 +64,7 @@ export default function EditResume() {
         location: yup.string().required("Location is required"),
     });
 
-    // States
+    // ✅ States
     const [formData, setFormData] = useState<PersonalData>({
         firstName: "",
         lastName: "",
@@ -87,7 +88,7 @@ export default function EditResume() {
         educations?: ErrorMessages[];
     }>({});
 
-    // Prefill with Faker data (only in dev mode)
+    // ✅ Prefill with Faker data (only in dev mode)
     useEffect(() => {
         if (import.meta.env.MODE === "development") {
             setFormData({
@@ -121,7 +122,7 @@ export default function EditResume() {
         }
     }, []);
 
-    // Handlers
+    // ✅ Handlers
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -246,73 +247,83 @@ export default function EditResume() {
         }));
     };
 
+    // ✅ Fixed handleSubmit
     const handleSubmit = async () => {
         try {
+            // Validate each section independently
             await personalSchema.validate(formData, { abortEarly: false });
-            await Promise.all(experiences.map((exp) => experienceSchema.validate(exp, { abortEarly: false })));
-            await Promise.all(educations.map((edu) => educationSchema.validate(edu, { abortEarly: false })));
+
+            const experienceErrors: ErrorMessages[] = [];
+            const educationErrors: ErrorMessages[] = [];
+            let hasError = false;
+
+            for (let i = 0; i < experiences.length; i++) {
+                try {
+                    await experienceSchema.validate(experiences[i], { abortEarly: false });
+                } catch (err) {
+                    if (err instanceof yup.ValidationError) {
+                        hasError = true;
+                        const fieldErrors: ErrorMessages = {};
+                        err.inner.forEach((e) => e.path && (fieldErrors[e.path] = e.message));
+                        experienceErrors[i] = fieldErrors;
+                    }
+                }
+            }
+
+            for (let i = 0; i < educations.length; i++) {
+                try {
+                    await educationSchema.validate(educations[i], { abortEarly: false });
+                } catch (err) {
+                    if (err instanceof yup.ValidationError) {
+                        hasError = true;
+                        const fieldErrors: ErrorMessages = {};
+                        err.inner.forEach((e) => e.path && (fieldErrors[e.path] = e.message));
+                        educationErrors[i] = fieldErrors;
+                    }
+                }
+            }
+
+            if (hasError) {
+                setErrors((prev) => ({
+                    ...prev,
+                    experiences: experienceErrors,
+                    educations: educationErrors,
+                }));
+                return;
+            }
+
             alert("Form submitted successfully!");
         } catch (err) {
             if (err instanceof yup.ValidationError) {
-                const personalErrors: ErrorMessages = {};
-                const experienceErrors: ErrorMessages[] = [];
-                const educationErrors: ErrorMessages[] = [];
-
-                err.inner.forEach((e) => {
-                    if (!e.path) return;
-                    if (Object.prototype.hasOwnProperty.call(formData, e.path)) {
-                        personalErrors[e.path] = e.message;
-                    } else {
-                        experiences.forEach((exp, idx) => {
-                            if (Object.prototype.hasOwnProperty.call(exp, e.path as string)) {
-                                experienceErrors[idx] = { ...(experienceErrors[idx] || {}), [e.path as string]: e.message };
-                            }
-                        });
-                        educations.forEach((edu, idx) => {
-                            if (Object.prototype.hasOwnProperty.call(edu, e.path as string)) {
-                                educationErrors[idx] = { ...(educationErrors[idx] || {}), [e.path as string]: e.message };
-                            }
-                        });
-                    }
-                });
-
-                setErrors({
-                    personal: personalErrors,
-                    experiences: experienceErrors,
-                    educations: educationErrors,
-                });
+                const fieldErrors: ErrorMessages = {};
+                err.inner.forEach((e) => e.path && (fieldErrors[e.path] = e.message));
+                setErrors((prev) => ({ ...prev, personal: fieldErrors }));
             }
         }
     };
-
-    console.log("Form Data:", educations);
 
     return (
         <>
             <div className="mb-8">
                 <Button
                     variant="ghost"
-                    onClick={() => navigate('/user/resume')}
+                    onClick={() => navigate("/user/resume")}
                     color="text-muted-foreground"
                     bg="bg-white"
                     icon={<ArrowLeft className="w-4 h-4" />}
                     iconPosition="left"
-                    className="
-            bg-white
-            rounded-3xl border border-[rgba(255,255,255,1)]
-            transition-transform
-            hover:text-foreground hover:-translate-y-[1px]
-          "
+                    className="bg-white rounded-3xl border border-[rgba(255,255,255,1)] transition-transform hover:text-foreground hover:-translate-y-[1px]"
                 >
                     Back
                 </Button>
             </div>
+
             <Card hoverable={false} className="shadow-none w-full">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full  mx-auto py-4 sm:py-6"
+                    className="w-full mx-auto py-4 sm:py-6"
                 >
                     <h2 className="text-2xl font-semibold mb-2">Resume Information</h2>
                     <p className="text-sm text-muted-foreground mb-6">
@@ -333,7 +344,9 @@ export default function EditResume() {
                                         placeholder={field === "email" ? "example@gmail.com" : field}
                                         className="w-full"
                                     />
-                                    {errors.personal?.[field] && <p className="text-red-500 text-xs mt-1">{errors.personal[field]}</p>}
+                                    {errors.personal?.[field] && (
+                                        <p className="text-red-500 text-xs mt-1">{errors.personal[field]}</p>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -347,7 +360,9 @@ export default function EditResume() {
                                 className="w-full border rounded-lg p-3 text-sm bg-background focus:ring-2 focus:ring-primary"
                                 rows={4}
                             />
-                            {errors.personal?.summary && <p className="text-red-500 text-xs mt-1">{errors.personal.summary}</p>}
+                            {errors.personal?.summary && (
+                                <p className="text-red-500 text-xs mt-1">{errors.personal.summary}</p>
+                            )}
                         </div>
                     </Card>
 
@@ -373,35 +388,44 @@ export default function EditResume() {
                                             </button>
                                         )}
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                                            {(["jobTitle", "company", "startDate", "endDate"] as (keyof Experience)[]).map((field) => (
-                                                <div key={field}>
-                                                    <Input
-                                                        label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                                        value={exp[field]}
-                                                        onChange={(e) => handleExperienceChange(index, field, e.target.value)}
-                                                        placeholder={field === "jobTitle" ? "Senior Frontend Developer" : field}
-                                                        className="w-full"
-                                                    />
-                                                    {errors.experiences?.[index]?.[field] && (
-                                                        <p className="text-red-500 text-xs mt-1">{errors.experiences[index][field]}</p>
-                                                    )}
-                                                </div>
-                                            ))}
+                                            {(["jobTitle", "company", "startDate", "endDate"] as (keyof Experience)[]).map(
+                                                (field) => (
+                                                    <div key={field}>
+                                                        <Input
+                                                            label={field.charAt(0).toUpperCase() + field.slice(1)}
+                                                            value={exp[field]}
+                                                            onChange={(e) =>
+                                                                handleExperienceChange(index, field, e.target.value)
+                                                            }
+                                                            placeholder={field}
+                                                            className="w-full"
+                                                        />
+                                                        {errors.experiences?.[index]?.[field] && (
+                                                            <p className="text-red-500 text-xs mt-1">
+                                                                {errors.experiences[index][field]}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                )
+                                            )}
                                         </div>
                                         <div className="mt-4">
                                             <label className="text-sm font-medium mb-1 block">Description</label>
                                             <textarea
                                                 value={exp.description}
-                                                onChange={(e) => handleExperienceChange(index, "description", e.target.value)}
-                                                placeholder="Led development of the company’s flagship product using React and TypeScript..."
+                                                onChange={(e) =>
+                                                    handleExperienceChange(index, "description", e.target.value)
+                                                }
+                                                placeholder="Led development of company product using React..."
                                                 className="w-full border rounded-lg p-3 text-sm bg-background focus:ring-2 focus:ring-primary"
                                                 rows={3}
                                             />
                                             {errors.experiences?.[index]?.description && (
-                                                <p className="text-red-500 text-xs mt-1">{errors.experiences[index].description}</p>
+                                                <p className="text-red-500 text-xs mt-1">
+                                                    {errors.experiences[index].description}
+                                                </p>
                                             )}
                                         </div>
-
                                     </div>
                                 </motion.div>
                             ))}
@@ -439,54 +463,56 @@ export default function EditResume() {
                                             </button>
                                         )}
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                                            {(["degree", "course", "institution", "graduationDate", "location"] as (keyof Education)[]).map(
-                                                (field) => (
-                                                    <div key={field}>
-                                                        <Input
-                                                            label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                                            value={edu[field]}
-                                                            onChange={(e) => handleEducationChange(index, field, e.target.value)}
-                                                            placeholder={field}
-                                                            className="w-full"
-                                                        />
-                                                        {errors.educations?.[index]?.[field] && (
-                                                            <p className="text-red-500 text-xs mt-1">{errors.educations[index][field]}</p>
-                                                        )}
-                                                    </div>
-                                                )
-                                            )}
+                                            {(
+                                                [
+                                                    "degree",
+                                                    "course",
+                                                    "institution",
+                                                    "graduationDate",
+                                                    "location",
+                                                ] as (keyof Education)[]
+                                            ).map((field) => (
+                                                <div key={field}>
+                                                    <Input
+                                                        label={field.charAt(0).toUpperCase() + field.slice(1)}
+                                                        value={edu[field]}
+                                                        onChange={(e) =>
+                                                            handleEducationChange(index, field, e.target.value)
+                                                        }
+                                                        placeholder={field}
+                                                        className="w-full"
+                                                    />
+                                                    {errors.educations?.[index]?.[field] && (
+                                                        <p className="text-red-500 text-xs mt-1">
+                                                            {errors.educations[index][field]}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            ))}
                                         </div>
-
                                     </div>
                                 </motion.div>
                             ))}
-                            <Button
-                                variant="outline"
-                                className="w-full text-primary-500 my-4"
-                                icon={<Plus />}
-                                iconPosition="left"
-                                onClick={addEducation}
-                            >
-                                Add Another Education
-                            </Button>
                         </AnimatePresence>
-
-                    </Card>
-
-                    {/* Skills Section */}
-                    <Card hoverable={false} className="mt-6 shadow-none w-full">
-                        <h3 className="text-lg font-semibold mb-4">Skills</h3>
-                        <Input label="Skills" placeholder="React, TypeScript, Node.js, etc." className="w-full" />
-                    </Card>
-
-                    {/* Actions */}
-                    <div className="flex flex-col sm:flex-row justify-between mt-6 gap-3">
-                        <Button variant="outline" className="text-gray-500 w-full sm:w-auto">
-                            Cancel
+                        <Button
+                            variant="outline"
+                            className="w-full text-primary-500 my-4"
+                            icon={<Plus />}
+                            iconPosition="left"
+                            onClick={addEducation}
+                        >
+                            Add Another Education
                         </Button>
-                        <Button icon={<FilePlayIcon className="w-4 h-4" />}
-                            iconPosition="left" onClick={handleSubmit} className="w-full sm:w-auto">
-                            Save Changes
+                    </Card>
+
+                    <div className="flex justify-end mt-8">
+                        <Button
+                            onClick={handleSubmit}
+                            className="text-white bg-primary-600 hover:bg-primary-700"
+                            icon={<FilePlayIcon />}
+                            iconPosition="left"
+                        >
+                            Save and Continue
                         </Button>
                     </div>
                 </motion.div>
