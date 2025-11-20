@@ -116,7 +116,7 @@ export default function AnalyticsPage() {
             </p>
 
             <ResponsiveContainer width="100%" height="85%">
-              <AreaChart data={applicationTrend}>
+              <AreaChart data={applicationTrend} margin={{ bottom: 30 }}>
                 <defs>
                   <linearGradient id="colorTrend" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#67005E" stopOpacity={0.5} />
@@ -124,8 +124,8 @@ export default function AnalyticsPage() {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ececec" />
-                <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} />
+                <XAxis dataKey="month" tick={{ fontSize: 12 }} label={{ value: 'Month', position: 'insideBottom', offset: -15, fontSize: 12, fontWeight: 'bold', fill: '#000000' }} />
+                <YAxis tick={{ fontSize: 12 }} label={{ value: 'Applications', angle: -90, position: 'center', fontSize: 12, fontWeight: 'bold', fill: '#000000', dx: -15 }}/>
                 <Tooltip />
                 <Area
                   type="monotone"
@@ -151,10 +151,10 @@ export default function AnalyticsPage() {
             <p className="text-xs text-gray-400 mb-2">Days taken to respond</p>
 
             <ResponsiveContainer width="100%" height="85%">
-              <BarChart data={responseDistribution}>
+              <BarChart data={responseDistribution} margin={{ bottom: 30 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ececec" />
-                <XAxis dataKey="day" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} />
+                <XAxis dataKey="day" tick={{ fontSize: 12 }} label={{ value: 'Days', position: 'insideBottom', offset: -15, fontSize: 12, fontWeight: 'bold', fill: '#000000' }}/>
+                <YAxis tick={{ fontSize: 12 }} label={{ value: 'Number of Days', angle: -90, position: 'center', fontSize: 12, fontWeight: 'bold', fill: '#000000', dx: -15 }}/>
                 <Tooltip />
                 <Bar dataKey="value" fill="#67005E" radius={[6, 6, 6, 6]} />
               </BarChart>
