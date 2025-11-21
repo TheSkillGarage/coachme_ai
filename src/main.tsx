@@ -6,9 +6,12 @@ import { store } from './store/store.ts'
 import { BrowserRouter } from 'react-router-dom'
 import Router from './router/index.tsx'
 import { ToastProvider } from "./context/ToastProvider.tsx";
+import {ErrorBoundary} from "./components/ui/errorBoundary/index.tsx";
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <ErrorBoundary>
     <ToastProvider>
     <BrowserRouter>
       <Provider store={store}>
@@ -16,5 +19,6 @@ createRoot(document.getElementById('root')!).render(
       </Provider>
     </BrowserRouter>
     </ToastProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )
